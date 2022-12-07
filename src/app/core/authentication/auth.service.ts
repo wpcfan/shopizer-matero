@@ -1,15 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, iif, merge, of } from 'rxjs';
-import { catchError, map, share, switchMap, tap } from 'rxjs/operators';
-import { TokenService } from './token.service';
-import { LoginService } from './login.service';
-import { filterObject, isEmptyObject } from './helpers';
+import { environment } from '@env/environment';
+import { LoginRes, Signup } from '@models';
+import { BehaviorSubject, iif, merge, Observable, of } from 'rxjs';
+import { map, share, switchMap, tap } from 'rxjs/operators';
+import { isEmptyObject } from './helpers';
 import { User } from './interface';
+import { LoginService } from './login.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  url = environment.apiUrl;
   private user$ = new BehaviorSubject<User>({});
   private change$ = merge(
     this.tokenService.change(),
@@ -19,7 +23,11 @@ export class AuthService {
     share()
   );
 
-  constructor(private loginService: LoginService, private tokenService: TokenService) {}
+  constructor(
+    private loginService: LoginService,
+    private tokenService: TokenService,
+    private http: HttpClient
+  ) {}
 
   init() {
     return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
@@ -33,21 +41,19 @@ export class AuthService {
     return this.tokenService.valid();
   }
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
-    );
+  login(username: string, password: string): Observable<LoginRes> {
+    return this.http.post<LoginRes>(`${this.url}/v1/private/login`, {
+      username,
+      password,
+    });
+  }
+
+  register(param: Signup): Observable<any> {
+    return this.http.post(`${this.url}/v1/store/signup`, param);
   }
 
   refresh() {
-    return this.loginService
-      .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
-      .pipe(
-        catchError(() => of(undefined)),
-        tap(token => this.tokenService.set(token)),
-        map(() => this.check())
-      );
+    return this.http.get<LoginRes>(`${this.url}/v1/auth/refresh`, {});
   }
 
   logout() {

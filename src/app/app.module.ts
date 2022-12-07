@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 }
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { reducer } from '@core/+state/reducers/root.reducer';
 import { LoginService } from '@core/authentication/login.service';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -49,9 +50,9 @@ import { FakeLoginService } from './fake-login.service';
       },
     }),
     BrowserAnimationsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot([reducer]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },

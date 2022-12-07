@@ -5,24 +5,64 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-//
-// Light theme
-//
 $primary: mat.define-palette(mat.$indigo-palette);
 $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$theme: mat.define-light-theme($primary, $accent);
+
+// The warn palette is optional (defaults to red).
+$warn: mat.define-palette(mat.$red-palette);
 
 $config: mat.define-typography-config();
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$light-theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  )
+));
 
-@include app-theme.theme($theme);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
 
-//
-// Dark theme
-//
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$pink-palette, 700, 300, 900),
+    accent: mat.define-palette(mat.$blue-grey-palette, 400),
+    warn: mat.define-palette(mat.$red-palette, 500),
+  )
+));
+
+$green-theme: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette(mat.$purple-palette, 700, 300, 900),
+    accent: mat.define-palette(mat.$green-palette, 400),
+    warn: mat.define-palette(mat.$red-palette, 500),
+  )
+));
+
+$amber-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette(mat.$deep-purple-palette),
+    accent: mat.define-palette(mat.$amber-palette, 200, 100, 400),
+    warn: mat.define-palette(mat.$red-palette, 600),
+  )
+));
+
+.theme-light {
+  @include app-theme.theme($light-theme);
+}
+
 .theme-dark {
-  $primary: mat.define-palette(mat.$blue-palette, 700, 300, 900);
-  $accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
-  $theme: mat.define-dark-theme($primary, $accent);
+  // This mixin only generates the color styles now.
+  @include app-theme.theme($dark-theme);
+}
 
-  @include app-theme.theme($theme);
+.theme-amber {
+  @include app-theme.theme($amber-theme);
+}
+
+.theme-green {
+  @include app-theme.theme($green-theme);
 }

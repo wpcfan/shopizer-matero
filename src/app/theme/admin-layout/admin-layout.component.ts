@@ -1,23 +1,23 @@
+import { Directionality } from '@angular/cdk/bidi';
+import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
-  OnDestroy,
-  ViewChild,
-  HostBinding,
   ElementRef,
+  HostBinding,
   Inject,
+  OnDestroy,
   Optional,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { Directionality } from '@angular/cdk/bidi';
-import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 
-import { SettingsService, AppSettings } from '@core';
+import { AppSettings, SettingsService } from '@core';
 import { AppDirectionality } from '@shared';
 
 const MOBILE_MEDIAQUERY = 'screen and (max-width: 599px)';
