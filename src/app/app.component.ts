@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   selector: 'app-root',
   template: `
     <ng-container *ngIf="theme$ | async as theme">
-      <div [class]="theme"><router-outlet></router-outlet></div>
+      <div [class]="theme" style="height: 100%;"><router-outlet></router-outlet></div>
     </ng-container>
   `,
 })
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(private preloader: PreloaderService, private store: Store) {}
 
   ngOnInit() {
-    this.theme$ = this.store.select(fromRoot.selectTheme);
+    this.theme$ = this.store.select(fromRoot.selectThemeClass);
   }
 
   ngAfterViewInit() {

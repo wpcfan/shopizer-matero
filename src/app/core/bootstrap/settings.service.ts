@@ -1,34 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AppSettings, defaults } from '../settings';
+import { State } from '@core/+state/reducers/setting.reducer';
+import * as fromRoot from '@core/+state/selectors/setting.selectors';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  get notify(): Observable<Record<string, any>> {
-    return this.notify$.asObservable();
-  }
+  constructor(private store: Store) {}
 
-  private notify$ = new BehaviorSubject<Record<string, any>>({});
-
-  getOptions() {
-    return this.options;
-  }
-
-  setOptions(options: AppSettings) {
-    this.options = Object.assign(defaults, options);
-    this.notify$.next(this.options);
-  }
-
-  private options = defaults;
-
-  getLanguage() {
-    return this.options.language;
-  }
-
-  setLanguage(lang: string) {
-    this.options.language = lang;
-    this.notify$.next({ lang });
+  getOptions(): Observable<State> {
+    return this.store.select(fromRoot.selectSettingState);
   }
 }

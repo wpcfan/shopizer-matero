@@ -18,7 +18,11 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AppSettings, SettingsService } from '@core';
+import { Store } from '@ngrx/store';
 import { AppDirectionality } from '@shared';
+
+import * as SettingActions from '@core/+state/actions/setting.actions';
+import { State } from '@core/+state/reducers/setting.reducer';
 
 const MOBILE_MEDIAQUERY = 'screen and (max-width: 599px)';
 const TABLET_MEDIAQUERY = 'screen and (min-width: 600px) and (max-width: 959px)';
@@ -34,7 +38,7 @@ export class AdminLayoutComponent implements OnDestroy {
   @ViewChild('sidenav', { static: true }) sidenav!: MatSidenav;
   @ViewChild('content', { static: true }) content!: MatSidenavContent;
 
-  options = this.settings.getOptions();
+  options?: State;
 
   private layoutChangesSubscription = Subscription.EMPTY;
 
@@ -47,8 +51,8 @@ export class AdminLayoutComponent implements OnDestroy {
   @HostBinding('class.matero-content-width-fix') get contentWidthFix() {
     return (
       this.isContentWidthFixed &&
-      this.options.navPos === 'side' &&
-      this.options.sidenavOpened &&
+      this.options?.navPos === 'side' &&
+      this.options?.sidenavOpened &&
       !this.isOver
     );
   }
@@ -58,7 +62,7 @@ export class AdminLayoutComponent implements OnDestroy {
   @HostBinding('class.matero-sidenav-collapsed-fix') get collapsedWidthFix() {
     return (
       this.isCollapsedWidthFixed &&
-      (this.options.navPos === 'top' || (this.options.sidenavOpened && this.isOver))
+      (this.options?.navPos === 'top' || (this.options?.sidenavOpened && this.isOver))
     );
   }
 
@@ -70,21 +74,36 @@ export class AdminLayoutComponent implements OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private overlay: OverlayContainer,
     private element: ElementRef,
+    private store: Store,
     private settings: SettingsService,
     @Optional() @Inject(DOCUMENT) private document: Document,
     @Inject(Directionality) public dir: AppDirectionality
   ) {
-    this.dir.value = this.options.dir;
-    this.document.body.dir = this.dir.value;
+    this.settings.getOptions().subscribe(options => {
+      this.options = options;
+      this.dir.value = this.options.dir;
+      this.document.body.dir = this.dir.value;
+      if (this.options.theme === 'auto') {
+        this.setAutoTheme();
+      }
+
+      // Initialize project theme with options
+      this.receiveOptions(this.options);
+    });
 
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_MEDIAQUERY, TABLET_MEDIAQUERY, MONITOR_MEDIAQUERY])
       .subscribe(state => {
         // SidenavOpened must be reset true when layout changes
-        this.options.sidenavOpened = true;
 
         this.isMobileScreen = state.breakpoints[MOBILE_MEDIAQUERY];
-        this.options.sidenavCollapsed = state.breakpoints[TABLET_MEDIAQUERY];
+        this.store.dispatch(
+          SettingActions.setSidenavWhenLayoutChanges({
+            sidenavOpened: true,
+            sidenavCollapsed: state.breakpoints[TABLET_MEDIAQUERY],
+          })
+        );
+
         this.isContentWidthFixed = state.breakpoints[MONITOR_MEDIAQUERY];
       });
 
@@ -94,13 +113,6 @@ export class AdminLayoutComponent implements OnDestroy {
       }
       this.content.scrollTo({ top: 0 });
     });
-
-    if (this.options.theme === 'auto') {
-      this.setAutoTheme();
-    }
-
-    // Initialize project theme with options
-    this.receiveOptions(this.options);
   }
 
   ngOnDestroy() {
@@ -109,14 +121,16 @@ export class AdminLayoutComponent implements OnDestroy {
 
   toggleCollapsed() {
     this.isContentWidthFixed = false;
-    this.options.sidenavCollapsed = !this.options.sidenavCollapsed;
-    this.resetCollapsedState();
+    this.store.dispatch(
+      SettingActions.setSidenavCollapsed({ sidenavCollapsed: !this.options?.sidenavCollapsed })
+    );
+    // this.resetCollapsedState();
   }
 
   // TODO: Trigger when transition end
-  resetCollapsedState(timer = 400) {
-    setTimeout(() => this.settings.setOptions(this.options), timer);
-  }
+  // resetCollapsedState(timer = 400) {
+  //   setTimeout(() => this.settings.setOptions(this.options), timer);
+  // }
 
   onSidenavClosedStart() {
     this.isContentWidthFixed = false;
@@ -124,8 +138,7 @@ export class AdminLayoutComponent implements OnDestroy {
 
   onSidenavOpenedChange(isOpened: boolean) {
     this.isCollapsedWidthFixed = !this.isOver;
-    this.options.sidenavOpened = isOpened;
-    this.settings.setOptions(this.options);
+    this.store.dispatch(SettingActions.setSidenavOpened({ sidenavOpened: isOpened }));
   }
 
   setAutoTheme() {
@@ -133,10 +146,7 @@ export class AdminLayoutComponent implements OnDestroy {
     if (this.mediaMatcher.matchMedia('(prefers-color-scheme)').media !== 'not all') {
       const isSystemDark = this.mediaMatcher.matchMedia('(prefers-color-scheme: dark)').matches;
       // Set theme to dark if `prefers-color-scheme` is dark. Otherwise, set it to light.
-      this.options.theme = isSystemDark ? 'dark' : 'light';
-    } else {
-      // If the browser does not support `prefers-color-scheme`, set the default to light.
-      this.options.theme = 'light';
+      this.store.dispatch(SettingActions.setTheme({ theme: isSystemDark ? 'dark' : 'light' }));
     }
   }
 
