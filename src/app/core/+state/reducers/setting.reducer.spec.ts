@@ -1,4 +1,4 @@
-import { initialState, reducer } from './root.reducer';
+import { reducer, initialState } from './setting.reducer';
 
 describe('Setting Reducer', () => {
   describe('an unknown action', () => {
