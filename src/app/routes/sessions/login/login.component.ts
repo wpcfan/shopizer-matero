@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as AuthActions from '@core/+state/actions';
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../+state/actions';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

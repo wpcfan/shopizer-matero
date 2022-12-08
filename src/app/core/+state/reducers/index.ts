@@ -1,13 +1,16 @@
 import { isDevMode } from '@angular/core';
 import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
+import * as fromAuth from './auth.reducer';
 import * as fromSetting from './setting.reducer';
 
 export interface AppState {
   [fromSetting.settingFeatureKey]: fromSetting.State;
+  [fromAuth.authFeatureKey]: fromAuth.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   [fromSetting.settingFeatureKey]: fromSetting.reducer,
+  [fromAuth.authFeatureKey]: fromAuth.reducer,
 };
 
 // console.log all actions
