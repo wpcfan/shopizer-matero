@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { LoginRes, Signup } from '@models';
+import { LoginRes, Profile, Signup } from '@models';
 import { BehaviorSubject, iif, merge, Observable, of } from 'rxjs';
 import { map, share, switchMap, tap } from 'rxjs/operators';
 import { isEmptyObject } from './helpers';
@@ -14,7 +14,9 @@ import { TokenService } from './token.service';
 })
 export class AuthService {
   url = environment.apiUrl;
+
   private user$ = new BehaviorSubject<User>({});
+
   private change$ = merge(
     this.tokenService.change(),
     this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
@@ -48,7 +50,7 @@ export class AuthService {
     });
   }
 
-  register(param: Signup): Observable<any> {
+  register(param: Partial<Signup>): Observable<any> {
     return this.http.post(`${this.url}/v1/store/signup`, param);
   }
 
@@ -64,7 +66,7 @@ export class AuthService {
   }
 
   user() {
-    return this.user$.pipe(share());
+    return this.http.get<Profile>(`${this.url}/v1/private/user/profile`);
   }
 
   menu() {

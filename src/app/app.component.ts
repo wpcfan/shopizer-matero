@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
   selector: 'app-root',
   template: `
     <ng-container *ngIf="theme$ | async as theme">
-      <div [class]="theme" style="height: 100%;"><router-outlet></router-outlet></div>
+      <div [class]="theme" style="height: 100%;">
+        <router-outlet></router-outlet>
+      </div>
     </ng-container>
   `,
 })

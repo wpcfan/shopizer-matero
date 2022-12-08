@@ -1,51 +1,124 @@
 <div class="w-full h-full" fxLayout="row wrap">
-  <mat-card class="mat-elevation-z4 m-auto" style="max-width: 380px;">
+  <mat-card class="mat-elevation-z4 m-auto" style="max-width: 380px">
     <mat-card-title class="m-b-24">
-      {{'register.welcome' | translate}}, <br />
-      {{'register.title' | translate}}
+      {{ 'register.welcome' | translate }}, <br />
+      {{ 'register.title' | translate }}
     </mat-card-title>
 
     <form class="form-field-full" [formGroup]="registerForm">
+      <div>{{ 'register.adminInformation' | translate }}</div>
+
       <mat-form-field appearance="outline">
-        <mat-label>{{'login.username' | translate}}</mat-label>
-        <input matInput formControlName="username" required>
-        <mat-error *ngIf="registerForm.get('username')?.invalid">
-          {{'validations.required' | translate}}
+        <mat-label>{{ 'register.firstName' | translate }}</mat-label>
+        <input matInput formControlName="firstName" required />
+        <mat-error *ngIf="registerForm.get('firstName')?.invalid">
+          {{ 'validations.required' | translate }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{'login.password' | translate}}</mat-label>
-        <input matInput type="password" formControlName="password" required>
+        <mat-label>{{ 'register.lastName' | translate }}</mat-label>
+        <input matInput formControlName="lastName" required />
+        <mat-error *ngIf="registerForm.get('lastName')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.email' | translate }}</mat-label>
+        <input matInput formControlName="email" required />
+        <mat-error *ngIf="registerForm.get('email')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'login.password' | translate }}</mat-label>
+        <input matInput type="password" formControlName="password" required />
         <mat-error *ngIf="registerForm.get('password')?.invalid">
-          {{'validations.required' | translate}}
+          {{ 'validations.required' | translate }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{'register.confirm_password' | translate}}</mat-label>
-        <input matInput type="password" formControlName="confirmPassword" required>
+        <mat-label>{{ 'register.confirm_password' | translate }}</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" required />
         <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
-          {{'validations.required' | translate}}
+          {{ 'validations.required' | translate }}
         </mat-error>
-        <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')"
-                   translate [translateParams]="{value: 'login.password' | translate}">
-          {{'validations.inconsistent'}}
+        <mat-error
+          *ngIf="registerForm.get('confirmPassword')?.hasError('mismatch')"
+          translate
+          [translateParams]="{ value: 'login.password' | translate }"
+        >
+          {{ 'validations.inconsistent' }}
+        </mat-error>
+      </mat-form-field>
+
+      <div>{{ 'register.storeInformation' | translate }}</div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.name' | translate }}</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-error *ngIf="registerForm.get('name')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.address' | translate }}</mat-label>
+        <input matInput formControlName="address" required />
+        <mat-error *ngIf="registerForm.get('address')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.city' | translate }}</mat-label>
+        <input matInput formControlName="city" required />
+        <mat-error *ngIf="registerForm.get('city')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.postalCode' | translate }}</mat-label>
+        <input matInput formControlName="postalCode" required />
+        <mat-error *ngIf="registerForm.get('postalCode')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.stateProvince' | translate }}</mat-label>
+        <input matInput formControlName="stateProvince" required />
+        <mat-error *ngIf="registerForm.get('stateProvince')?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.country' | translate }}</mat-label>
+        <input matInput formControlName="country" required />
+        <mat-error *ngIf="registerForm.get('country')?.invalid">
+          {{ 'validations.required' | translate }}
         </mat-error>
       </mat-form-field>
 
       <div class="m-y-16" fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-checkbox>{{'register.agree' | translate}}</mat-checkbox>
+        <mat-checkbox formControlName="acceptTerms">{{
+          'register.agree' | translate
+        }}</mat-checkbox>
       </div>
 
-      <button class="w-full" mat-raised-button color="primary">
-        {{'register.register' | translate}}
+      <button class="w-full" mat-raised-button color="primary" (click)="register($event)">
+        {{ 'register.register' | translate }}
       </button>
 
-      <div class="m-t-16">{{'register.have_an_account' | translate}}?
-        <a routerLink="/auth/login">{{'login.login' | translate}}</a>
+      <div class="m-t-16">
+        {{ 'register.have_an_account' | translate }}?
+        <a routerLink="/auth/login">{{ 'login.login' | translate }}</a>
       </div>
     </form>
-
   </mat-card>
 </div>

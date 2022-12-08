@@ -110,7 +110,19 @@
     "confirm_password": "Confirm Password",
     "agree": "I have read and agree to the terms of service",
     "have_an_account": "Already have an account",
-    "register": "Create account"
+    "register": "Create account",
+    "adminInformation": "Store administrator information",
+    "storeInformation": "Store information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "name": "Store name",
+    "code": "Store code",
+    "address": "Address",
+    "city": "City",
+    "stateProvince": "State / province",
+    "country": "Country",
+    "postalCode": "Postal code"
   },
   "paginator": {
     "items_per_page_label": "Items per page:",

@@ -110,7 +110,19 @@
     "confirm_password": "确认密码",
     "agree": "我已阅读并同意服务条款",
     "have_an_account": "已经有帐号了",
-    "register": "创建账号"
+    "register": "创建账号",
+    "adminInformation": "管理员信息",
+    "storeInformation": "店铺信息",
+    "firstName": "姓",
+    "lastName": "名",
+    "email": "邮箱",
+    "name": "店铺名称",
+    "code": "店铺代码",
+    "address": "地址",
+    "city": "城市",
+    "stateProvince": "省份",
+    "country": "国家",
+    "postalCode": "邮编"
   },
   "paginator": {
     "items_per_page_label": "每页共：",

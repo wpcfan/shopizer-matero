@@ -110,7 +110,19 @@
     "confirm_password": "確認密碼",
     "agree": "我已閱讀並同意服務條款",
     "have_an_account": "已經有帳號了",
-    "register": "創建賬號"
+    "register": "創建賬號",
+    "adminInformation": "管理員信息",
+    "storeInformation": "店鋪信息",
+    "firstName": "姓",
+    "lastName": "名",
+    "email": "郵箱",
+    "name": "店鋪名稱",
+    "code": "店鋪代碼",
+    "address": "地址",
+    "city": "城市",
+    "stateProvince": "州/省",
+    "country": "國家",
+    "postalCode": "郵編"
   },
   "paginator": {
     "items_per_page_label": "每頁共：",

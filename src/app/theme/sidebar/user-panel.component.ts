@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService, User } from '@core/authentication';
-
+import * as AuthActions from '@core/+state/actions';
+import * as fromAuth from '@core/+state/selectors/auth.selectors';
+import { Profile } from '@models';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-user-panel',
   template: `
-    <div class="matero-user-panel" fxLayout="column" fxLayoutAlign="center center">
-      <img class="matero-user-panel-avatar" [src]="user.avatar" alt="avatar" width="64" />
-      <h4 class="matero-user-panel-name">{{ user.name }}</h4>
-      <h5 class="matero-user-panel-email">{{ user.email }}</h5>
+    <div
+      class="matero-user-panel"
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      *ngIf="profile$ | async as user"
+    >
+      <mat-icon class="matero-avatar-icon" width="32">account_circle</mat-icon>
+      <h4 class="matero-user-panel-name">{{ user.firstName }} {{ user.lastName }}</h4>
+      <h5 class="matero-user-panel-email">{{ user.emailAddress }}</h5>
       <div class="matero-user-panel-icons">
         <button mat-icon-button routerLink="/profile/overview">
           <mat-icon class="icon-18">account_circle</mat-icon>
@@ -25,15 +32,17 @@ import { AuthService, User } from '@core/authentication';
   styleUrls: ['./user-panel.component.scss'],
 })
 export class UserPanelComponent implements OnInit {
-  user!: User;
+  profile$: Observable<Profile | undefined>;
 
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private store: Store) {
+    this.profile$ = this.store.select(fromAuth.selectProfile);
+  }
 
   ngOnInit(): void {
-    this.auth.user().subscribe(user => (this.user = user));
+    this.store.dispatch(AuthActions.loadProfile());
   }
 
   logout() {
-    this.auth.logout().subscribe(() => this.router.navigateByUrl('/auth/login'));
+    this.store.dispatch(AuthActions.logout());
   }
 }

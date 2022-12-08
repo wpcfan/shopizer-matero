@@ -2,19 +2,41 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/authentication';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import * as AuthActions from '../actions';
 
 @Injectable()
 export class AuthEffects {
+  initAuth$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ROOT_EFFECTS_INIT),
+      map(() => {
+        const rememberMe = localStorage.getItem('rememberMe') === 'true';
+        const token = rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token');
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+          return AuthActions.initRememberMe({ rememberMe: true, token: token || undefined });
+        } else {
+          localStorage.setItem('rememberMe', 'false');
+          return AuthActions.initRememberMe({ rememberMe: false, token: token || undefined });
+        }
+      })
+    );
+  });
+
   login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.login),
-      exhaustMap(({ username, password }) =>
+      exhaustMap(({ username, password, rememberMe }) =>
         this.authService.login(username, password).pipe(
           map(data => {
-            sessionStorage.setItem('token', data.token);
+            localStorage.setItem('rememberMe', rememberMe ? 'true' : 'false');
+            if (rememberMe) {
+              localStorage.setItem('token', data.token);
+            } else {
+              sessionStorage.setItem('token', data.token);
+            }
             return AuthActions.loginSuccess({ data });
           }),
           catchError(error => {
@@ -40,6 +62,23 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  loadProfile$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.loadProfile),
+      exhaustMap(() =>
+        this.authService.user().pipe(
+          map(data => AuthActions.loadProfileSuccess({ data })),
+          catchError(error => {
+            if (error instanceof HttpErrorResponse) {
+              return of(AuthActions.loadProfileFailure({ error: error.error.message }));
+            }
+            return of(AuthActions.loadProfileFailure({ error: 'Unknown Error' }));
+          })
+        )
+      )
+    );
+  });
+
   register$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.register),
@@ -56,6 +95,20 @@ export class AuthEffects {
       )
     );
   });
+
+  logout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap(() => {
+          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
+          this.router.navigate(['/auth/login']);
+        })
+      );
+    },
+    { dispatch: false }
+  );
 
   constructor(
     private actions$: Actions,

@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { map } from 'rxjs';
@@ -7,15 +8,17 @@ import { initialState } from '../reducers/setting.reducer';
 
 @Injectable()
 export class SettingEffects {
-  init$ = createEffect(() => {
+  initSetting$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ROOT_EFFECTS_INIT),
       map(() => {
         const settings = localStorage.getItem('settings');
         if (!settings) {
           localStorage.setItem('settings', JSON.stringify(initialState));
+          this.overlay.getContainerElement().classList.add('theme-' + initialState.theme);
           return SettingActions.initSettings({ settings: initialState });
         }
+        this.overlay.getContainerElement().classList.add('theme-' + JSON.parse(settings).theme);
         return SettingActions.initSettings({ settings: JSON.parse(settings) });
       })
     );
@@ -37,6 +40,8 @@ export class SettingEffects {
       ofType(SettingActions.setTheme),
       map(({ theme }) => {
         const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+        this.overlay.getContainerElement().classList.remove('theme-' + settings.theme);
+        this.overlay.getContainerElement().classList.add('theme-' + theme);
         localStorage.setItem('settings', JSON.stringify({ ...settings, theme }));
         return SettingActions.setThemeSuccess({ theme });
       })
@@ -137,5 +142,5 @@ export class SettingEffects {
     );
   });
 
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private overlay: OverlayContainer) {}
 }

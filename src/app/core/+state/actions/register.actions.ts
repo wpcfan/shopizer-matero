@@ -1,7 +1,10 @@
 import { Signup } from '@models';
 import { createAction, props } from '@ngrx/store';
 
-export const register = createAction('[Register Page] register', props<{ signup: Signup }>());
+export const register = createAction(
+  '[Register Page] register',
+  props<{ signup: Partial<Signup> }>()
+);
 
 export const registerSuccess = createAction('[Register Api] Register success', props<any>());
 

@@ -11,8 +11,8 @@ export class LoginComponent {
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['ng-matero', [Validators.required]],
-    password: ['ng-matero', [Validators.required]],
+    username: ['admin@shopizer.com', [Validators.required]],
+    password: ['password', [Validators.required]],
     rememberMe: [false],
   });
 
@@ -36,7 +36,11 @@ export class LoginComponent {
       return;
     }
     this.store.dispatch(
-      AuthActions.login({ username: this.username.value, password: this.password.value })
+      AuthActions.login({
+        username: this.username.value,
+        password: this.password.value,
+        rememberMe: this.rememberMe.value,
+      })
     );
   }
 }

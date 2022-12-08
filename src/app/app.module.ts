@@ -23,7 +23,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 }
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SettingEffects } from '@core/+state/effects/setting.effects';
+import { AuthEffects, SettingEffects } from '@core/+state/effects';
 import { metaReducers, reducers } from '@core/+state/reducers';
 import { LoginService } from '@core/authentication/login.service';
 import { EffectsModule } from '@ngrx/effects';
@@ -53,7 +53,7 @@ import { FakeLoginService } from './fake-login.service';
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([SettingEffects]),
+    EffectsModule.forRoot([SettingEffects, AuthEffects]),
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
