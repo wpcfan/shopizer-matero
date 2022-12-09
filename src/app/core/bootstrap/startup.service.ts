@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '@core/authentication';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
-import { switchMap, tap } from 'rxjs/operators';
-import { Menu, MenuService } from './menu.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,6 @@ import { Menu, MenuService } from './menu.service';
 export class StartupService {
   constructor(
     private authService: AuthService,
-    private menuService: MenuService,
     private permissonsService: NgxPermissionsService,
     private rolesService: NgxRolesService
   ) {}
@@ -23,21 +21,12 @@ export class StartupService {
     return new Promise<void>((resolve, reject) => {
       this.authService
         .change()
-        .pipe(
-          tap(user => this.setPermissions(user)),
-          switchMap(() => this.authService.menu()),
-          tap(menu => this.setMenu(menu))
-        )
+        .pipe(tap(user => this.setPermissions(user)))
         .subscribe({
           next: () => resolve(),
           complete: () => resolve(),
         });
     });
-  }
-
-  private setMenu(menu: Menu[]) {
-    this.menuService.addNamespace(menu, 'menu');
-    this.menuService.set(menu);
   }
 
   private setPermissions(user: User) {

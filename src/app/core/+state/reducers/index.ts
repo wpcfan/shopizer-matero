@@ -1,6 +1,7 @@
 import { isDevMode } from '@angular/core';
 import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
 import * as fromAuth from './auth.reducer';
+import * as fromMenu from './menu.reducer';
 import * as fromProfile from './profile.reducer';
 import * as fromSetting from './setting.reducer';
 
@@ -8,12 +9,14 @@ export interface AppState {
   [fromSetting.settingFeatureKey]: fromSetting.State;
   [fromAuth.authFeatureKey]: fromAuth.State;
   [fromProfile.profileFeatureKey]: fromProfile.State;
+  [fromMenu.menuFeatureKey]: fromMenu.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   [fromSetting.settingFeatureKey]: fromSetting.reducer,
   [fromAuth.authFeatureKey]: fromAuth.reducer,
   [fromProfile.profileFeatureKey]: fromProfile.reducer,
+  [fromMenu.menuFeatureKey]: fromMenu.reducer,
 };
 
 // console.log all actions

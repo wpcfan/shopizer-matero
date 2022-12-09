@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { LoginRes, Signup } from '@models';
-import { BehaviorSubject, iif, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { map, share, switchMap, tap } from 'rxjs/operators';
 import { isEmptyObject } from './helpers';
 import { User } from './interface';
@@ -64,11 +64,6 @@ export class AuthService {
       map(() => !this.check())
     );
   }
-
-  menu() {
-    return iif(() => this.check(), this.loginService.menu(), of([]));
-  }
-
   private assignUser() {
     if (!this.check()) {
       return of({}).pipe(tap(user => this.user$.next(user)));

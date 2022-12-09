@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, Input, HostBinding } from '@angular/core';
-import { MenuService } from '@core/bootstrap/menu.service';
-import { Router } from '@angular/router';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { Component, HostBinding, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { Menu } from '@models';
+import { getMenuLevel } from '@shared';
 
 @Component({
   selector: 'page-header',
@@ -15,6 +16,7 @@ export class PageHeaderComponent implements OnInit {
   @Input() title = '';
   @Input() subtitle = '';
   @Input() nav: string[] = [];
+  @Input() menus: Menu[] = [];
   @Input()
   get hideBreadcrumb() {
     return this._hideBreadCrumb;
@@ -24,7 +26,7 @@ export class PageHeaderComponent implements OnInit {
   }
   private _hideBreadCrumb = false;
 
-  constructor(private router: Router, private menu: MenuService) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.nav = Array.isArray(this.nav) ? this.nav : [];
@@ -38,7 +40,7 @@ export class PageHeaderComponent implements OnInit {
 
   genBreadcrumb() {
     const routes = this.router.url.slice(1).split('/');
-    this.nav = this.menu.getLevel(routes);
+    this.nav = getMenuLevel(routes, this.menus);
     this.nav.unshift('home');
   }
 

@@ -1,6 +1,5 @@
 import { Directive } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { MenuService } from '@core';
 import { filter } from 'rxjs/operators';
 import { NavAccordionItemDirective } from './nav-accordion-item.directive';
 
@@ -10,15 +9,10 @@ import { NavAccordionItemDirective } from './nav-accordion-item.directive';
 export class NavAccordionDirective {
   protected navLinks: NavAccordionItemDirective[] = [];
 
-  constructor(private router: Router, private menu: MenuService) {
+  constructor(private router: Router) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => this.checkOpenLinks());
-
-    // Fix opening status for async menu data
-    this.menu.change().subscribe(() => {
-      setTimeout(() => this.checkOpenLinks());
-    });
   }
 
   addLink(link: NavAccordionItemDirective) {

@@ -1,14 +1,11 @@
 import { Component, HostBinding, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router, RouterLinkActive } from '@angular/router';
-import { Menu, MenuService } from '@core';
+import * as fromMenu from '@core/+state/selectors/menu.selectors';
+import { Menu, TopmenuState } from '@models';
+import { Store } from '@ngrx/store';
+import { buildRoute as route } from '@shared/utils/menu';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-export interface TopmenuState {
-  active: boolean;
-  route: string;
-}
-
 @Component({
   selector: 'app-topmenu',
   templateUrl: './topmenu.component.html',
@@ -18,9 +15,10 @@ export interface TopmenuState {
 export class TopmenuComponent implements OnDestroy {
   @HostBinding('class') class = 'matero-topmenu';
 
-  menu$ = this.menu.getAll();
+  menu$ = this.store.select(fromMenu.selectMenus);
 
-  buildRoute = this.menu.buildRoute;
+  /** Delete empty values and rebuild route. */
+  buildRoute = route;
 
   menuList: Menu[] = [];
   menuStates: TopmenuState[] = [];
@@ -28,7 +26,7 @@ export class TopmenuComponent implements OnDestroy {
   private menuSubscription = Subscription.EMPTY;
   private routerSubscription = Subscription.EMPTY;
 
-  constructor(private menu: MenuService, private router: Router) {
+  constructor(private store: Store, private router: Router) {
     this.menuSubscription = this.menu$.subscribe(res => {
       this.menuList = res;
       this.menuList.forEach(item => {

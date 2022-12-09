@@ -1,3 +1,9 @@
-<page-header title="Setting" subtitle="personal preferences" [hideBreadcrumb]="false"></page-header>
-
+<ng-container *ngIf="menus$ | async as menus">
+  <page-header
+    title="Setting"
+    subtitle="personal preferences"
+    [hideBreadcrumb]="false"
+    [menus]="menus"
+  ></page-header>
+</ng-container>
 <p>setting works!</p>

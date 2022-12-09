@@ -1,19 +1,17 @@
 import {
   Component,
-  ViewChild,
-  Input,
-  Output,
   EventEmitter,
-  OnInit,
+  Input,
   OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { MatMenu } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLinkActive } from '@angular/router';
-import { MenuChildrenItem, MenuService } from '@core';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { TopmenuState } from './topmenu.component';
-
+import { MenuChildrenItem, TopmenuState } from '@models';
+import { buildRoute as route } from '@shared/utils/menu';
+import { filter, Subscription } from 'rxjs';
 @Component({
   selector: 'app-topmenu-panel',
   templateUrl: './topmenu-panel.component.html',
@@ -28,11 +26,12 @@ export class TopmenuPanelComponent implements OnInit, OnDestroy {
 
   menuStates: TopmenuState[] = [];
 
-  buildRoute = this.menu.buildRoute;
+  /** Delete empty values and rebuild route. */
+  buildRoute = route;
 
   private routerSubscription = Subscription.EMPTY;
 
-  constructor(private menu: MenuService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.items.forEach(item => {
