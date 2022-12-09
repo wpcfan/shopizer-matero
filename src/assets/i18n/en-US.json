@@ -124,6 +124,24 @@
     "country": "Country",
     "postalCode": "Postal code"
   },
+  "profile": {
+    "update": "Update",
+    "active": "Active",
+    "defaultLanguage": "Default language",
+    "groups": "Groups",
+    "SUPERADMIN": "Super Admin",
+    "ADMIN": "Admin",
+    "ADMIN_RETAILER": "Admin Retailer",
+    "ADMIN_STORE": "Admin Store",
+    "ADMIN_CATALOGUE": "Admin Catalogue",
+    "ADMIN_ORDER": "Admin Order",
+    "ADMIN_CONTENT": "Admin Content",
+    "CUSTOMER": "Customer",
+    "en": "English",
+    "fr": "Français",
+    "es": "Español",
+    "zh": "中文"
+  },
   "paginator": {
     "items_per_page_label": "Items per page:",
     "next_page_label": "Next page",

@@ -1,8 +1,4 @@
-export interface Group {
-  id: number;
-  name: string;
-  type?: string;
-}
+import { Group } from './group';
 
 export interface Permission {
   id: number;

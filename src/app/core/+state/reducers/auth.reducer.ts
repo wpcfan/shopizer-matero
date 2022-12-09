@@ -1,11 +1,12 @@
-import { Profile } from '@models';
+import { Group, Language } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as AuthActions from '../actions';
 
 export const authFeatureKey = 'auth';
 
 export interface State {
-  profile?: Profile;
+  groups: Group[];
+  languages: Language[];
   loggedIn: boolean;
   rememberMe: boolean;
   error?: string;
@@ -15,6 +16,8 @@ export interface State {
 export const initialState: State = {
   loggedIn: false,
   rememberMe: false,
+  groups: [],
+  languages: [],
 };
 
 export const reducer = createReducer(
@@ -33,7 +36,5 @@ export const reducer = createReducer(
   on(
     AuthActions.registerFailure,
     (state, { error }): State => ({ ...state, loggedIn: false, error })
-  ),
-  on(AuthActions.loadProfileSuccess, (state, { data }): State => ({ ...state, profile: data })),
-  on(AuthActions.loadProfileFailure, (state, { error }): State => ({ ...state, error }))
+  )
 );

@@ -1,0 +1,75 @@
+<page-header title="Profile" subtitle="personal overview" [hideBreadcrumb]="false"></page-header>
+
+<div class="w-full h-full" fxLayout="row wrap">
+  <mat-card class="mat-elevation-z4 m-auto" style="max-width: 380px">
+    <mat-card-title class="m-b-24">
+      {{ 'register.welcome' | translate }}, <br />
+      {{ 'register.title' | translate }}
+    </mat-card-title>
+
+    <form class="form-field-full" #form="ngForm" *ngIf="profile$ | async as profile">
+      <div>{{ 'register.adminInformation' | translate }}</div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.firstName' | translate }}</mat-label>
+        <input matInput name="firstName" required [(ngModel)]="model.firstName" />
+        <mat-error *ngIf="form.controls['firstName']?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.lastName' | translate }}</mat-label>
+        <input matInput name="lastName" required [(ngModel)]="model.lastName" />
+        <mat-error *ngIf="form.controls['lastName']?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'register.email' | translate }}</mat-label>
+        <input matInput name="emailAddress" required [(ngModel)]="model.emailAddress" />
+        <mat-error *ngIf="form.controls['emailAddress']?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="m-y-16" fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-checkbox name="active" [(ngModel)]="model.active">{{
+          'profile.active' | translate
+        }}</mat-checkbox>
+      </div>
+
+      <ng-container *ngIf="languages$ | async as languages">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'profile.defaultLanguage' | translate }}</mat-label>
+          <mat-select name="defaultLanguage" [(ngModel)]="model.defaultLanguage">
+            <mat-option *ngFor="let language of languages" [value]="language.code">
+              {{ 'profile.' + language.code | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="groups$ | async as groups">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'profile.groups' | translate }}</mat-label>
+          <mat-select
+            [compareWith]="compareGroup"
+            name="groups"
+            multiple
+            [(ngModel)]="model.groups"
+          >
+            <mat-option *ngFor="let group of groups" [value]="group">
+              {{ 'profile.' + group.name | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <button class="w-full" mat-raised-button color="primary" (click)="update()">
+        {{ 'profile.update' | translate }}
+      </button>
+    </form>
+  </mat-card>
+</div>

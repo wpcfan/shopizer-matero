@@ -1,14 +1,15 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from '@shared';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class SettingsInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private local: LocalStorageService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const settings = localStorage.getItem('settings');
-    const language = settings ? JSON.parse(settings).language : 'en-US';
+    const settings = this.local.get('settings');
+    const language = settings ? settings.language : 'en-US';
     return next.handle(
       request.clone({
         headers: request.headers.append('Accept-Language', language),

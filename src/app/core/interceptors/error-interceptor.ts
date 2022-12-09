@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -6,10 +5,11 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -55,6 +55,6 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
     }
 
-    return throwError(error);
+    return throwError(() => error);
   }
 }

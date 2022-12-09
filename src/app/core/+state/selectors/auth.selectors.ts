@@ -6,5 +6,3 @@ export const selectAuthFeatureState = createFeatureSelector<fromAuth.State>(
 );
 
 export const selectLoggedIn = createSelector(selectAuthFeatureState, state => state.loggedIn);
-
-export const selectProfile = createSelector(selectAuthFeatureState, state => state.profile);

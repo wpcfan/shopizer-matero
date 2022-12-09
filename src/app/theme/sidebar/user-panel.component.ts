@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as AuthActions from '@core/+state/actions';
-import * as fromAuth from '@core/+state/selectors/auth.selectors';
+import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Profile } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
         <button mat-icon-button routerLink="/profile/overview">
           <mat-icon class="icon-18">account_circle</mat-icon>
         </button>
-        <button mat-icon-button routerLink="/profile/settings">
+        <button mat-icon-button routerLink="/profile/setting">
           <mat-icon class="icon-18">settings</mat-icon>
         </button>
         <button mat-icon-button (click)="logout()">
@@ -35,7 +35,7 @@ export class UserPanelComponent implements OnInit {
   profile$: Observable<Profile | undefined>;
 
   constructor(private store: Store) {
-    this.profile$ = this.store.select(fromAuth.selectProfile);
+    this.profile$ = this.store.select(fromProfile.selectProfile);
   }
 
   ngOnInit(): void {

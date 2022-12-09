@@ -62,23 +62,6 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  loadProfile$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.loadProfile),
-      exhaustMap(() =>
-        this.authService.user().pipe(
-          map(data => AuthActions.loadProfileSuccess({ data })),
-          catchError(error => {
-            if (error instanceof HttpErrorResponse) {
-              return of(AuthActions.loadProfileFailure({ error: error.error.message }));
-            }
-            return of(AuthActions.loadProfileFailure({ error: 'Unknown Error' }));
-          })
-        )
-      )
-    );
-  });
-
   register$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.register),

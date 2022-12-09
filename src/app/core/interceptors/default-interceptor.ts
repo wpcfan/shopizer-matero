@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpHandler,
@@ -6,6 +5,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         if (body.msg) {
           this.toast.error(body.msg);
         }
-        return throwError([]);
+        return throwError(() => []);
       }
     }
     // Pass down event if everything is OK

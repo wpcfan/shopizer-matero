@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { LoginRes, Profile, Signup } from '@models';
+import { LoginRes, Signup } from '@models';
 import { BehaviorSubject, iif, merge, Observable, of } from 'rxjs';
 import { map, share, switchMap, tap } from 'rxjs/operators';
 import { isEmptyObject } from './helpers';
@@ -63,10 +63,6 @@ export class AuthService {
       tap(() => this.tokenService.clear()),
       map(() => !this.check())
     );
-  }
-
-  user() {
-    return this.http.get<Profile>(`${this.url}/v1/private/user/profile`);
   }
 
   menu() {

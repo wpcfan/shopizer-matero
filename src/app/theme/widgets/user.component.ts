@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as AuthActions from '@core/+state/actions';
-import * as fromAuth from '@core/+state/selectors/auth.selectors';
+import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Profile } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
           <mat-icon>account_circle</mat-icon>
           <span>{{ 'user.profile' | translate }}</span>
         </button>
-        <button routerLink="/profile/settings" mat-menu-item>
+        <button routerLink="/profile/setting" mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>{{ 'user.settings' | translate }}</span>
         </button>
@@ -38,7 +38,7 @@ export class UserComponent {
   profile$: Observable<Profile | undefined>;
 
   constructor(private store: Store) {
-    this.profile$ = this.store.select(fromAuth.selectProfile);
+    this.profile$ = this.store.select(fromProfile.selectProfile);
   }
 
   logout() {

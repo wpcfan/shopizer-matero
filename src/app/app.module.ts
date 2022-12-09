@@ -23,13 +23,12 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 }
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthEffects, SettingEffects } from '@core/+state/effects';
+import { AuthEffects, ProfileEffects, SettingEffects } from '@core/+state/effects';
 import { metaReducers, reducers } from '@core/+state/reducers';
-import { LoginService } from '@core/authentication/login.service';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { FakeLoginService } from './fake-login.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,11 +52,11 @@ import { FakeLoginService } from './fake-login.service';
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([SettingEffects, AuthEffects]),
+    EffectsModule.forRoot([SettingEffects, AuthEffects, ProfileEffects]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
-    { provide: LoginService, useClass: FakeLoginService }, // <= Remove it in the real APP
     httpInterceptorProviders,
     appInitializerProviders,
   ],

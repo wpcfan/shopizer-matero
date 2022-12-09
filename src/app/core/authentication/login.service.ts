@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Token, User } from './interface';
+import { Injectable } from '@angular/core';
 import { Menu } from '@core';
 import { map } from 'rxjs/operators';
+import { Token, User } from './interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +27,8 @@ export class LoginService {
   }
 
   menu() {
-    return this.http.get<{ menu: Menu[] }>('/me/menu').pipe(map(res => res.menu));
+    return this.http
+      .get<{ menu: Menu[] }>('assets/data/menu.json?_t=' + Date.now())
+      .pipe(map(res => res.menu));
   }
 }

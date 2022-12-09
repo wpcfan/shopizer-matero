@@ -35,7 +35,45 @@ export interface Menu {
   providedIn: 'root',
 })
 export class MenuService {
-  private menu$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
+  private menu$: BehaviorSubject<Menu[]>;
+
+  constructor() {
+    this.menu$ = new BehaviorSubject<Menu[]>([
+      {
+        route: 'dashboard',
+        name: 'dashboard',
+        type: 'link',
+        icon: 'dashboard',
+        badge: {
+          color: 'red-500',
+          value: '5',
+        },
+      },
+      {
+        route: '/',
+        name: 'sessions',
+        type: 'sub',
+        icon: 'question_answer',
+        children: [
+          {
+            route: '403',
+            name: '403',
+            type: 'link',
+          },
+          {
+            route: '404',
+            name: '404',
+            type: 'link',
+          },
+          {
+            route: '500',
+            name: '500',
+            type: 'link',
+          },
+        ],
+      },
+    ]);
+  }
 
   /** Get all the menu data. */
   getAll(): Observable<Menu[]> {

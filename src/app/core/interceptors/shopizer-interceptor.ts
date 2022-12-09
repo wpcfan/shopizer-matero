@@ -15,7 +15,7 @@ export class ShopizerInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const rememberMe = !!localStorage.getItem('rememberMe');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
     if (
       req.url.includes(environment.apiUrl) &&
       !req.url.includes('login') &&
