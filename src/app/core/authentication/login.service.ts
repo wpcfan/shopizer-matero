@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Menu } from '@core';
-import { map } from 'rxjs/operators';
 import { Token, User } from './interface';
 
 @Injectable({
@@ -24,11 +22,5 @@ export class LoginService {
 
   me() {
     return this.http.get<User>('/me');
-  }
-
-  menu() {
-    return this.http
-      .get<{ menu: Menu[] }>('assets/data/menu.json?_t=' + Date.now())
-      .pipe(map(res => res.menu));
   }
 }
