@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-branding',
@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
       <span class="matero-branding-name">MATERO</span>
     </a>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrandingComponent {}

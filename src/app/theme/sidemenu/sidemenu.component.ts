@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import { Store } from '@ngrx/store';
 import { buildRoute as route } from '@shared/utils/menu';
@@ -7,6 +7,7 @@ import { buildRoute as route } from '@shared/utils/menu';
   templateUrl: './sidemenu.component.html',
   styleUrls: ['./sidemenu.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidemenuComponent {
   // Note: Ripple effect make page flashing on mobile

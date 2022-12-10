@@ -1,4 +1,10 @@
-import { Component, HostBinding, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  OnDestroy,
+  ViewEncapsulation,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterLinkActive } from '@angular/router';
 import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import { Menu, TopmenuState } from '@models';
@@ -10,6 +16,7 @@ import { filter, Subscription } from 'rxjs';
   templateUrl: './topmenu.component.html',
   styleUrls: ['./topmenu.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopmenuComponent implements OnDestroy {
   @HostBinding('class') class = 'matero-topmenu';

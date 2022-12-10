@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import * as SettingActions from '@core/+state/actions/setting.actions';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
     </mat-menu>
   `,
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TranslateComponent {
   langs = {

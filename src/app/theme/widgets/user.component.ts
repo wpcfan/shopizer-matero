@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Profile } from '@models';
@@ -33,6 +33,7 @@ import { Observable } from 'rxjs';
       </mat-menu>
     </ng-container>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent {
   profile$: Observable<Profile | undefined>;

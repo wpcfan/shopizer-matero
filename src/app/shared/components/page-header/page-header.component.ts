@@ -1,5 +1,12 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Menu } from '@models';
 import { getMenuLevel } from '@shared';
@@ -9,6 +16,7 @@ import { getMenuLevel } from '@shared';
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageHeaderComponent implements OnInit {
   @HostBinding('class') class = 'matero-page-header';

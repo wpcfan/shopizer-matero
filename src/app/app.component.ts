@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { PreloaderService } from '@core';
 import * as fromRoot from '@core/+state/selectors/setting.selectors';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
       </div>
     </ng-container>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, AfterViewInit {
   theme$?: Observable<string>;
