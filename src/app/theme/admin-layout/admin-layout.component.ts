@@ -3,6 +3,7 @@ import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { DOCUMENT } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -35,9 +36,9 @@ const MONITOR_MEDIAQUERY = 'screen and (min-width: 960px)';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminLayoutComponent implements OnDestroy {
-  @ViewChild('sidenav', { static: true }) sidenav!: MatSidenav;
-  @ViewChild('content', { static: true }) content!: MatSidenavContent;
+export class AdminLayoutComponent implements OnDestroy, AfterViewInit {
+  @ViewChild('sidenav', { static: false }) sidenav!: MatSidenav;
+  @ViewChild('content', { static: false }) content!: MatSidenavContent;
 
   options?: State;
   options$: Observable<State>;
@@ -106,7 +107,9 @@ export class AdminLayoutComponent implements OnDestroy {
 
         this.isContentWidthFixed = state.breakpoints[MONITOR_MEDIAQUERY];
       });
+  }
 
+  ngAfterViewInit() {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(e => {
       if (this.isOver) {
         this.sidenav.close();

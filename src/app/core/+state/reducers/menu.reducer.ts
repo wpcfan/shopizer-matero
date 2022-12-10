@@ -22,24 +22,19 @@ export const initialState: State = {
       },
     },
     {
-      route: '/',
-      name: 'sessions',
+      route: '/users',
+      name: 'users',
       type: 'sub',
-      icon: 'question_answer',
+      icon: 'group',
       children: [
         {
-          route: '403',
-          name: '403',
+          route: 'list',
+          name: 'User list',
           type: 'link',
         },
         {
-          route: '404',
-          name: '404',
-          type: 'link',
-        },
-        {
-          route: '500',
-          name: '500',
+          route: 'create',
+          name: 'Create user',
           type: 'link',
         },
       ],

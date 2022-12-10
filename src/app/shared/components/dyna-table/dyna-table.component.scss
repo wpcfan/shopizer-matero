@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+  white-space: nowrap;
+}
+
+th .mat-icon.mat-default {
+  opacity: 0.54;
+}
+
+th .mat-icon.mat-default:hover {
+  opacity: 1;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+// TODO: this is a workaroud for button focus after dialog closed
+button.mat-icon-button {
+  &.cdk-program-focused {
+    ::ng-deep .mat-button-focus-overlay {
+      opacity: 0; // hide overlay
+    }
+  }
+}
+
+.mat-cell {
+  padding: 8px 8px 8px 8px;
+}
+
+.table-container {
+  margin: auto;
+  overflow: auto;
+}

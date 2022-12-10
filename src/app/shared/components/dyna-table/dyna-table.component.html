@@ -1,0 +1,151 @@
+<div
+  class="mat-elevation-z8 table-container"
+  [ngStyle]="{ height: tableHeight, width: tableWidth }"
+>
+  <table
+    id="ngx-data-table"
+    mat-table
+    matSort
+    [dataSource]="data"
+    (matSortChange)="handleSortChange($event)"
+  >
+    <!--Select Column-->
+    <ng-container matColumnDef="ngx-select" *ngIf="selectable">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          (change)="$event ? masterToggle() : undefined"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          [checked]="selection.isSelected(row)"
+          (click)="$event.stopPropagation()"
+          (change)="handleSelectChange($event, row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <!--Render rows defined in config-->
+    <ng-container
+      *ngFor="let column of columns; let i = index"
+      matColumnDef="{{ column.name }}"
+      [sticky]="!!column.sticky && column.sticky === 'start'"
+      [stickyEnd]="!!column.sticky && column.sticky === 'end'"
+    >
+      <th
+        *matHeaderCellDef
+        mat-header-cell
+        matSort
+        [matSortDisabled]="!column.sortable"
+        (matSortChange)="handleSortChange($event)"
+      >
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          *ngIf="!column.headerTpl; else customHeader"
+        >
+          <span
+            *ngIf="column.sortable; else nosort"
+            mat-sort-header
+            arrowPosition="after"
+            [disabled]="!column.name"
+            >{{ column.header || 'col' + i }}
+          </span>
+          <ng-template #nosort>
+            <span>{{ column.header }} </span>
+          </ng-template>
+          <button
+            #filterBtn
+            *ngIf="column.filterable && canFilter(column)"
+            mat-icon-button
+            [class.mat-sort-header-button]="column.sortable"
+            (click)="filter(column); $event.stopPropagation()"
+          >
+            <mat-icon color="{{ isFiltered(column) ? 'primary' : 'secondary' }}"
+              >filter_list</mat-icon
+            >
+          </button>
+        </div>
+        <ng-template #customHeader>
+          <ng-container *ngTemplateOutlet="column.headerTpl!"></ng-container>
+        </ng-template>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <ngx-table-cell
+          [row]="row"
+          [column]="column"
+          *ngIf="!column.cellTpl; else customCell"
+        ></ngx-table-cell>
+        <ng-template #customCell>
+          <ng-container
+            *ngTemplateOutlet="column.cellTpl!; context: { $implicit: row }"
+          ></ng-container>
+        </ng-template>
+      </td>
+    </ng-container>
+    <!--render default action column-->
+    <ng-container matColumnDef="ngx-action" *ngIf="showAction">
+      <th mat-header-cell *matHeaderCellDef>
+        <button
+          [disabled]="!showAdd"
+          type="button"
+          (click)="handleRowActionAdd($event)"
+          color="primary"
+          mat-icon-button
+          *ngxPermissionsOnly="permsToAdd"
+        >
+          <mat-icon>add_box</mat-icon>
+        </button>
+        <button type="button" mat-icon-button [matMenuTriggerFor]="moreMenu" *ngIf="showMore">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #moreMenu="matMenu">
+          <ng-container *ngTemplateOutlet="moreMenuTpl!"></ng-container>
+        </mat-menu>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          [disabled]="!showEdit"
+          type="button"
+          (click)="handleRowActionEdit(row, $event)"
+          color="accent"
+          mat-icon-button
+          *ngxPermissionsOnly="permsToEdit"
+        >
+          <mat-icon>assignment</mat-icon>
+        </button>
+        <button
+          [disabled]="!showDelete"
+          type="button"
+          (click)="handleRowActionDelete(row, $event)"
+          color="warn"
+          mat-icon-button
+          *ngxPermissionsOnly="permsToDelete"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: [stickyHeader]"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [ngxDetailRow]="row"
+      [ngxDetailRowTpl]="expandTpl!"
+      (click)="handleRowClick(row, $event)"
+    ></tr>
+  </table>
+  <mat-paginator
+    *ngIf="showPaginator"
+    #paginator
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageIndex]="pageIndex"
+    [length]="total"
+    (page)="emitPage($event)"
+  >
+  </mat-paginator>
+</div>
