@@ -25,6 +25,21 @@ export class SettingEffects {
     );
   });
 
+  update$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SettingActions.updateSettings),
+      map(({ settings }) => {
+        const old = this.local.get('settings');
+        if (old.theme) {
+          this.overlay.getContainerElement().classList.remove('theme-' + old.theme);
+        }
+        this.local.set('settings', settings);
+        this.overlay.getContainerElement().classList.add('theme-' + settings.theme);
+        return SettingActions.updateSettingsSuccess({ settings });
+      })
+    );
+  });
+
   navPos$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SettingActions.setNavPos),

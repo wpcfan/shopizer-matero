@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -15,6 +16,7 @@ import { filter, Subscription } from 'rxjs';
 @Component({
   selector: 'app-topmenu-panel',
   templateUrl: './topmenu-panel.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopmenuPanelComponent implements OnInit, OnDestroy {
   @ViewChild(MatMenu, { static: true }) menuPanel!: MatMenu;

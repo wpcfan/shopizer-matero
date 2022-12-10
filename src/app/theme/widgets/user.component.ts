@@ -39,6 +39,7 @@ export class UserComponent {
   profile$: Observable<Profile | undefined>;
 
   constructor(private store: Store) {
+    this.store.dispatch(AuthActions.loadProfile());
     this.profile$ = this.store.select(fromProfile.selectProfile);
   }
 

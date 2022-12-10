@@ -19,6 +19,8 @@
           [showToggle]="!isOver"
           (toggleCollapsed)="toggleCollapsed()"
           [toggleChecked]="!!options?.sidenavCollapsed"
+          [showHeader]="!!options?.showHeader"
+          [showUser]="!!options?.showUserPanel"
         >
         </app-sidebar>
       </mat-sidenav>
