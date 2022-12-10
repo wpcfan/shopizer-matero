@@ -142,6 +142,36 @@
     "es": "Español",
     "zh": "中文"
   },
+  "setting": {
+    "title": "Setting",
+    "subtitle": "preferences",
+    "navPos": {
+      "title": "Navigation bar position",
+      "side": "side",
+      "top": "top"
+    },
+    "theme": {
+      "title": "Theme",
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "dir": {
+      "title": "Text direction",
+      "ltr": "Left to right",
+      "rtl": "Right to left"
+    },
+    "headerPos": {
+      "title": "Header position",
+      "fixed": "Fixed",
+      "static": "Static",
+      "above": "Above"
+    },
+    "showHeader": "Show header?",
+    "showUserPanel": "Show user panel?",
+    "sidenavOpened": "Side navigation bar opened?",
+    "sidenavCollapsed": "Side navigation menus collapsed?",
+    "update": "Update"
+  },
   "paginator": {
     "items_per_page_label": "Items per page:",
     "next_page_label": "Next page",

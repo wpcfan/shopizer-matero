@@ -30,6 +30,7 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   on(SettingActions.initSettings, (state, { settings }): State => ({ ...state, ...settings })),
+  on(SettingActions.updateSettings, (state, { settings }): State => ({ ...state, ...settings })),
   on(SettingActions.setNavPosSuccess, (state, { navPos }): State => ({ ...state, navPos })),
   on(SettingActions.setThemeSuccess, (state, { theme }): State => ({ ...state, theme })),
   on(SettingActions.setDirSuccess, (state, { dir }): State => ({ ...state, dir })),

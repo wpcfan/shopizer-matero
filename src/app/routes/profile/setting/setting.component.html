@@ -1,9 +1,89 @@
 <ng-container *ngIf="menus$ | async as menus">
   <page-header
-    title="Setting"
-    subtitle="personal preferences"
+    [title]="'setting.title' | translate"
+    [subtitle]="'setting.subtitle' | translate"
     [hideBreadcrumb]="false"
     [menus]="menus"
   ></page-header>
 </ng-container>
-<p>setting works!</p>
+<div class="w-full h-full" fxLayout="row wrap">
+  <mat-card
+    class="mat-elevation-z4 m-auto"
+    style="max-width: 380px"
+    *ngIf="setting$ | async as setting"
+  >
+    <form class="form-field-full" #form="ngForm">
+      <div>
+        <mat-label>{{ 'setting.navPos.title' | translate }}</mat-label>
+        <mat-radio-group name="navPos" [(ngModel)]="model.navPos">
+          <mat-radio-button value="side">{{ 'setting.navPos.side' | translate }}</mat-radio-button>
+          <mat-radio-button value="top">{{ 'setting.navPos.top' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <mat-label>{{ 'setting.theme.title' | translate }}</mat-label>
+        <mat-radio-group name="theme" [(ngModel)]="model.theme">
+          <mat-radio-button value="light">{{ 'setting.theme.light' | translate }}</mat-radio-button>
+          <mat-radio-button value="dark">{{ 'setting.theme.dark' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <mat-label>{{ 'setting.dir.title' | translate }}</mat-label>
+        <mat-radio-group name="dir" [(ngModel)]="model.dir">
+          <mat-radio-button value="ltr">{{ 'setting.dir.ltr' | translate }}</mat-radio-button>
+          <mat-radio-button value="rtl">{{ 'setting.dir.rtl' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <mat-label>{{ 'setting.headerPos.title' | translate }}</mat-label>
+        <mat-radio-group name="headerPos" [(ngModel)]="model.headerPos">
+          <mat-radio-button value="fixed">{{
+            'setting.headerPos.fixed' | translate
+          }}</mat-radio-button>
+          <mat-radio-button value="static">{{
+            'setting.headerPos.static' | translate
+          }}</mat-radio-button>
+          <mat-radio-button value="above">{{
+            'setting.headerPos.above' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <mat-slide-toggle name="showHeader" [(ngModel)]="model.showHeader">{{
+          'setting.showHeader' | translate
+        }}</mat-slide-toggle>
+      </div>
+
+      <div>
+        <mat-slide-toggle name="showUserPanel" [(ngModel)]="model.showUserPanel">{{
+          'setting.showUserPanel' | translate
+        }}</mat-slide-toggle>
+      </div>
+
+      <div>
+        <mat-slide-toggle name="sidenavOpened" [(ngModel)]="model.sidenavOpened">{{
+          'setting.sidenavOpened' | translate
+        }}</mat-slide-toggle>
+      </div>
+
+      <div>
+        <mat-slide-toggle name="sidenavCollapsed" [(ngModel)]="model.sidenavCollapsed">{{
+          'setting.sidenavCollapsed' | translate
+        }}</mat-slide-toggle>
+      </div>
+
+      <button
+        class="w-full"
+        mat-raised-button
+        color="primary"
+        (click)="form.form.valid ? update() : null"
+      >
+        {{ 'setting.update' | translate }}
+      </button>
+    </form>
+  </mat-card>
+</div>

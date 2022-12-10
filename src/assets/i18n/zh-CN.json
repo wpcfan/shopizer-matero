@@ -142,6 +142,36 @@
     "es": "Español",
     "zh": "中文"
   },
+  "setting": {
+    "title": "设置",
+    "subtitle": "偏好设置",
+    "navPos": {
+      "title": "导航栏位置",
+      "side": "侧边栏",
+      "top": "顶部"
+    },
+    "theme": {
+      "title": "主题",
+      "dark": "暗色",
+      "light": "亮色"
+    },
+    "dir": {
+      "title": "文字方向",
+      "ltr": "从左到右",
+      "rtl": "从右到左"
+    },
+    "headerPos": {
+      "title": "头部位置",
+      "fixed": "固定",
+      "static": "静态",
+      "above": "上方"
+    },
+    "showHeader": "显示头部?",
+    "showUserPanel": "显示用户面板?",
+    "sidenavOpened": "侧边栏打开?",
+    "sidenavCollapsed": "侧边栏菜单折叠?",
+    "update": "更新偏好设置"
+  },
   "paginator": {
     "items_per_page_label": "每页共：",
     "next_page_label": "下一页",

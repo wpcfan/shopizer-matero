@@ -68,6 +68,10 @@ export const initSettings = createAction(
   '[Setting] Init settings',
   props<{ settings: Partial<State> }>()
 );
+export const updateSettings = createAction(
+  '[Setting] Init settings',
+  props<{ settings: Partial<State> }>()
+);
 export const setSidenavWhenLayoutChanges = createAction(
   '[Layout Changes] Set sidenav when layout changes',
   props<{ sidenavOpened: boolean; sidenavCollapsed: boolean }>()

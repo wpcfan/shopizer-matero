@@ -14,14 +14,14 @@ import {
 } from '@angular/core';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { filter, Observable, Subscription, tap } from 'rxjs';
 
-import { AppSettings, SettingsService } from '@core';
 import { Store } from '@ngrx/store';
 import { AppDirectionality } from '@shared';
 
 import * as SettingActions from '@core/+state/actions/setting.actions';
 import { State } from '@core/+state/reducers/setting.reducer';
+import * as fromSetting from '@core/+state/selectors/setting.selectors';
 
 const MOBILE_MEDIAQUERY = 'screen and (max-width: 599px)';
 const TABLET_MEDIAQUERY = 'screen and (min-width: 600px) and (max-width: 959px)';
@@ -38,6 +38,7 @@ export class AdminLayoutComponent implements OnDestroy {
   @ViewChild('content', { static: true }) content!: MatSidenavContent;
 
   options?: State;
+  options$: Observable<State>;
 
   private layoutChangesSubscription = Subscription.EMPTY;
 
@@ -74,21 +75,19 @@ export class AdminLayoutComponent implements OnDestroy {
     private overlay: OverlayContainer,
     private element: ElementRef,
     private store: Store,
-    private settings: SettingsService,
     @Optional() @Inject(DOCUMENT) private document: Document,
     @Inject(Directionality) public dir: AppDirectionality
   ) {
-    this.settings.getOptions().subscribe(options => {
-      this.options = options;
-      this.dir.value = this.options.dir;
-      this.document.body.dir = this.dir.value;
-      if (this.options.theme === 'auto') {
-        this.setAutoTheme();
-      }
-
-      // Initialize project theme with options
-      this.receiveOptions(this.options);
-    });
+    this.options$ = this.store.select(fromSetting.selectSettingState).pipe(
+      tap(options => {
+        this.options = options;
+        this.dir.value = this.options.dir;
+        this.document.body.dir = this.dir.value;
+        if (this.options.theme === 'auto') {
+          this.setAutoTheme();
+        }
+      })
+    );
 
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_MEDIAQUERY, TABLET_MEDIAQUERY, MONITOR_MEDIAQUERY])
@@ -151,13 +150,13 @@ export class AdminLayoutComponent implements OnDestroy {
 
   // Demo purposes only
 
-  receiveOptions(options: AppSettings): void {
+  receiveOptions(options: State): void {
     this.options = options;
     this.toggleDarkTheme(options);
     this.toggleDirection(options);
   }
 
-  toggleDarkTheme(options: AppSettings) {
+  toggleDarkTheme(options: State) {
     if (options.theme === 'dark') {
       this.element.nativeElement.classList.add('theme-dark');
       this.overlay.getContainerElement().classList.add('theme-dark');
@@ -167,7 +166,7 @@ export class AdminLayoutComponent implements OnDestroy {
     }
   }
 
-  toggleDirection(options: AppSettings) {
+  toggleDirection(options: State) {
     this.dir.value = options.dir;
     this.document.body.dir = this.dir.value;
   }

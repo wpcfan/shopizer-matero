@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Group, Language, Menu, Profile } from '@models';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import * as fromProfile from '@core/+state/selectors/profile.selectors';
   selector: 'app-profile-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileOverviewComponent {
   form!: FormGroup;
