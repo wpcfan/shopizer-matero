@@ -22,6 +22,15 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
+  on(
+    AuthActions.initAuth,
+    (state, { rememberMe, token, loggedIn }): State => ({
+      ...state,
+      rememberMe,
+      token,
+      loggedIn,
+    })
+  ),
   on(AuthActions.login, (state, { rememberMe }): State => ({ ...state, rememberMe })),
   on(
     AuthActions.loginSuccess,
