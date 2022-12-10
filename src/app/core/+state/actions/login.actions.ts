@@ -10,9 +10,9 @@ export const loginSuccess = createAction('[Login Api] Login success', props<{ da
 
 export const loginFailure = createAction('[Login Api] Login failure', props<{ error: string }>());
 
-export const initRememberMe = createAction(
+export const initAuth = createAction(
   '[Auth] init auth',
-  props<{ rememberMe: boolean; token?: string }>()
+  props<{ rememberMe: boolean; token?: string; loggedIn: boolean }>()
 );
 
 export const logout = createAction('[Auth] logout');

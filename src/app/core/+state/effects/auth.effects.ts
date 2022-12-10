@@ -16,10 +16,18 @@ export class AuthEffects {
         const token = rememberMe ? localStorage.getItem('token') : sessionStorage.getItem('token');
         if (rememberMe) {
           localStorage.setItem('rememberMe', 'true');
-          return AuthActions.initRememberMe({ rememberMe: true, token: token || undefined });
+          return AuthActions.initAuth({
+            rememberMe: true,
+            token: token || undefined,
+            loggedIn: !!token,
+          });
         } else {
           localStorage.setItem('rememberMe', 'false');
-          return AuthActions.initRememberMe({ rememberMe: false, token: token || undefined });
+          return AuthActions.initAuth({
+            rememberMe: false,
+            token: token || undefined,
+            loggedIn: !!token,
+          });
         }
       })
     );

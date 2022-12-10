@@ -14,8 +14,7 @@ import {
 } from '@angular/core';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, Subscription } from 'rxjs';
 
 import { AppSettings, SettingsService } from '@core';
 import { Store } from '@ngrx/store';

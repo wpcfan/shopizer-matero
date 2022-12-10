@@ -8,8 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, Observable, throwError } from 'rxjs';
 
 export enum STATUS {
   UNAUTHORIZED = 401,

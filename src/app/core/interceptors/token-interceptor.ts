@@ -1,4 +1,3 @@
-import { Inject, Injectable, Optional } from '@angular/core';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -6,10 +5,10 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { TokenService } from '@core/authentication';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { BASE_URL } from './base-url-interceptor';
 
 @Injectable()

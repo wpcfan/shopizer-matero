@@ -4,8 +4,7 @@ import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import { Menu, TopmenuState } from '@models';
 import { Store } from '@ngrx/store';
 import { buildRoute as route } from '@shared/utils/menu';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, Subscription } from 'rxjs';
 @Component({
   selector: 'app-topmenu',
   templateUrl: './topmenu.component.html',

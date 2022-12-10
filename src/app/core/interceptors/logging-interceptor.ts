@@ -1,7 +1,7 @@
+import { HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
-import { finalize, tap } from 'rxjs/operators';
 import { MessageService } from '@shared';
+import { finalize, tap } from 'rxjs';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {

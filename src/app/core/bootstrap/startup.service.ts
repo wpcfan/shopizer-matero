@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '@core/authentication';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
-import { tap } from 'rxjs/operators';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

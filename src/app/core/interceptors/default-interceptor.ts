@@ -6,8 +6,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, Observable, of, throwError } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
 
