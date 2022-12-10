@@ -168,7 +168,7 @@
     },
     "showHeader": "Show header?",
     "showUserPanel": "Show user panel?",
-    "sidenavOpened": "Side navigation bar opened?",
+    "sidenavOpened": "Side navigation bar displayed?",
     "sidenavCollapsed": "Side navigation menus collapsed?",
     "update": "Update"
   },

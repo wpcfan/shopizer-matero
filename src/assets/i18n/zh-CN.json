@@ -168,7 +168,7 @@
     },
     "showHeader": "显示头部?",
     "showUserPanel": "显示用户面板?",
-    "sidenavOpened": "侧边栏打开?",
+    "sidenavOpened": "始终显示侧边栏?",
     "sidenavCollapsed": "侧边栏菜单折叠?",
     "update": "更新偏好设置"
   },
