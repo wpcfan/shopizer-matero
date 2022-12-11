@@ -56,13 +56,13 @@ $amber-theme: mat.define-light-theme((
 
 .theme-dark {
   // This mixin only generates the color styles now.
-  @include app-theme.theme($dark-theme);
+  @include app-theme.color($dark-theme);
 }
 
 .theme-amber {
-  @include app-theme.theme($amber-theme);
+  @include app-theme.color($amber-theme);
 }
 
 .theme-green {
-  @include app-theme.theme($green-theme);
+  @include app-theme.color($green-theme);
 }

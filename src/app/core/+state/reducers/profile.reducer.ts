@@ -8,16 +8,20 @@ export interface State {
   profile?: Profile;
   groups: Group[];
   languages: Language[];
+  stores: string[];
   error?: string;
 }
 
 export const initialState: State = {
   groups: [],
   languages: [],
+  stores: [],
 };
 
 export const reducer = createReducer(
   initialState,
+  on(ProfileActions.loadStoresSuccess, (state, { data }): State => ({ ...state, stores: data })),
+  on(ProfileActions.loadStoresFailure, (state, { error }): State => ({ ...state, error })),
   on(ProfileActions.loadProfileSuccess, (state, { data }): State => ({ ...state, profile: data })),
   on(ProfileActions.loadProfileFailure, (state, { error }): State => ({ ...state, error })),
   on(ProfileActions.loadGroupsSuccess, (state, { data }): State => ({ ...state, groups: data })),

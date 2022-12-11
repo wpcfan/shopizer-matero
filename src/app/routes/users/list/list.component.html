@@ -2,14 +2,14 @@
   <page-header title="User List" [hideBreadcrumb]="false" [menus]="menus"></page-header>
 </ng-container>
 
-<ng-container *ngIf="data$ | async as data">
+<ng-container *ngIf="state$ | async as state">
   <ngx-dyna-table
     #table
-    [data]="data"
+    [data]="state.users"
     [columns]="columns"
-    [pageIndex]="pageIndex"
+    [pageIndex]="state.page"
     [pageSize]="pageSize"
-    [total]="total"
+    [total]="state.total"
     [selectable]="selectable"
     [sortable]="sortable"
     [showEdit]="showEdit"

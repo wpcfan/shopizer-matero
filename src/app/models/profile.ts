@@ -12,6 +12,8 @@ export interface Profile {
   emailAddress: string;
   userName: string;
   merchant: string;
+  password?: string;
+  repeatPassword?: string;
   active: boolean;
   lastAccess?: Date;
   loginTime?: Date;

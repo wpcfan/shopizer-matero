@@ -5,9 +5,12 @@ import { Observable } from 'rxjs';
 
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
+import { TextFilter } from '@shared/components/dyna-table/table-filter';
 import * as UserActions from '../+state/actions/user.actions';
+import { State } from '../+state/reducers/user.reducer';
 import * as fromUser from '../+state/selectors/user.selectors';
 
 @Component({
@@ -17,7 +20,7 @@ import * as fromUser from '../+state/selectors/user.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListComponent extends BaseCrudTable<Profile> {
-  data$: Observable<Profile[]> = this.store.select(fromUser.selectUsers);
+  state$: Observable<State> = this.store.select(fromUser.selectUserState);
   public columns: ColumnConfig[] = [
     {
       name: 'id',
@@ -35,11 +38,11 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
       filterable: false,
     },
     {
-      name: 'email',
+      name: 'emailAddress',
       header: 'Email',
       cell: (e: Profile) => e.emailAddress,
       type: 'string',
-      filterable: false,
+      filterable: true,
     },
     {
       name: 'active',
@@ -50,30 +53,39 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
     },
   ];
   public handlePageChange(ev: PageEvent): void {
-    throw new Error('Method not implemented.');
+    this.store.dispatch(UserActions.loadUsers({ page: ev.pageIndex }));
   }
-  public handleSortChange(ev: Record<string, Sort>): void {
-    throw new Error('Method not implemented.');
-  }
-  public handleDelete(row: Profile): void {
-    throw new Error('Method not implemented.');
-  }
+  public handleSortChange(ev: Record<string, Sort>): void {}
+  public handleDelete(row: Profile): void {}
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
-    throw new Error('Method not implemented.');
+    console.log(appliedFilters);
+    const params: Record<string, string> = {};
+    for (const key in appliedFilters) {
+      const element = appliedFilters[key];
+      if (element) {
+        if (element instanceof TextFilter) {
+          params[key] = (element as TextFilter).value;
+        }
+      }
+    }
+
+    if (Object.keys(params).length > 0) {
+      this.store.dispatch(UserActions.loadUsers({ page: 0, params }));
+    } else {
+      this.store.dispatch(UserActions.loadUsers({ page: 0 }));
+    }
   }
   public handleItem(row: Profile): void {
-    throw new Error('Method not implemented.');
+    this.handleEdit(row);
   }
   public handleEdit(row: Profile): void {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['users', row.id]);
   }
-  public handleAdd(): void {
-    throw new Error('Method not implemented.');
-  }
+  public handleAdd(): void {}
   menus$: Observable<Menu[]>;
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
     super();
     this.menus$ = this.store.select(fromMenu.selectMenus);
-    this.store.dispatch(UserActions.loadUsers());
+    this.store.dispatch(UserActions.loadUsers({ page: 0 }));
   }
 }

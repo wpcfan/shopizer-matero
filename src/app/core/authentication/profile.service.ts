@@ -25,6 +25,10 @@ export class ProfileService {
     return this.http.get<Group[]>(`${this.url}/v1/sec/private/groups`);
   }
 
+  stores() {
+    return this.http.get<string[]>(`${this.url}/v1/sec/private/stores/names`);
+  }
+
   update(param: Partial<Profile>, id: number, merchant: string) {
     return this.http.put<Profile>(`${this.url}/v1/private/user/${id}`, param, {
       params: { store: merchant },

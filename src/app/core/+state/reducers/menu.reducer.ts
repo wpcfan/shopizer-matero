@@ -39,6 +39,60 @@ export const initialState: State = {
         },
       ],
     },
+    {
+      route: '/stores',
+      name: 'stores',
+      type: 'sub',
+      icon: 'storefront',
+      children: [
+        {
+          route: 'list',
+          name: 'Store list',
+          type: 'link',
+        },
+        {
+          route: 'create',
+          name: 'Create store',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      route: '/categories',
+      name: 'categories',
+      type: 'sub',
+      icon: 'category',
+      children: [
+        {
+          route: 'list',
+          name: 'Category list',
+          type: 'link',
+        },
+        {
+          route: 'create',
+          name: 'Create category',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      route: '/products',
+      name: 'products',
+      type: 'sub',
+      icon: 'inventory',
+      children: [
+        {
+          route: 'list',
+          name: 'Product list',
+          type: 'link',
+        },
+        {
+          route: 'create',
+          name: 'Create product',
+          type: 'link',
+        },
+      ],
+    },
   ],
 };
 

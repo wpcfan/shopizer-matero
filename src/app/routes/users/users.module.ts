@@ -8,8 +8,9 @@ import { UserService } from './+state/service/user.service';
 import { UsersCreateComponent } from './create/create.component';
 import { UsersListComponent } from './list/list.component';
 import { UsersRoutingModule } from './users-routing.module';
+import { UsersUpdateComponent } from './update/update.component';
 
-const COMPONENTS: any[] = [UsersListComponent, UsersCreateComponent];
+const COMPONENTS: any[] = [UsersListComponent, UsersCreateComponent, UsersUpdateComponent];
 const COMPONENTS_DYNAMIC: any[] = [];
 
 @NgModule({

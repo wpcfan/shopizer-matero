@@ -15,10 +15,10 @@ export abstract class BaseCrudTable<T extends Entity> {
   public permsToAdd: string[] = [];
   public showEdit = true;
   public permsToEdit: string[] = [];
-  public showDelete = true;
+  public showDelete = false;
   public permsToDelete: string[] = [];
-  public showAdd = true;
-  public showMore = true;
+  public showAdd = false;
+  public showMore = false;
   public showExportExcel = false;
   public multiSortable = false;
   public stickyHeader = true;

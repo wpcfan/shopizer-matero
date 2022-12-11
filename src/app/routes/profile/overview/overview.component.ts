@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Group, Language, Menu, Profile } from '@models';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import * as ProfileActions from '@core/+state/actions/profile.actions';
 import * as fromMenu from '@core/+state/selectors/menu.selectors';
@@ -15,8 +14,6 @@ import * as fromProfile from '@core/+state/selectors/profile.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileOverviewComponent {
-  form!: FormGroup;
-  sub = new Subscription();
   groups$: Observable<Group[]>;
   languages$: Observable<Language[]>;
   menus$: Observable<Menu[]>;

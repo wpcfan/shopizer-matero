@@ -1,0 +1,25 @@
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { CustomerUpdateComponent } from './update.component';
+
+describe('CustomerUpdateComponent', () => {
+  let component: CustomerUpdateComponent;
+  let fixture: ComponentFixture<CustomerUpdateComponent>;
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ CustomerUpdateComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CustomerUpdateComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

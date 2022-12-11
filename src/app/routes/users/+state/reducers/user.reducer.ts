@@ -10,6 +10,7 @@ export interface State {
   page: number;
   loading: boolean;
   error?: string;
+  filters?: Record<string, string>;
 }
 
 export const initialState: State = {
@@ -34,7 +35,7 @@ export const reducer = createReducer(
       ...state,
       users: data.data,
       total: data.recordsTotal,
-      page: data.number,
+      page: Math.floor(data.recordsTotal / data.number),
       loading: false,
     })
   ),

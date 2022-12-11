@@ -26,3 +26,8 @@
 
   @include table-theme.theme($theme);
 }
+
+@mixin color($theme) {
+  @include mat.all-component-colors($theme);
+  @include mtx.all-component-colors($theme);
+}
