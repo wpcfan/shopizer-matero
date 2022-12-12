@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  registerForm = this.fb.nonNullable.group(
+  form = this.fb.nonNullable.group(
     {
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -52,11 +52,11 @@ export class RegisterComponent {
   register(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
-    if (this.registerForm.invalid) {
+    if (this.form.invalid) {
       return;
     }
     this.store.dispatch(
-      AuthActions.register({ signup: { ...this.registerForm.value, url: this.location.path() } })
+      AuthActions.register({ signup: { ...this.form.value, url: this.location.path() } })
     );
   }
 }

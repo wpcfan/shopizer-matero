@@ -172,6 +172,14 @@
     "sidenavCollapsed": "侧边栏菜单折叠?",
     "update": "更新偏好设置"
   },
+  "users": {
+    "create": {
+      "password": "密码",
+      "repeat_password": "重复密码",
+      "merchant": "商户",
+      "submit": "创建用户"
+    }
+  },
   "paginator": {
     "items_per_page_label": "每页共：",
     "next_page_label": "下一页",

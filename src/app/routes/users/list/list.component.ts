@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Menu, Profile } from '@models';
+import { Menu, Profile, SelectOption } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -7,8 +7,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import * as fromMenu from '@core/+state/selectors/menu.selectors';
+import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
-import { TextFilter } from '@shared/components/dyna-table/table-filter';
+import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
 import * as UserActions from '../+state/actions/user.actions';
 import { State } from '../+state/reducers/user.reducer';
 import * as fromUser from '../+state/selectors/user.selectors';
@@ -21,6 +22,7 @@ import * as fromUser from '../+state/selectors/user.selectors';
 })
 export class UsersListComponent extends BaseCrudTable<Profile> {
   state$: Observable<State> = this.store.select(fromUser.selectUserState);
+  store$: Observable<SelectOption[]> = this.store.select(fromProfile.selectStoreOptions);
   public columns: ColumnConfig[] = [
     {
       name: 'id',
@@ -45,6 +47,14 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
       filterable: true,
     },
     {
+      name: 'store',
+      header: 'Store',
+      cell: (e: Profile) => e.merchant,
+      type: 'select',
+      filterable: true,
+      filterOptions: this.store$,
+    },
+    {
       name: 'active',
       header: 'Active',
       cell: (e: Profile) => (e.active ? 'Yes' : 'No'),
@@ -65,6 +75,9 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
       if (element) {
         if (element instanceof TextFilter) {
           params[key] = (element as TextFilter).value;
+        }
+        if (element instanceof SelectFilter) {
+          params[key] = (element as SelectFilter).value;
         }
       }
     }

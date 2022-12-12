@@ -30,7 +30,9 @@ export class ProfileEffects {
       ofType(AuthActions.loadProfile),
       exhaustMap(() =>
         this.profileService.user().pipe(
-          map(data => AuthActions.loadProfileSuccess({ data })),
+          map(data => {
+            return AuthActions.loadProfileSuccess({ data });
+          }),
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
               return of(AuthActions.loadProfileFailure({ error: error.error.message }));
@@ -70,6 +72,23 @@ export class ProfileEffects {
               return of(AuthActions.loadLanguagesFailure({ error: error.error.message }));
             }
             return of(AuthActions.loadLanguagesFailure({ error: 'Unknown Error' }));
+          })
+        )
+      )
+    );
+  });
+
+  stores$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.loadStores),
+      exhaustMap(() =>
+        this.profileService.stores().pipe(
+          map(data => AuthActions.loadStoresSuccess({ data })),
+          catchError(error => {
+            if (error instanceof HttpErrorResponse) {
+              return of(AuthActions.loadStoresFailure({ error: error.error.message }));
+            }
+            return of(AuthActions.loadStoresFailure({ error: 'Unknown Error' }));
           })
         )
       )

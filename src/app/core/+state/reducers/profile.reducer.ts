@@ -1,4 +1,4 @@
-import { Group, Language, Profile } from '@models';
+import { Group, Language, Merchant, Profile } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as ProfileActions from '../actions';
 
@@ -8,7 +8,7 @@ export interface State {
   profile?: Profile;
   groups: Group[];
   languages: Language[];
-  stores: string[];
+  stores: Merchant[];
   error?: string;
 }
 

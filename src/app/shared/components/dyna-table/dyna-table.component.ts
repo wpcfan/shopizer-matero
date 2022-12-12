@@ -16,13 +16,14 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { ColumnConfig } from './column-config.model';
 import { ColumnFilter } from './column-filter.model';
 import { ColumnFilterService } from './table-cell/column-filter.service';
 
 import { Entity } from './models/entity.model';
+import { SelectFilter } from './table-filter';
 
 export const DEFAULT_PAGE_SIZE = 20;
 
@@ -168,6 +169,9 @@ export class DynaTableComponent implements OnInit, OnDestroy {
 
       if (this.appliedFilters[column.name]) {
         columnFilter.filter = Object.create(this.appliedFilters[column.name]);
+        if (columnFilter.filter instanceof SelectFilter) {
+          columnFilter.filter.options = column.filterOptions ?? of([]);
+        }
       }
 
       dialogConfig.data = columnFilter;

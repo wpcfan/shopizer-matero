@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import * as AuthActions from '@core/+state/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigatedAction } from '@ngrx/router-store';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map } from 'rxjs/operators';
 import * as UserActions from '../actions/user.actions';
 import { UserService } from '../service/user.service';
-
 @Injectable()
 export class UserEffects {
   loadUsers$ = createEffect(() => {
@@ -16,6 +17,43 @@ export class UserEffects {
           catchError(error => of(UserActions.loadUsersFailure({ error })))
         )
       )
+    );
+  });
+
+  loadGroupsWhenRoutedToCreateOrEditUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      filter(
+        ({ payload }) =>
+          payload.routerState.url === '/users/create' ||
+          /\/users\/\d+/.test(payload.routerState.url)
+      ),
+      map(() => AuthActions.loadGroups())
+    );
+  });
+
+  loadLanguagesWhenRoutedToCreateOrEditUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      filter(
+        ({ payload }) =>
+          payload.routerState.url === '/users/create' ||
+          /\/users\/\d+/.test(payload.routerState.url)
+      ),
+      map(() => AuthActions.loadLanguages())
+    );
+  });
+
+  loadStoresWhenRoutedToCreateOrEditUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      filter(
+        ({ payload }) =>
+          payload.routerState.url === '/users/list' ||
+          payload.routerState.url === '/users/create' ||
+          /\/users\/\d+/.test(payload.routerState.url)
+      ),
+      map(() => AuthActions.loadStores())
     );
   });
 

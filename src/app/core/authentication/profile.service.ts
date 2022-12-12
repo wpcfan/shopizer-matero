@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { Group, Language, Profile } from '@models';
+import { Group, Language, Merchant, Profile } from '@models';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
@@ -26,7 +26,7 @@ export class ProfileService {
   }
 
   stores() {
-    return this.http.get<string[]>(`${this.url}/v1/sec/private/stores/names`);
+    return this.http.get<Merchant[]>(`${this.url}/v1/private/stores/names`);
   }
 
   update(param: Partial<Profile>, id: number, merchant: string) {

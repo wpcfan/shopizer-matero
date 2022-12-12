@@ -1,4 +1,5 @@
 import { endOfDay, startOfDay } from 'date-fns';
+import { Observable } from 'rxjs';
 
 export interface TableFilter {
   getFilter(): object;
@@ -33,6 +34,23 @@ export class DateFilter implements TableFilter {
 
 export class TextFilter implements TableFilter {
   value: string;
+
+  public constructor(private readonly column: string) {
+    this.value = '';
+  }
+
+  getFilter(): object {
+    const filter: Record<string, string> = {};
+
+    filter[this.column] = this.value;
+
+    return filter;
+  }
+}
+
+export class SelectFilter implements TableFilter {
+  value: string;
+  options!: Observable<{ label: string; value: string }[]>;
 
   public constructor(private readonly column: string) {
     this.value = '';

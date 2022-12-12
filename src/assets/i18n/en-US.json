@@ -172,6 +172,14 @@
     "sidenavCollapsed": "Side navigation menus collapsed?",
     "update": "Update"
   },
+  "users": {
+    "create": {
+      "password": "Password",
+      "repeat_password": "Repeat password",
+      "merchant": "Merchant",
+      "submit": "Submit"
+    }
+  },
   "paginator": {
     "items_per_page_label": "Items per page:",
     "next_page_label": "Next page",

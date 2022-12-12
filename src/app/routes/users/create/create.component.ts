@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
-import { Group, Language, Menu, Profile } from '@models';
+import { Group, Language, Menu, Merchant, Profile } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as UserActions from '../+state/actions/user.actions';
@@ -16,11 +16,12 @@ export class UsersCreateComponent {
   menus$: Observable<Menu[]>;
   groups$: Observable<Group[]>;
   languages$: Observable<Language[]>;
+  stores$: Observable<Merchant[]>;
   model: Partial<Profile> = {
-    emailAddress: '',
-    merchant: 'DEFAULT',
-    firstName: '',
-    lastName: '',
+    emailAddress: undefined,
+    merchant: undefined,
+    firstName: undefined,
+    lastName: undefined,
     groups: [],
     defaultLanguage: 'en',
     active: true,
@@ -29,6 +30,7 @@ export class UsersCreateComponent {
     this.menus$ = this.store.select(fromMenu.selectMenus);
     this.groups$ = this.store.select(fromProfile.selectGroups);
     this.languages$ = this.store.select(fromProfile.selectLanguages);
+    this.stores$ = this.store.select(fromProfile.selectStores);
   }
 
   compareGroup(a: Group, b: Group) {

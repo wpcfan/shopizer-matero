@@ -7,7 +7,7 @@ import { LoginRes } from '@models';
 import { BehaviorSubject, catchError, filter, Observable, switchMap, take, tap } from 'rxjs';
 
 @Injectable()
-export class ShopizerInterceptor implements HttpInterceptor {
+export class ShopizerTokenInterceptor implements HttpInterceptor {
   private refreshTokenInProgress = false;
 
   private refreshTokenSubject = new BehaviorSubject<string | null>(null);

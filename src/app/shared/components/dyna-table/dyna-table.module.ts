@@ -22,7 +22,11 @@ import { TableCellComponent } from './table-cell/table-cell.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { TableDateFilterComponent, TableTextFilterComponent } from './filters';
+import {
+  TableDateFilterComponent,
+  TableSelectFilterComponent,
+  TableTextFilterComponent,
+} from './filters';
 import { CellDirective, CellService, ColumnFilterService, DetailRowDirective } from './table-cell';
 import { DateCellComponent, TextCellComponent } from './table-cell/cell-types';
 
@@ -56,6 +60,7 @@ import { DateCellComponent, TextCellComponent } from './table-cell/cell-types';
     DateCellComponent,
     TableTextFilterComponent,
     TableDateFilterComponent,
+    TableSelectFilterComponent,
   ],
   exports: [DynaTableComponent, DetailRowDirective],
   providers: [CellService, ColumnFilterService],
@@ -65,6 +70,7 @@ export class DynaTableModule {
     cellService.registerCell('string', TextCellComponent);
     cellService.registerCell('date', DateCellComponent);
     filterService.registerFilter('string', TableTextFilterComponent);
+    filterService.registerFilter('select', TableSelectFilterComponent);
     filterService.registerFilter('date', TableDateFilterComponent);
   }
 }

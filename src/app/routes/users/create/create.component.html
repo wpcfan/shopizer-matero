@@ -29,6 +29,37 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'users.create.password' | translate }}</mat-label>
+        <input matInput name="password" type="password" required [(ngModel)]="model.password" />
+        <mat-error *ngIf="form.controls['password']?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'users.create.repeat_password' | translate }}</mat-label>
+        <input
+          matInput
+          name="repeatPassword"
+          type="password"
+          required
+          [(ngModel)]="model.repeatPassword"
+        />
+        <mat-error *ngIf="form.controls['repeatPassword']?.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'users.create.merchant' | translate }}</mat-label>
+        <mat-select name="merchantId" [(ngModel)]="model.merchant" required>
+          <mat-option *ngFor="let merchant of stores$ | async" [value]="merchant.code">
+            {{ merchant.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <div class="m-y-16" fxLayout="row" fxLayoutAlign="space-between center">
         <mat-checkbox name="active" [(ngModel)]="model.active">{{
           'profile.active' | translate
@@ -62,8 +93,14 @@
         </mat-form-field>
       </ng-container>
 
-      <button class="w-full" mat-raised-button color="primary" (click)="create($event)">
-        {{ 'profile.update' | translate }}
+      <button
+        class="w-full"
+        mat-raised-button
+        color="primary"
+        (click)="form.form.valid ? create($event) : null"
+        [disabled]="form.form.invalid"
+      >
+        {{ 'users.create.submit' | translate }}
       </button>
     </form>
   </mat-card>

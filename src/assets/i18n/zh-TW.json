@@ -172,6 +172,14 @@
     "sidenavCollapsed": "側邊欄菜單折疊?",
     "update": "更新偏好設置"
   },
+  "users": {
+    "create": {
+      "password": "密碼",
+      "repeat_password": "重複密碼",
+      "merchant": "商戶",
+      "submit": "創建"
+    }
+  },
   "paginator": {
     "items_per_page_label": "每頁共：",
     "next_page_label": "下壹頁",
