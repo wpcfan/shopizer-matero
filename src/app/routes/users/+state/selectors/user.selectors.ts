@@ -12,3 +12,5 @@ export const selectPage = createSelector(selectUserState, state => state.page);
 export const selectLoading = createSelector(selectUserState, state => state.loading);
 
 export const selectError = createSelector(selectUserState, state => state.error);
+
+export const selectUser = createSelector(selectUserState, state => state.selectedUser);

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import * as AuthActions from '@core/+state/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, filter, map } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, tap } from 'rxjs/operators';
 import * as UserActions from '../actions/user.actions';
 import { UserService } from '../service/user.service';
 @Injectable()
@@ -11,12 +12,15 @@ export class UserEffects {
   loadUsers$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UserActions.loadUsers),
-      exhaustMap(({ page, params }) =>
-        this.userService.getUsers(page, params).pipe(
+      exhaustMap(({ page, params }) => {
+        if (params?.store) {
+          localStorage.setItem('store', params.store);
+        }
+        return this.userService.getUsers(page, params).pipe(
           map(data => UserActions.loadUsersSuccess({ data })),
           catchError(error => of(UserActions.loadUsersFailure({ error })))
-        )
-      )
+        );
+      })
     );
   });
 
@@ -105,5 +109,19 @@ export class UserEffects {
     );
   });
 
-  constructor(private actions$: Actions, private userService: UserService) {}
+  createUserSuccessAndRedirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(UserActions.createUserSuccess),
+        tap(({ data }) => this.router.navigate(['/users', data.id]))
+      );
+    },
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private userService: UserService,
+    private router: Router
+  ) {}
 }

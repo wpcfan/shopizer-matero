@@ -23,6 +23,7 @@ import * as fromUser from '../+state/selectors/user.selectors';
 export class UsersListComponent extends BaseCrudTable<Profile> {
   state$: Observable<State> = this.store.select(fromUser.selectUserState);
   store$: Observable<SelectOption[]> = this.store.select(fromProfile.selectStoreOptions);
+
   public columns: ColumnConfig[] = [
     {
       name: 'id',

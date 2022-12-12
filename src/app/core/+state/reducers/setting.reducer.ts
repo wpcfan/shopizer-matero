@@ -23,8 +23,8 @@ export const initialState: State = {
   headerPos: 'fixed',
   showUserPanel: false,
   sidenavOpened: true,
-  sidenavCollapsed: false,
-  language: 'en-US',
+  sidenavCollapsed: true,
+  language: 'en',
 };
 
 export const reducer = createReducer(

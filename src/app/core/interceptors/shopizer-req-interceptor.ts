@@ -11,13 +11,19 @@ export class ShopizerReqInterceptor implements HttpInterceptor {
     if (!req.url.includes(environment.apiUrl)) {
       return next.handle(req);
     }
-    const language = this.local.get('settings').language || 'en';
-    const params = req.params.set('lang', language);
-    if (!params.has('store')) {
-      params.set('store', localStorage.getItem('store') ?? environment.defaultStore);
-    }
+    const language = this.local.get('settings').language ?? environment.defaultLanguage;
+
     const clonedReq = req.clone({
-      params,
+      params: req.params
+        .set('lang', language)
+        .set(
+          'store',
+          !req.url.includes('/v1/private/user/profile') &&
+            !req.url.includes('/v1/languages') &&
+            !req.url.includes('/v1/countries')
+            ? localStorage.getItem('store') ?? environment.defaultStore
+            : environment.defaultStore
+        ),
     });
     return next.handle(clonedReq);
   }

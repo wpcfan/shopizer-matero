@@ -36,7 +36,7 @@ export class UserService {
   }
 
   getById(id: number) {
-    return this.http.get<Profile>(`${this.url}/v1/private/user/${id}`);
+    return this.http.get<Profile>(`${this.url}/v1/private/users/${id}`);
   }
 
   uniqueEmail(email: string): Observable<ValidationErrors | null> {

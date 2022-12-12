@@ -4,4 +4,5 @@ export const environment = {
   apiUrl: '',
   useHash: false,
   defaultStore: 'DEFAULT',
+  defaultLanguage: 'en',
 };

@@ -11,6 +11,7 @@ export interface State {
   loading: boolean;
   error?: string;
   filters?: Record<string, string>;
+  selectedUser?: Profile;
 }
 
 export const initialState: State = {
@@ -45,6 +46,20 @@ export const reducer = createReducer(
       ...state,
       error: action.error,
       loading: false,
+    })
+  ),
+  on(
+    UserActions.getByIdSuccess,
+    (state, { data }): State => ({
+      ...state,
+      selectedUser: data,
+    })
+  ),
+  on(
+    UserActions.getByIdFailure,
+    (state, action): State => ({
+      ...state,
+      error: action.error,
     })
   )
 );

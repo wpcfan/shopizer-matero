@@ -5,8 +5,6 @@ import { DefaultInterceptor } from './default-interceptor';
 // import { SanctumInterceptor } from './sanctum-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { LoggingInterceptor } from './logging-interceptor';
-import { NoopInterceptor } from './noop-interceptor';
-import { SettingsInterceptor } from './settings-interceptor';
 import { ShopizerReqInterceptor } from './shopizer-req-interceptor';
 import { ShopizerTokenInterceptor } from './shopizer-token-interceptor';
 
@@ -22,10 +20,9 @@ export * from './shopizer-token-interceptor';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true },
   // { provide: HTTP_INTERCEPTORS, useClass: SanctumInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: SettingsInterceptor, multi: true },
+  // { provide: HTTP_INTERCEPTORS, useClass: SettingsInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerReqInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerTokenInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
