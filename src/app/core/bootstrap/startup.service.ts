@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService, User } from '@core/authentication';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
-import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +18,14 @@ export class StartupService {
    */
   load() {
     return new Promise<void>((resolve, reject) => {
-      this.authService
-        .change()
-        .pipe(tap(user => this.setPermissions(user)))
-        .subscribe({
-          next: () => resolve(),
-          complete: () => resolve(),
-        });
+      resolve();
+      // this.authService
+      //   .change()
+      //   .pipe(tap(user => this.setPermissions(user)))
+      //   .subscribe({
+      //     next: () => resolve(),
+      //     complete: () => resolve(),
+      //   });
     });
   }
 

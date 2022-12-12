@@ -5,7 +5,4 @@ export * from './interface';
 export * from './login.service';
 export * from './profile.service';
 export * from './public.service';
-export * from './token';
-export * from './token-factory.service';
-export * from './token.service';
 export * from './user';
