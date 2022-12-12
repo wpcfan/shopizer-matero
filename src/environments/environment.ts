@@ -7,6 +7,7 @@ export const environment = {
   baseUrl: '',
   apiUrl: 'http://localhost:8080/api',
   useHash: false,
+  defaultStore: 'DEFAULT',
 };
 
 /*

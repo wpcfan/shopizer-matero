@@ -23,7 +23,7 @@ export const initialState: State = {
     },
     {
       route: '/users',
-      name: 'users',
+      name: 'users management',
       type: 'sub',
       icon: 'group',
       children: [

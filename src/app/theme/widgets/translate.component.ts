@@ -20,13 +20,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class TranslateComponent {
   langs = {
-    'en-US': 'English',
-    'zh-CN': '中文简体',
-    'zh-TW': '中文繁体',
+    en: 'English',
+    zh: '中文简体',
   };
 
   constructor(private translate: TranslateService, private store: Store) {
-    translate.addLangs(['en-US', 'zh-CN', 'zh-TW']);
+    translate.addLangs(['en', 'zh']);
   }
 
   useLanguage(language: string) {

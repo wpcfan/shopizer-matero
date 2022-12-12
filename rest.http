@@ -1,0 +1,30 @@
+POST http://localhost:8080/api/v1/private/user/?lang=en_US&store=mystore
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBzaG9waXplci5jb20iLCJhdWQiOiJhcGkiLCJleHAiOjE2NzE0MTQwMDgsImlhdCI6MTY3MDgwOTIwOH0.EKtQkZ2jwIQtjuWmDrbNJTepVwK9mCCRBTvkDzBng7jN7SOz0zK36nT91LDIE85ybe12NJBsAu-F7M0tOxdmoQ
+Content-Type: application/json
+
+{
+  "emailAddress": "test@local.dev",
+  "merchant": "mystore",
+  "firstName": "Peng",
+  "lastName": "Wang",
+  "userName": "test@local.dev",
+  "groups": [
+    {
+      "name": "ADMIN",
+      "type": "ADMIN",
+      "id": 351
+    },
+    {
+      "name": "ADMIN_RETAILER",
+      "type": "ADMIN",
+      "id": 352
+    }
+  ],
+  "defaultLanguage": "en",
+  "active": true,
+  "password": "X*bcYp4x",
+  "repeatPassword": "X*bcYp4x"
+}
+
+###
+GET http://localhost:8080/api/v1/languages

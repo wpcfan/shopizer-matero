@@ -31,6 +31,7 @@ export class ProfileEffects {
       exhaustMap(() =>
         this.profileService.user().pipe(
           map(data => {
+            localStorage.setItem('store', data.merchant);
             return AuthActions.loadProfileSuccess({ data });
           }),
           catchError(error => {

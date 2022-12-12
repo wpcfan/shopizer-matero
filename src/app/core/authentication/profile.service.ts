@@ -1,28 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { Group, Language, Merchant, Profile } from '@models';
+import { Group, Merchant, Profile } from '@models';
+import { PublicService } from './public.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
   url = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private publicService: PublicService) {}
 
   user() {
     return this.http.get<Profile>(`${this.url}/v1/private/user/profile`);
   }
 
+  groups() {
+    return this.http.get<Group[]>(`${this.url}/v1/sec/private/groups`);
+  }
+
   languages() {
-    return this.http.get<Language[]>(`${this.url}/v1/languages`);
+    return this.publicService.languages();
   }
 
   countries() {
-    return this.http.get<string[]>(`${this.url}/v1/countries`);
-  }
-
-  groups() {
-    return this.http.get<Group[]>(`${this.url}/v1/sec/private/groups`);
+    return this.publicService.countries();
   }
 
   stores() {
