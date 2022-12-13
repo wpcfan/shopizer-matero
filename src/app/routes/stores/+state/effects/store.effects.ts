@@ -8,7 +8,7 @@ import { StoreService } from '../services/store.service';
 
 @Injectable()
 export class StoreEffects {
-  loadCurrenciesWhenRoutedToCreateOrEditStore$ = createEffect(() => {
+  loadCountriesWhenRoutedToCreateOrEditStore$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(routerNavigatedAction),
       filter(
@@ -16,7 +16,7 @@ export class StoreEffects {
           payload.routerState.url === '/stores/create' ||
           /\/stores\/\d+/.test(payload.routerState.url)
       ),
-      map(() => StoreActions.loadCurrencies())
+      map(() => AuthActions.loadCountries())
     );
   });
 
@@ -29,6 +29,18 @@ export class StoreEffects {
           /\/stores\/\d+/.test(payload.routerState.url)
       ),
       map(() => AuthActions.loadLanguages())
+    );
+  });
+
+  loadCurrenciesWhenRoutedToCreateOrEditStore$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      filter(
+        ({ payload }) =>
+          payload.routerState.url === '/stores/create' ||
+          /\/stores\/\d+/.test(payload.routerState.url)
+      ),
+      map(() => StoreActions.loadCurrencies())
     );
   });
 
@@ -100,6 +112,18 @@ export class StoreEffects {
         this.storeService.retailers().pipe(
           map(data => StoreActions.loadRetailersSuccess({ data })),
           catchError(error => of(StoreActions.loadRetailersFailure({ error })))
+        )
+      )
+    );
+  });
+
+  createStore$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StoreActions.createStore),
+      exhaustMap(({ data }) =>
+        this.storeService.create(data).pipe(
+          map(store => StoreActions.createStoreSuccess({ data: store })),
+          catchError(error => of(StoreActions.createStoreFailure({ error })))
         )
       )
     );

@@ -73,7 +73,11 @@
 
           <mat-form-field appearance="outline">
             <mat-label>{{ 'stores.create.address.country' | translate }}</mat-label>
-            <input matInput formControlName="country" />
+            <mat-select formControlName="country">
+              <mat-option *ngFor="let country of countries$ | async" [value]="country.code">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
             <mat-error *ngIf="form.controls.address.get('country')?.invalid">
               {{ 'validations.required' | translate }}
             </mat-error>

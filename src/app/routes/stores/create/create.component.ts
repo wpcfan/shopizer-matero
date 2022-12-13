@@ -15,6 +15,7 @@ export class StoresCreateComponent {
   menus$ = this.store.select(fromMenu.selectMenus);
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
+  countries$ = this.store.select(fromProfile.selectCountries);
   currencies$ = this.store.select(fromStore.selectCurrencies);
   dimensions$ = this.store.select(fromStore.selectDimensions);
   weights$ = this.store.select(fromStore.selectWeights);
@@ -51,6 +52,9 @@ export class StoresCreateComponent {
     if (this.form.invalid) {
       return;
     }
-    this.store.dispatch(StoreActions.createStore({ data: this.form.value }));
+    const formattedDate = this.form.value.inBusinessSince.format('YYYY-MM-DD');
+    this.store.dispatch(
+      StoreActions.createStore({ data: { ...this.form.value, inBusinessSince: formattedDate } })
+    );
   }
 }

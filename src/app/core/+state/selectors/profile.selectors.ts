@@ -11,6 +11,8 @@ export const selectGroups = createSelector(selectProfileFeatureState, state => s
 
 export const selectLanguages = createSelector(selectProfileFeatureState, state => state.languages);
 
+export const selectCountries = createSelector(selectProfileFeatureState, state => state.countries);
+
 export const selectStores = createSelector(selectProfileFeatureState, state => state.stores);
 
 export const selectStoreOptions = createSelector(selectStores, stores =>

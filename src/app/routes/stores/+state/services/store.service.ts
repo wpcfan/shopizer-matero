@@ -44,4 +44,8 @@ export class StoreService {
       })
       .pipe(map(({ data }) => data));
   }
+
+  create(store: Partial<Merchant>) {
+    return this.http.post<Merchant>(`${this.url}/v1/private/store`, store);
+  }
 }
