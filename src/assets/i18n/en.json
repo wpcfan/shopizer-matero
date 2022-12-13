@@ -1,4 +1,9 @@
 {
+  "common": {
+    "cancel": "Cancel",
+    "ok": "OK",
+    "back": "Back"
+  },
   "menu": {
     "dashboard": "Dashboard",
     "design": "Design",
@@ -178,6 +183,17 @@
       "repeat_password": "Repeat password",
       "merchant": "Merchant",
       "submit": "Submit"
+    },
+    "update": {
+      "title": "Update user",
+      "submit": "Update",
+      "delete": "Delete",
+      "back_to_list": "Back to list",
+      "change_password": "Change password"
+    },
+    "change_password": {
+      "title": "Change password",
+      "subtitle": "update user's password"
     }
   },
   "paginator": {

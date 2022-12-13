@@ -69,3 +69,15 @@ export const getByIdFailure = createAction(
   '[User Service] Get user by id failed',
   props<{ error: string }>()
 );
+
+export const changePassword = createAction(
+  '[Change Password Page] Change password',
+  props<{ id: number; password: string; repeatPassword: string }>()
+);
+
+export const changePasswordSuccess = createAction('[User Service] Change password successfully');
+
+export const changePasswordFailure = createAction(
+  '[User Service] Change password failed',
+  props<{ error: string }>()
+);

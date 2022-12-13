@@ -61,5 +61,33 @@ export const reducer = createReducer(
       ...state,
       error: action.error,
     })
+  ),
+  on(
+    UserActions.updateUserSuccess,
+    (state, { data }): State => ({
+      ...state,
+      selectedUser: data,
+    })
+  ),
+  on(
+    UserActions.updateUserFailure,
+    (state, action): State => ({
+      ...state,
+      error: action.error,
+    })
+  ),
+  on(
+    UserActions.deleteUserSuccess,
+    (state): State => ({
+      ...state,
+      selectedUser: undefined,
+    })
+  ),
+  on(
+    UserActions.deleteUserFailure,
+    (state, action): State => ({
+      ...state,
+      error: action.error,
+    })
   )
 );

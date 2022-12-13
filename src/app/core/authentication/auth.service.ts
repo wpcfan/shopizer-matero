@@ -27,4 +27,10 @@ export class AuthService {
   refresh() {
     return this.http.get<LoginRes>(`${this.url}/v1/auth/refresh`, {});
   }
+
+  logout() {
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    localStorage.removeItem('rememberMe');
+  }
 }

@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@core/authentication';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
 
@@ -33,7 +34,11 @@ export class ErrorInterceptor implements HttpInterceptor {
     return `${error.status} ${error.statusText}`;
   };
 
-  constructor(private router: Router, private toast: ToastrService) {}
+  constructor(
+    private router: Router,
+    private toast: ToastrService,
+    private authService: AuthService
+  ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next
@@ -50,6 +55,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       console.error('ERROR', error);
       this.toast.error(this.getMessage(error));
       if (error.status === STATUS.UNAUTHORIZED) {
+        this.authService.logout();
         this.router.navigateByUrl('/auth/login');
       }
     }

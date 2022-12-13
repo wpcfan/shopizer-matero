@@ -1,4 +1,9 @@
 {
+  "common": {
+    "cancel": "取消",
+    "ok": "确定",
+    "back": "返回"
+  },
   "menu": {
     "dashboard": "数据大盘",
     "design": "设计",
@@ -178,6 +183,17 @@
       "repeat_password": "重复密码",
       "merchant": "商户",
       "submit": "创建用户"
+    },
+    "update": {
+      "title": "更新用户",
+      "submit": "更新用户",
+      "delete": "删除用户",
+      "back_to_list": "返回用户列表",
+      "change_password": "更改密码"
+    },
+    "change_password": {
+      "title": "更改密码",
+      "subtitle": "更改用户密码"
     }
   },
   "paginator": {

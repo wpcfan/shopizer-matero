@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as AuthActions from '@core/+state/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -119,9 +120,60 @@ export class UserEffects {
     { dispatch: false }
   );
 
+  deleteUserSuccessAndRedirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(UserActions.deleteUserSuccess),
+        tap(() => this.router.navigate(['/users', 'list']))
+      );
+    },
+    { dispatch: false }
+  );
+
+  updateSuccessAndDisplayMessage$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(UserActions.updateUserSuccess),
+        tap(() => {
+          this.snackBar.open('User updated successfully', 'Close', {
+            duration: 2000,
+          });
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  changePassword$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.changePassword),
+      exhaustMap(({ id, password, repeatPassword }) =>
+        this.userService.changePassword(id, password, repeatPassword).pipe(
+          map(() => UserActions.changePasswordSuccess()),
+          catchError(error => of(UserActions.changePasswordFailure({ error })))
+        )
+      )
+    );
+  });
+
+  changePasswordSuccessAndDisplayMessage$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(UserActions.changePasswordSuccess),
+        tap(() => {
+          this.snackBar.open('Password changed successfully', 'Close', {
+            duration: 2000,
+          });
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 }

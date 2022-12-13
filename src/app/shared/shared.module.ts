@@ -16,6 +16,7 @@ import { MaterialExtensionsModule } from '../material-extensions.module';
 import { MaterialModule } from '../material.module';
 
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DynaTableModule } from './components/dyna-table';
 import { ErrorCodeComponent } from './components/error-code/error-code.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
@@ -41,7 +42,12 @@ const MODULES: any[] = [
   TranslateModule,
   DynaTableModule,
 ];
-const COMPONENTS: any[] = [BreadcrumbComponent, PageHeaderComponent, ErrorCodeComponent];
+const COMPONENTS: any[] = [
+  BreadcrumbComponent,
+  PageHeaderComponent,
+  ErrorCodeComponent,
+  ConfirmDialogComponent,
+];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
 const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];

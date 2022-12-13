@@ -46,4 +46,11 @@ export class UserService {
       })
       .pipe(map(res => (res.exists ? { unique: true } : null)));
   }
+
+  changePassword(id: number, password: string, repeatPassword: string) {
+    return this.http.put<void>(`${this.url}/v1/private/user/${id}/password`, {
+      password,
+      changePassword: repeatPassword,
+    });
+  }
 }

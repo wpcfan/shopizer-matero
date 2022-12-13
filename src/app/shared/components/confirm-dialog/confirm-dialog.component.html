@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<div mat-dialog-content>
+  <p>{{ data.message }}</p>
+</div>
+<ng-container [ngSwitch]="data.type">
+  <ng-container *ngSwitchCase="'warning'">
+    <div mat-dialog-actions [align]="'end'">
+      <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
+        {{ 'common.cancel' | translate }}
+      </button>
+      <button mat-button [mat-dialog-close]="true" color="warn">
+        {{ 'common.ok' | translate }}
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'error'">
+    <div mat-dialog-actions [align]="'start'">
+      <button mat-button [mat-dialog-close]="true" color="accent" cdkFocusInitial>
+        {{ 'common.ok' | translate }}
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'info'">
+    <div mat-dialog-actions [align]="'center'">
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+        {{ 'common.ok' | translate }}
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'success'">
+    <div mat-dialog-actions [align]="'center'">
+      <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>
+        {{ 'common.ok' | translate }}
+      </button>
+    </div>
+  </ng-container>
+</ng-container>
