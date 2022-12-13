@@ -41,7 +41,7 @@ export const initialState: State = {
     },
     {
       route: '/stores',
-      name: 'stores',
+      name: 'Stores',
       type: 'sub',
       icon: 'storefront',
       children: [

@@ -4,6 +4,12 @@
     "ok": "确定",
     "back": "返回"
   },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "es": "Español",
+    "zh": "中文"
+  },
   "menu": {
     "dashboard": "数据大盘",
     "design": "设计",
@@ -141,11 +147,7 @@
     "ADMIN_CATALOGUE": "目录管理员",
     "ADMIN_ORDER": "订单管理员",
     "ADMIN_CONTENT": "内容管理员",
-    "CUSTOMER": "客户",
-    "en": "English",
-    "fr": "Français",
-    "es": "Español",
-    "zh": "中文"
+    "CUSTOMER": "客户"
   },
   "setting": {
     "title": "设置",
@@ -194,6 +196,36 @@
     "change_password": {
       "title": "更改密码",
       "subtitle": "更改用户密码"
+    }
+  },
+  "stores": {
+    "list": {
+      "title": "店铺列表"
+    },
+    "create": {
+      "title": "创建店铺",
+      "submit": "创建店铺",
+      "name": "店铺名称",
+      "code": "店铺代码",
+      "phone": "店铺电话",
+      "email": "店铺邮箱",
+      "address": {
+        "address": "具体地址",
+        "city": "城市",
+        "state_province": "省份",
+        "country": "国家",
+        "postal_code": "邮编"
+      },
+      "supported_languages": "支持的语言",
+      "default_language": "默认语言",
+      "currency": "货币",
+      "currency_format_national": "国家货币格式？",
+      "dimension": "尺寸单位",
+      "weight": "重量单位",
+      "in_business_since": "开业时间",
+      "use_cache": "使用缓存？",
+      "retailer": "是否零售商？",
+      "retailer_store": "上级零售商店铺"
     }
   },
   "paginator": {

@@ -4,23 +4,24 @@ import { Language } from './language';
 
 export interface Merchant {
   id: number;
+  name: string;
   code: string;
+  email: string;
+  address: Address;
   currency: string;
   currencyFormatNational: boolean;
   currentUserLanguage?: string;
+  supportedLanguages: Language[];
   defaultLanguage: string;
   dimension: 'IN' | 'CM';
-  email: string;
+  weight: 'LB' | 'KG';
   inBusinessSince: string;
   logo?: string;
-  name: string;
   parent?: Merchant;
   phone?: string;
   readableAudit?: Audit;
-  retailer: boolean;
-  supportedLanguages: Language[];
   template?: string;
   useCache: boolean;
-  weight: 'LB' | 'KG';
-  address: Address;
+  retailer: boolean;
+  retailerStore?: string;
 }

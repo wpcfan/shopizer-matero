@@ -4,6 +4,12 @@
     "ok": "OK",
     "back": "Back"
   },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "es": "Español",
+    "zh": "中文"
+  },
   "menu": {
     "dashboard": "Dashboard",
     "design": "Design",
@@ -141,11 +147,7 @@
     "ADMIN_CATALOGUE": "Admin Catalogue",
     "ADMIN_ORDER": "Admin Order",
     "ADMIN_CONTENT": "Admin Content",
-    "CUSTOMER": "Customer",
-    "en": "English",
-    "fr": "Français",
-    "es": "Español",
-    "zh": "中文"
+    "CUSTOMER": "Customer"
   },
   "setting": {
     "title": "Setting",
@@ -194,6 +196,36 @@
     "change_password": {
       "title": "Change password",
       "subtitle": "update user's password"
+    }
+  },
+  "stores": {
+    "list": {
+      "title": "Store list"
+    },
+    "create": {
+      "title": "Create store",
+      "submit": "Create",
+      "name": "Store name",
+      "code": "Store code",
+      "phone": "Store phone",
+      "email": "Store email",
+      "address": {
+        "address": "address",
+        "city": "City",
+        "state_province": "State / province",
+        "country": "Country",
+        "postal_code": "Postal code"
+      },
+      "supported_languages": "Supported languages",
+      "default_language": "Default language",
+      "currency": "Currency",
+      "currency_format_national": "National currency format?",
+      "dimension": "Dimension unit",
+      "weight": "Weight unit",
+      "in_business_since": "In business since",
+      "use_cache": "Use cache?",
+      "retailer": "Retailer?",
+      "retailer_store": "Parent retailer store"
     }
   },
   "paginator": {

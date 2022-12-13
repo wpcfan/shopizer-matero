@@ -66,7 +66,7 @@
           <mat-label>{{ 'profile.defaultLanguage' | translate }}</mat-label>
           <mat-select formControlName="defaultLanguage">
             <mat-option *ngFor="let language of languages" [value]="language.code">
-              {{ 'profile.' + language.code | translate }}
+              {{ 'language.' + language.code | translate }}
             </mat-option>
           </mat-select>
         </mat-form-field>

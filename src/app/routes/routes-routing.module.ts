@@ -44,14 +44,36 @@ const routes: Routes = [
         path: 'products',
         loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
       },
-  { path: 'brands', loadChildren: () => import('./brands/brands.module').then(m => m.BrandsModule) },
-  { path: 'product-group', loadChildren: () => import('./product-group/product-group.module').then(m => m.ProductGroupModule) },
-  { path: 'content', loadChildren: () => import('./content/content.module').then(m => m.ContentModule) },
-  { path: 'shipping', loadChildren: () => import('./shipping/shipping.module').then(m => m.ShippingModule) },
-  { path: 'payment', loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule) },
-  { path: 'tax', loadChildren: () => import('./tax/tax.module').then(m => m.TaxModule) },
-  { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
-  { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
+      {
+        path: 'brands',
+        loadChildren: () => import('./brands/brands.module').then(m => m.BrandsModule),
+      },
+      {
+        path: 'product-group',
+        loadChildren: () =>
+          import('./product-group/product-group.module').then(m => m.ProductGroupModule),
+      },
+      {
+        path: 'content',
+        loadChildren: () => import('./content/content.module').then(m => m.ContentModule),
+      },
+      {
+        path: 'shipping',
+        loadChildren: () => import('./shipping/shipping.module').then(m => m.ShippingModule),
+      },
+      {
+        path: 'payment',
+        loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule),
+      },
+      { path: 'tax', loadChildren: () => import('./tax/tax.module').then(m => m.TaxModule) },
+      {
+        path: 'customer',
+        loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
+      },
+      {
+        path: 'orders',
+        loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule),
+      },
     ],
   },
   {

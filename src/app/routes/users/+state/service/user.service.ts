@@ -10,12 +10,16 @@ export class UserService {
   url = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getUsers(page = 0, filterParams?: Record<string, string>, pageSize = 20) {
+  getUsers(
+    page = 0,
+    filterParams?: Record<string, string>,
+    pageSize = environment.defaultPageSize
+  ) {
     const params = { count: pageSize.toString(), page: page.toString() };
     if (filterParams) {
       Object.assign(params, filterParams);
     }
-    return this.http.get<Pageable<Profile>>(`${this.url}/v1/private/users?`, {
+    return this.http.get<Pageable<Profile>>(`${this.url}/v1/private/users`, {
       params,
     });
   }

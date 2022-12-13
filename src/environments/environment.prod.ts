@@ -5,4 +5,5 @@ export const environment = {
   useHash: false,
   defaultStore: 'DEFAULT',
   defaultLanguage: 'en',
+  defaultPageSize: 20,
 };
