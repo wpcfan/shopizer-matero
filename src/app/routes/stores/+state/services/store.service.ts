@@ -48,4 +48,16 @@ export class StoreService {
   create(store: Partial<Merchant>) {
     return this.http.post<Merchant>(`${this.url}/v1/private/store`, store);
   }
+
+  getByCode(code: string) {
+    return this.http.get<Merchant>(`${this.url}/v1/private/store/${code}`);
+  }
+
+  update(code: string, store: Partial<Merchant>) {
+    return this.http.put<Merchant>(`${this.url}/v1/private/store/${code}`, store);
+  }
+
+  delete(code: string) {
+    return this.http.delete(`${this.url}/v1/private/store/${code}`);
+  }
 }

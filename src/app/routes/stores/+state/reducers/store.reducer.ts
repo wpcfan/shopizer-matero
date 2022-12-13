@@ -71,5 +71,10 @@ export const reducer = createReducer(
     StoreActions.loadRetailersSuccess,
     (state, { data }): State => ({ ...state, retailers: data })
   ),
-  on(StoreActions.loadRetailersFailure, (state, { error }): State => ({ ...state, error }))
+  on(StoreActions.loadRetailersFailure, (state, { error }): State => ({ ...state, error })),
+  on(
+    StoreActions.selectMerchantSuccess,
+    (state, { data }): State => ({ ...state, selectedStore: data })
+  ),
+  on(StoreActions.selectMerchantFailure, (state, { error }): State => ({ ...state, error }))
 );

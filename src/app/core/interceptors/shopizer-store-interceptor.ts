@@ -11,7 +11,7 @@ export class ShopizerStoreInterceptor implements HttpInterceptor {
     if (
       !req.url.includes(environment.apiUrl) ||
       req.url.includes('/v1/private/user/profile') ||
-      // req.url.includes('/v1/private/stores') ||
+      // req.url.includes('/v1/private/store') ||
       req.url.includes('/v1/languages') ||
       req.url.includes('/v1/countries')
     ) {
