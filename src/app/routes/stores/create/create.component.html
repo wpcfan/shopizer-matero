@@ -1,10 +1,4 @@
-<ng-container *ngIf="menus$ | async as menus">
-  <page-header
-    [title]="'stores.create.title' | translate"
-    [hideBreadcrumb]="false"
-    [menus]="menus"
-  ></page-header>
-</ng-container>
+<page-header [title]="'stores.create.title' | translate" [hideBreadcrumb]="false"></page-header>
 
 <div class="w-full h-full" fxLayout="row wrap">
   <ng-container *ngIf="languages$ | async as languages">

@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import * as fromMenu from '@core/+state/selectors/menu.selectors';
-import { Menu, Merchant } from '@models';
+import { Merchant } from '@models';
 import { Store } from '@ngrx/store';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
@@ -87,13 +86,11 @@ export class StoresListComponent extends BaseCrudTable<Merchant> {
     this.handleEdit(row);
   }
   public handleEdit(row: Merchant): void {
-    this.router.navigate(['users', row.id]);
+    this.router.navigate(['stores', row.id]);
   }
   public handleAdd(): void {}
-  menus$: Observable<Menu[]>;
   constructor(private store: Store, private router: Router) {
     super();
-    this.menus$ = this.store.select(fromMenu.selectMenus);
     this.store.dispatch(StoreActions.loadStores({ page: 0 }));
   }
 }

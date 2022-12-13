@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
-import { Group, Language, Menu, Merchant, Profile } from '@models';
+import { Group } from '@models';
 import { Store } from '@ngrx/store';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
-import { map, Observable, take, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import * as UserActions from '../+state/actions/user.actions';
 import * as fromUser from '../+state/selectors/user.selectors';
 @Component({
@@ -16,14 +15,22 @@ import * as fromUser from '../+state/selectors/user.selectors';
   styleUrls: ['./update.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersUpdateComponent implements OnInit {
+export class UsersUpdateComponent {
   form: FormGroup;
-  menus$: Observable<Menu[]>;
-  groups$: Observable<Group[]>;
-  languages$: Observable<Language[]>;
-  stores$: Observable<Merchant[]>;
-  id$: Observable<number>;
-  user$: Observable<Profile | undefined>;
+  groups$ = this.store.select(fromProfile.selectGroups);
+  languages$ = this.store.select(fromProfile.selectLanguages);
+  stores$ = this.store.select(fromProfile.selectStores);
+  id$ = this.route.params.pipe(
+    map(params => parseInt(params.id)),
+    tap(id => this.store.dispatch(UserActions.getById({ id })))
+  );
+  user$ = this.store.select(fromUser.selectUser).pipe(
+    tap(user => {
+      if (user) {
+        this.form.patchValue(user);
+      }
+    })
+  );
 
   constructor(
     private fb: FormBuilder,
@@ -40,25 +47,7 @@ export class UsersUpdateComponent implements OnInit {
       defaultLanguage: ['en', [Validators.required]],
       active: [true],
     });
-    this.menus$ = this.store.select(fromMenu.selectMenus);
-    this.groups$ = this.store.select(fromProfile.selectGroups);
-    this.languages$ = this.store.select(fromProfile.selectLanguages);
-    this.stores$ = this.store.select(fromProfile.selectStores);
-    this.id$ = this.route.params.pipe(
-      map(params => parseInt(params.id)),
-      tap(id => this.store.dispatch(UserActions.getById({ id })))
-    );
-
-    this.user$ = this.store.select(fromUser.selectUser).pipe(
-      tap(user => {
-        if (user) {
-          this.form.patchValue(user);
-        }
-      })
-    );
   }
-
-  ngOnInit() {}
 
   compareGroup(a: Group, b: Group) {
     return a.id === b.id;

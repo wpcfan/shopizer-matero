@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { State } from '@core/+state/reducers/setting.reducer';
-import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import * as fromSetting from '@core/+state/selectors/setting.selectors';
-import { Menu } from '@models';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 import * as SettingActions from '@core/+state/actions/setting.actions';
 @Component({
@@ -14,17 +12,13 @@ import * as SettingActions from '@core/+state/actions/setting.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileSettingComponent {
-  menus$: Observable<Menu[]>;
-  setting$: Observable<State>;
+  setting$ = this.store.select(fromSetting.selectSettingState).pipe(
+    tap(setting => {
+      this.model = Object.assign({}, setting);
+    })
+  );
   model!: State;
-  constructor(private store: Store) {
-    this.menus$ = this.store.select(fromMenu.selectMenus);
-    this.setting$ = this.store.select(fromSetting.selectSettingState).pipe(
-      tap(setting => {
-        this.model = Object.assign({}, setting);
-      })
-    );
-  }
+  constructor(private store: Store) {}
 
   update() {
     this.store.dispatch(SettingActions.updateSettings({ settings: this.model }));

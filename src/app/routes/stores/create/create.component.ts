@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
 import * as StoreActions from '../+state/actions/store.actions';
@@ -9,10 +8,10 @@ import * as fromStore from '../+state/selectors/store.selectors';
   selector: 'app-stores-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoresCreateComponent {
   form: FormGroup;
-  menus$ = this.store.select(fromMenu.selectMenus);
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
   countries$ = this.store.select(fromProfile.selectCountries);

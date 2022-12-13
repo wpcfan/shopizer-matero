@@ -1,11 +1,8 @@
-<ng-container *ngIf="menus$ | async as menus">
-  <page-header
-    [title]="'setting.title' | translate"
-    [subtitle]="'setting.subtitle' | translate"
-    [hideBreadcrumb]="false"
-    [menus]="menus"
-  ></page-header>
-</ng-container>
+<page-header
+  [title]="'setting.title' | translate"
+  [subtitle]="'setting.subtitle' | translate"
+  [hideBreadcrumb]="false"
+></page-header>
 <div class="w-full h-full" fxLayout="row wrap">
   <mat-card
     class="mat-elevation-z4 m-auto"

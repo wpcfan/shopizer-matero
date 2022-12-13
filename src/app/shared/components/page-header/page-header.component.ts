@@ -4,13 +4,14 @@ import {
   Component,
   HostBinding,
   Input,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import { Menu } from '@models';
+import { Store } from '@ngrx/store';
 import { getMenuLevel } from '@shared';
-
+import { tap } from 'rxjs';
 @Component({
   selector: 'page-header',
   templateUrl: './page-header.component.html',
@@ -18,13 +19,12 @@ import { getMenuLevel } from '@shared';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageHeaderComponent implements OnInit {
+export class PageHeaderComponent {
   @HostBinding('class') class = 'matero-page-header';
 
   @Input() title = '';
   @Input() subtitle = '';
   @Input() nav: string[] = [];
-  @Input() menus: Menu[] = [];
   @Input()
   get hideBreadcrumb() {
     return this._hideBreadCrumb;
@@ -33,22 +33,21 @@ export class PageHeaderComponent implements OnInit {
     this._hideBreadCrumb = coerceBooleanProperty(value);
   }
   private _hideBreadCrumb = false;
+  menus$ = this.store.select(fromMenu.selectMenus).pipe(
+    tap(menus => {
+      this.nav = Array.isArray(this.nav) ? this.nav : [];
+      if (this.nav.length === 0) {
+        this.genBreadcrumb(menus);
+      }
+      this.title = this.title || this.nav[this.nav.length - 1];
+    })
+  );
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store) {}
 
-  ngOnInit() {
-    this.nav = Array.isArray(this.nav) ? this.nav : [];
-
-    if (this.nav.length === 0) {
-      this.genBreadcrumb();
-    }
-
-    this.title = this.title || this.nav[this.nav.length - 1];
-  }
-
-  genBreadcrumb() {
+  genBreadcrumb(menus: Menu[]) {
     const routes = this.router.url.slice(1).split('/');
-    this.nav = getMenuLevel(routes, this.menus);
+    this.nav = getMenuLevel(routes, menus);
     this.nav.unshift('home');
   }
 

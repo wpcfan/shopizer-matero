@@ -1,6 +1,4 @@
-<ng-container *ngIf="menus$ | async as menus">
-  <page-header title="User List" [hideBreadcrumb]="false" [menus]="menus"></page-header>
-</ng-container>
+<page-header title="User List" [hideBreadcrumb]="false"></page-header>
 
 <ng-container *ngIf="state$ | async as state">
   <ngx-dyna-table

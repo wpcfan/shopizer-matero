@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Menu, Profile, SelectOption } from '@models';
+import { Profile, SelectOption } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
@@ -96,10 +95,8 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
     this.router.navigate(['users', row.id]);
   }
   public handleAdd(): void {}
-  menus$: Observable<Menu[]>;
   constructor(private store: Store, private router: Router) {
     super();
-    this.menus$ = this.store.select(fromMenu.selectMenus);
     this.store.dispatch(UserActions.loadUsers({ page: 0 }));
   }
 }

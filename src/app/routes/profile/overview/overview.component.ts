@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Group, Language, Menu, Profile } from '@models';
+import { Group, Profile } from '@models';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 import * as ProfileActions from '@core/+state/actions/profile.actions';
-import * as fromMenu from '@core/+state/selectors/menu.selectors';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 
 @Component({
@@ -14,23 +13,17 @@ import * as fromProfile from '@core/+state/selectors/profile.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileOverviewComponent {
-  groups$: Observable<Group[]>;
-  languages$: Observable<Language[]>;
-  menus$: Observable<Menu[]>;
-  profile$: Observable<Profile | undefined>;
+  groups$ = this.store.select(fromProfile.selectGroups);
+  languages$ = this.store.select(fromProfile.selectLanguages);
+  profile$ = this.store.select(fromProfile.selectProfile).pipe(
+    tap(it => {
+      if (it) {
+        this.model = Object.assign({}, it);
+      }
+    })
+  );
   model!: Profile;
-  constructor(private store: Store) {
-    this.menus$ = this.store.select(fromMenu.selectMenus);
-    this.groups$ = this.store.select(fromProfile.selectGroups);
-    this.languages$ = this.store.select(fromProfile.selectLanguages);
-    this.profile$ = this.store.select(fromProfile.selectProfile).pipe(
-      tap(it => {
-        if (it) {
-          this.model = Object.assign({}, it);
-        }
-      })
-    );
-  }
+  constructor(private store: Store) {}
 
   update() {
     this.store.dispatch(
