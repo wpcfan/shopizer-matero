@@ -76,6 +76,10 @@ export class MerchantsUpdateComponent {
     this.store.dispatch(MerchantActions.updateMerchant({ code, data: this.form.value }));
   }
 
+  get disableDelete() {
+    return localStorage.getItem('store') === this.form.get('code')?.value;
+  }
+
   delete(code: string) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
