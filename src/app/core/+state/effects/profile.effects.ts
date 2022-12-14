@@ -113,6 +113,23 @@ export class ProfileEffects {
     );
   });
 
+  zones$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.loadZones),
+      exhaustMap(({ countryCode }) =>
+        this.profileService.zones(countryCode).pipe(
+          map(data => AuthActions.loadZonesSuccess({ data })),
+          catchError(error => {
+            if (error instanceof HttpErrorResponse) {
+              return of(AuthActions.loadZonesFailure({ error: error.error.message }));
+            }
+            return of(AuthActions.loadZonesFailure({ error: 'Unknown Error' }));
+          })
+        )
+      )
+    );
+  });
+
   update$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.updateProfile),

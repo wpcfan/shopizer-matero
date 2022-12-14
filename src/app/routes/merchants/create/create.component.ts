@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
+import { filter } from 'rxjs';
 import * as MerchantActions from '../+state/actions/merchant.actions';
 import * as fromMerchant from '../+state/selectors/merchant.selectors';
 @Component({
@@ -19,6 +21,7 @@ export class MerchantsCreateComponent {
   dimensions$ = this.store.select(fromMerchant.selectDimensions);
   weights$ = this.store.select(fromMerchant.selectWeights);
   retailerStores$ = this.store.select(fromMerchant.selectRetailers);
+  stateProvinces$ = this.store.select(fromProfile.selectZones);
   constructor(private store: Store, private fb: FormBuilder) {
     this.form = this.fb.nonNullable.group({
       name: ['', [Validators.required]],
@@ -43,6 +46,13 @@ export class MerchantsCreateComponent {
       retailer: [false],
       retailerStore: [''],
     });
+    this.form
+      .get('address')
+      ?.get('country')
+      ?.valueChanges.pipe(filter(country => !!country))
+      .subscribe(country => {
+        this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
+      });
   }
 
   create(ev: Event) {

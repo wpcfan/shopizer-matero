@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 import { filter, map, take, tap } from 'rxjs';
 import * as MerchantActions from '../+state/actions/merchant.actions';
 import * as fromMerchant from '../+state/selectors/merchant.selectors';
-
 @Component({
   selector: 'app-merchants-update',
   templateUrl: './update.component.html',
@@ -36,6 +36,7 @@ export class MerchantsUpdateComponent {
     map(params => params.get('code') as string),
     tap(code => this.store.dispatch(MerchantActions.getByCode({ code })))
   );
+  stateProvinces$ = this.store.select(fromProfile.selectZones);
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -65,6 +66,13 @@ export class MerchantsUpdateComponent {
       retailer: [false],
       retailerStore: [''],
     });
+    this.form
+      .get('address')
+      ?.get('country')
+      ?.valueChanges.pipe(filter(country => !!country))
+      .subscribe(country => {
+        this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
+      });
   }
 
   update(ev: Event, code: string) {

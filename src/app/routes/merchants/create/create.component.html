@@ -58,14 +58,6 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>{{ 'merchants.create.address.state_province' | translate }}</mat-label>
-            <input matInput formControlName="stateProvince" />
-            <mat-error *ngIf="form.controls.address.get('stateProvince')?.invalid">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
             <mat-label>{{ 'merchants.create.address.country' | translate }}</mat-label>
             <mat-select formControlName="country">
               <mat-option *ngFor="let country of countries$ | async" [value]="country.code">
@@ -73,6 +65,18 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="form.controls.address.get('country')?.invalid">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'merchants.create.address.state_province' | translate }}</mat-label>
+            <mat-select formControlName="stateProvince">
+              <mat-option *ngFor="let state of stateProvinces$ | async" [value]="state.code">
+                {{ state.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls.address.get('stateProvince')?.invalid">
               {{ 'validations.required' | translate }}
             </mat-error>
           </mat-form-field>

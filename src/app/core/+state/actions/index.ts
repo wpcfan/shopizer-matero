@@ -7,3 +7,4 @@ export * from './profile.actions';
 export * from './register.actions';
 export * from './setting.actions';
 export * from './store.actions';
+export * from './zone.actions';

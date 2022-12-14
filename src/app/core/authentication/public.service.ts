@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { Country, Language } from '@models';
+import { Country, Currency, Language, Zone } from '@models';
 
 /**
  * These are public apis that do not require authentication,
@@ -18,5 +18,13 @@ export class PublicService {
 
   countries() {
     return this.http.get<Country[]>(`${this.url}/country`);
+  }
+
+  zones(countryCode: string) {
+    return this.http.get<Zone[]>(`${this.url}/zones`, { params: { code: countryCode } });
+  }
+
+  currencies() {
+    return this.http.get<Currency[]>(`${this.url}/currency`);
   }
 }

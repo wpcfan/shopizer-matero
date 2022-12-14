@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PublicService } from '@core';
 import { environment } from '@env/environment';
-import { Currency, Measure, Merchant, Pageable } from '@models';
+import { Measure, Merchant, Pageable } from '@models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MerchantService {
   url = environment.apiUrl;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private publicService: PublicService) {}
 
   merchants(
     page = 0,
@@ -25,7 +26,7 @@ export class MerchantService {
   }
 
   currencies() {
-    return this.http.get<Currency[]>(`${this.url}/v1/currency`);
+    return this.publicService.currencies();
   }
 
   measures(): Observable<Measure> {
@@ -34,8 +35,8 @@ export class MerchantService {
       .pipe(map(({ measures, weights }) => ({ dimensions: measures, weights })));
   }
 
-  zones() {
-    return this.http.get<Zone[]>(`${this.url}/v1/zones`);
+  zones(countryCode: string) {
+    return this.publicService.zones(countryCode);
   }
 
   retailers(): Observable<Merchant[]> {

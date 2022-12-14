@@ -1,4 +1,4 @@
-import { Country, Group, Language, Merchant, Profile } from '@models';
+import { Country, Group, Language, Merchant, Profile, Zone } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as ProfileActions from '../actions';
 
@@ -9,6 +9,7 @@ export interface State {
   groups: Group[];
   languages: Language[];
   countries: Country[];
+  zones: Zone[];
   stores: Merchant[];
   error?: string;
 }
@@ -17,6 +18,7 @@ export const initialState: State = {
   groups: [],
   languages: [],
   countries: [],
+  zones: [],
   stores: [],
 };
 
@@ -37,5 +39,7 @@ export const reducer = createReducer(
     ProfileActions.loadCountriesSuccess,
     (state, { data }): State => ({ ...state, countries: data })
   ),
-  on(ProfileActions.loadCountriesFailure, (state, { error }): State => ({ ...state, error }))
+  on(ProfileActions.loadCountriesFailure, (state, { error }): State => ({ ...state, error })),
+  on(ProfileActions.loadZonesSuccess, (state, { data }): State => ({ ...state, zones: data })),
+  on(ProfileActions.loadZonesFailure, (state, { error }): State => ({ ...state, error }))
 );

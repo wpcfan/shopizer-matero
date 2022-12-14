@@ -21,3 +21,5 @@ export const selectStoreOptions = createSelector(selectStores, stores =>
     value: store.code,
   }))
 );
+
+export const selectZones = createSelector(selectProfileFeatureState, state => state.zones);

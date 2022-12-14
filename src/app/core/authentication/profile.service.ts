@@ -26,6 +26,10 @@ export class ProfileService {
     return this.publicService.countries();
   }
 
+  zones(countryCode: string) {
+    return this.publicService.zones(countryCode);
+  }
+
   stores() {
     return this.http.get<Merchant[]>(`${this.url}/v1/private/stores/names`);
   }
