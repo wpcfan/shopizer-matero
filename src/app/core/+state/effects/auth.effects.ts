@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/authentication';
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
-import { catchError, exhaustMap, map, of, tap } from 'rxjs';
+import { routerNavigatedAction } from '@ngrx/router-store';
+import { catchError, exhaustMap, filter, map, of, tap } from 'rxjs';
 import * as AuthActions from '../actions';
 
 @Injectable()
@@ -100,6 +101,14 @@ export class AuthEffects {
     },
     { dispatch: false }
   );
+
+  loadCountriesWhenRoutedToRegister$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      filter(({ payload }) => payload.routerState.url === '/register'),
+      map(() => AuthActions.loadCountries())
+    );
+  });
 
   constructor(
     private actions$: Actions,

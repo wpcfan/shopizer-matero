@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,7 @@ import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
-import { filter, map, take, tap } from 'rxjs';
+import { filter, map, Subscription, take, tap } from 'rxjs';
 import * as MerchantActions from '../+state/actions/merchant.actions';
 import * as fromMerchant from '../+state/selectors/merchant.selectors';
 @Component({
@@ -15,7 +15,7 @@ import * as fromMerchant from '../+state/selectors/merchant.selectors';
   styleUrls: ['./update.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MerchantsUpdateComponent {
+export class MerchantsUpdateComponent implements OnInit, OnDestroy {
   form: FormGroup;
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
@@ -37,6 +37,8 @@ export class MerchantsUpdateComponent {
     tap(code => this.store.dispatch(MerchantActions.getByCode({ code })))
   );
   stateProvinces$ = this.store.select(fromProfile.selectZones);
+  sub = new Subscription();
+
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -66,13 +68,22 @@ export class MerchantsUpdateComponent {
       retailer: [false],
       retailerStore: [''],
     });
-    this.form
-      .get('address')
-      ?.get('country')
-      ?.valueChanges.pipe(filter(country => !!country))
-      .subscribe(country => {
-        this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
-      });
+  }
+
+  ngOnInit(): void {
+    this.sub.add(
+      this.form
+        .get('address')
+        ?.get('country')
+        ?.valueChanges.pipe(filter(country => !!country))
+        .subscribe(country => {
+          this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   update(ev: Event, code: string) {

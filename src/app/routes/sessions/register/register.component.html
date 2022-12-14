@@ -10,7 +10,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.firstName' | translate }}</mat-label>
-        <input matInput formControlName="firstName" required />
+        <input matInput formControlName="firstName" />
         <mat-error *ngIf="form.get('firstName')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -18,7 +18,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.lastName' | translate }}</mat-label>
-        <input matInput formControlName="lastName" required />
+        <input matInput formControlName="lastName" />
         <mat-error *ngIf="form.get('lastName')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -26,7 +26,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.email' | translate }}</mat-label>
-        <input matInput formControlName="email" required />
+        <input matInput formControlName="email" />
         <mat-error *ngIf="form.get('email')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -34,7 +34,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'login.password' | translate }}</mat-label>
-        <input matInput type="password" formControlName="password" required />
+        <input matInput type="password" formControlName="password" />
         <mat-error *ngIf="form.get('password')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -42,7 +42,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.confirm_password' | translate }}</mat-label>
-        <input matInput type="password" formControlName="confirmPassword" required />
+        <input matInput type="password" formControlName="confirmPassword" />
         <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -59,7 +59,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.name' | translate }}</mat-label>
-        <input matInput formControlName="name" required />
+        <input matInput formControlName="name" />
         <mat-error *ngIf="form.get('name')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -67,7 +67,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.address' | translate }}</mat-label>
-        <input matInput formControlName="address" required />
+        <input matInput formControlName="address" />
         <mat-error *ngIf="form.get('address')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -75,7 +75,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.city' | translate }}</mat-label>
-        <input matInput formControlName="city" required />
+        <input matInput formControlName="city" />
         <mat-error *ngIf="form.get('city')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
@@ -83,24 +83,32 @@
 
       <mat-form-field appearance="outline">
         <mat-label>{{ 'register.postalCode' | translate }}</mat-label>
-        <input matInput formControlName="postalCode" required />
+        <input matInput formControlName="postalCode" />
         <mat-error *ngIf="form.get('postalCode')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'register.stateProvince' | translate }}</mat-label>
-        <input matInput formControlName="stateProvince" required />
-        <mat-error *ngIf="form.get('stateProvince')?.invalid">
+        <mat-label>{{ 'register.country' | translate }}</mat-label>
+        <mat-select formControlName="country">
+          <mat-option *ngFor="let country of countries$ | async" [value]="country.code">
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('country')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'register.country' | translate }}</mat-label>
-        <input matInput formControlName="country" required />
-        <mat-error *ngIf="form.get('country')?.invalid">
+        <mat-label>{{ 'register.stateProvince' | translate }}</mat-label>
+        <mat-select formControlName="stateProvince">
+          <mat-option *ngFor="let state of stateProvinces$ | async" [value]="state.code">
+            {{ state.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('stateProvince')?.invalid">
           {{ 'validations.required' | translate }}
         </mat-error>
       </mat-form-field>

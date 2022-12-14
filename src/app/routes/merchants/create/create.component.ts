@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import * as MerchantActions from '../+state/actions/merchant.actions';
 import * as fromMerchant from '../+state/selectors/merchant.selectors';
 @Component({
@@ -12,7 +12,7 @@ import * as fromMerchant from '../+state/selectors/merchant.selectors';
   styleUrls: ['./create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MerchantsCreateComponent {
+export class MerchantsCreateComponent implements OnInit, OnDestroy {
   form: FormGroup;
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
@@ -22,6 +22,8 @@ export class MerchantsCreateComponent {
   weights$ = this.store.select(fromMerchant.selectWeights);
   retailerStores$ = this.store.select(fromMerchant.selectRetailers);
   stateProvinces$ = this.store.select(fromProfile.selectZones);
+  sub = new Subscription();
+
   constructor(private store: Store, private fb: FormBuilder) {
     this.form = this.fb.nonNullable.group({
       name: ['', [Validators.required]],
@@ -46,13 +48,22 @@ export class MerchantsCreateComponent {
       retailer: [false],
       retailerStore: [''],
     });
-    this.form
-      .get('address')
-      ?.get('country')
-      ?.valueChanges.pipe(filter(country => !!country))
-      .subscribe(country => {
-        this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
-      });
+  }
+
+  ngOnInit(): void {
+    this.sub.add(
+      this.form
+        .get('address')
+        ?.get('country')
+        ?.valueChanges.pipe(filter(country => !!country))
+        .subscribe(country => {
+          this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   create(ev: Event) {
