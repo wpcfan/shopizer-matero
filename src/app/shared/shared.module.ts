@@ -4,8 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyMaterialModule } from '@ngx-formly/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgProgressModule } from 'ngx-progressbar';
@@ -32,8 +30,6 @@ const MODULES: any[] = [
   MaterialModule,
   MaterialExtensionsModule,
   FlexLayoutModule,
-  FormlyModule,
-  FormlyMaterialModule,
   NgProgressModule,
   NgProgressRouterModule,
   NgProgressHttpModule,
