@@ -2,65 +2,65 @@ import { Merchant, Pageable } from '@models';
 import { createAction, props } from '@ngrx/store';
 
 export const loadMerchants = createAction(
-  '[Store] Load Stores',
+  '[Merchant] Load Merchants',
   props<{ page: number; params?: Record<string, string> }>()
 );
 
 export const loadMerchantsSuccess = createAction(
-  '[Store] Load Stores Success',
+  '[Merchant] Load Merchants Success',
   props<{ data: Pageable<Merchant> }>()
 );
 
 export const loadMerchantsFailure = createAction(
-  '[Store] Load Stores Failure',
+  '[Merchant] Load Merchants Failure',
   props<{ error: string }>()
 );
 
 export const createMerchant = createAction(
-  '[Store] Create Store',
+  '[Merchant] Create Merchant',
   props<{ data: Partial<Merchant> }>()
 );
 
 export const createMerchantSuccess = createAction(
-  '[Store] Create Store Success',
+  '[Merchant] Create Merchant Success',
   props<{ data: Merchant }>()
 );
 
 export const createMerchantFailure = createAction(
-  '[Store] Create Store Failure',
+  '[Merchant] Create Merchant Failure',
   props<{ error: string }>()
 );
 
-export const selectMerchant = createAction('[Store] Select Store', props<{ code: string }>());
+export const getByCode = createAction('[Merchant] Get Merchant By Code', props<{ code: string }>());
 
-export const selectMerchantSuccess = createAction(
-  '[Store] Select Store Success',
+export const getByCodeSuccess = createAction(
+  '[Merchant] Get Merchant By Code Success',
   props<{ data: Merchant }>()
 );
 
-export const selectMerchantFailure = createAction(
-  '[Store] Select Store Failure',
+export const getByCodeFailure = createAction(
+  '[Merchant] Get Merchant By Code Failure',
   props<{ error: string }>()
 );
 
 export const updateMerchant = createAction(
-  '[Store] Update Store',
+  '[Merchant] Update Merchant',
   props<{ code: string; data: Partial<Merchant> }>()
 );
 
 export const updateMerchantSuccess = createAction(
-  '[Store] Update Store Success',
+  '[Merchant] Update Merchant Success',
   props<{ data: Merchant }>()
 );
 
 export const updateMerchantFailure = createAction(
-  '[Store] Update Store Failure',
+  '[Merchant] Update Merchant Failure',
   props<{ error: string }>()
 );
 
-export const deleteMerchant = createAction('[Store] Delete Store', props<{ code: string }>());
-export const deleteMerchantSuccess = createAction('[Store] Delete Store Success');
+export const deleteMerchant = createAction('[Merchant] Delete Merchant', props<{ code: string }>());
+export const deleteMerchantSuccess = createAction('[Merchant] Delete Merchant Success');
 export const deleteMerchantFailure = createAction(
-  '[Store] Delete Store Failure',
+  '[Merchant] Delete Merchant Failure',
   props<{ error: string }>()
 );

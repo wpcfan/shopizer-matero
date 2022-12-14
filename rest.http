@@ -37,3 +37,7 @@ Content-Type: application/json
   "username": "admin@shopizer.com",
   "password": "password"
 }
+
+###
+GET http://localhost:8080/api/v1/private/store/DEFAULT?lang=en&store=DEFAULT
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBzaG9waXplci5jb20iLCJhdWQiOiJhcGkiLCJleHAiOjE2NzE1OTA1MzcsImlhdCI6MTY3MDk4NTczN30.iKPHIVaLTFg8pKo_LYhUUn-soSzU9phaBHwSl7g67-izNPDj2lvhpRUhswJnfmBLWA-zeG4reGEHliguqQQ3tg

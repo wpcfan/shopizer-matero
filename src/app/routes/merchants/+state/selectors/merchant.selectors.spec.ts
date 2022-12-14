@@ -1,10 +1,10 @@
-import * as fromStore from '../reducers/merchant.reducer';
+import * as fromMerchant from '../reducers/merchant.reducer';
 import { selectMerchantState } from './merchant.selectors';
 
-describe('Store Selectors', () => {
+describe('Merchant Selectors', () => {
   it('should select the feature state', () => {
     const result = selectMerchantState({
-      [fromStore.merchantFeatureKey]: {},
+      [fromMerchant.merchantFeatureKey]: {},
     });
 
     expect(result).toEqual({});

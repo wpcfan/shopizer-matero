@@ -1,6 +1,5 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from './base-url-interceptor';
-import { DefaultInterceptor } from './default-interceptor';
 
 // import { SanctumInterceptor } from './sanctum-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
@@ -28,7 +27,7 @@ export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerLanguageInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerStoreInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerTokenInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
+  // { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
 ];

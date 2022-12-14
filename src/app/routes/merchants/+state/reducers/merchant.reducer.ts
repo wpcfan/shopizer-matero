@@ -73,8 +73,8 @@ export const reducer = createReducer(
   ),
   on(MerchantActions.loadRetailersFailure, (state, { error }): State => ({ ...state, error })),
   on(
-    MerchantActions.selectMerchantSuccess,
+    MerchantActions.getByCodeSuccess,
     (state, { data }): State => ({ ...state, selectedMerchant: data })
   ),
-  on(MerchantActions.selectMerchantFailure, (state, { error }): State => ({ ...state, error }))
+  on(MerchantActions.getByCodeFailure, (state, { error }): State => ({ ...state, error }))
 );

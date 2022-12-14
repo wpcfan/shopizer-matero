@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
-import * as StoreActions from '../+state/actions/merchant.actions';
-import * as fromStore from '../+state/selectors/merchant.selectors';
+import * as MerchantActions from '../+state/actions/merchant.actions';
+import * as fromMerchant from '../+state/selectors/merchant.selectors';
 @Component({
-  selector: 'app-stores-create',
+  selector: 'app-merchants-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,10 +15,10 @@ export class MerchantsCreateComponent {
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
   countries$ = this.store.select(fromProfile.selectCountries);
-  currencies$ = this.store.select(fromStore.selectCurrencies);
-  dimensions$ = this.store.select(fromStore.selectDimensions);
-  weights$ = this.store.select(fromStore.selectWeights);
-  retailerStores$ = this.store.select(fromStore.selectRetailers);
+  currencies$ = this.store.select(fromMerchant.selectCurrencies);
+  dimensions$ = this.store.select(fromMerchant.selectDimensions);
+  weights$ = this.store.select(fromMerchant.selectWeights);
+  retailerStores$ = this.store.select(fromMerchant.selectRetailers);
   constructor(private store: Store, private fb: FormBuilder) {
     this.form = this.fb.nonNullable.group({
       name: ['', [Validators.required]],
@@ -53,7 +53,9 @@ export class MerchantsCreateComponent {
     }
     const formattedDate = this.form.value.inBusinessSince.format('YYYY-MM-DD');
     this.store.dispatch(
-      StoreActions.createMerchant({ data: { ...this.form.value, inBusinessSince: formattedDate } })
+      MerchantActions.createMerchant({
+        data: { ...this.form.value, inBusinessSince: formattedDate },
+      })
     );
   }
 }

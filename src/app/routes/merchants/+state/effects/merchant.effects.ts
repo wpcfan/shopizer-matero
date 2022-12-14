@@ -6,7 +6,7 @@ import * as AuthActions from '@core/+state/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { catchError, exhaustMap, filter, map, of, tap } from 'rxjs';
-import * as StoreActions from '../actions';
+import * as MerchantActions from '../actions';
 import { MerchantService } from '../services/merchant.service';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class MerchantEffects {
       filter(
         ({ payload }) =>
           payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\d+/.test(payload.routerState.url)
+          /\/stores\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => AuthActions.loadCountries())
     );
@@ -29,7 +29,7 @@ export class MerchantEffects {
       filter(
         ({ payload }) =>
           payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\d+/.test(payload.routerState.url)
+          /\/stores\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => AuthActions.loadLanguages())
     );
@@ -41,9 +41,9 @@ export class MerchantEffects {
       filter(
         ({ payload }) =>
           payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\d+/.test(payload.routerState.url)
+          /\/stores\/update\/\w+/.test(payload.routerState.url)
       ),
-      map(() => StoreActions.loadCurrencies())
+      map(() => MerchantActions.loadCurrencies())
     );
   });
 
@@ -53,9 +53,9 @@ export class MerchantEffects {
       filter(
         ({ payload }) =>
           payload.routerState.url === '/stores/create' ||
-          /\/stores\/\d+/.test(payload.routerState.url)
+          /\/stores\/update\/\w+/.test(payload.routerState.url)
       ),
-      map(() => StoreActions.loadMeasures())
+      map(() => MerchantActions.loadMeasures())
     );
   });
 
@@ -66,19 +66,19 @@ export class MerchantEffects {
         ({ payload }) =>
           payload.routerState.url === '/stores/list' ||
           payload.routerState.url === '/stores/create' ||
-          /\/stores\/\d+/.test(payload.routerState.url)
+          /\/stores\/update\/\w+/.test(payload.routerState.url)
       ),
-      map(() => StoreActions.loadRetailers())
+      map(() => MerchantActions.loadRetailers())
     );
   });
 
   loadStores$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.loadMerchants),
+      ofType(MerchantActions.loadMerchants),
       exhaustMap(({ page, params }) =>
         this.service.merchants(page, params).pipe(
-          map(data => StoreActions.loadMerchantsSuccess({ data })),
-          catchError(error => of(StoreActions.loadMerchantsFailure({ error })))
+          map(data => MerchantActions.loadMerchantsSuccess({ data })),
+          catchError(error => of(MerchantActions.loadMerchantsFailure({ error })))
         )
       )
     );
@@ -86,11 +86,11 @@ export class MerchantEffects {
 
   loadCurrencies$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.loadCurrencies),
+      ofType(MerchantActions.loadCurrencies),
       exhaustMap(() =>
         this.service.currencies().pipe(
-          map(data => StoreActions.loadCurrenciesSuccess({ data })),
-          catchError(error => of(StoreActions.loadCurrenciesFailure({ error })))
+          map(data => MerchantActions.loadCurrenciesSuccess({ data })),
+          catchError(error => of(MerchantActions.loadCurrenciesFailure({ error })))
         )
       )
     );
@@ -98,11 +98,11 @@ export class MerchantEffects {
 
   loadMeasures$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.loadMeasures),
+      ofType(MerchantActions.loadMeasures),
       exhaustMap(() =>
         this.service.measures().pipe(
-          map(data => StoreActions.loadMeasuresSuccess({ data })),
-          catchError(error => of(StoreActions.loadMeasuresFailure({ error })))
+          map(data => MerchantActions.loadMeasuresSuccess({ data })),
+          catchError(error => of(MerchantActions.loadMeasuresFailure({ error })))
         )
       )
     );
@@ -110,11 +110,11 @@ export class MerchantEffects {
 
   loadRetailers$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.loadRetailers),
+      ofType(MerchantActions.loadRetailers),
       exhaustMap(() =>
         this.service.retailers().pipe(
-          map(data => StoreActions.loadRetailersSuccess({ data })),
-          catchError(error => of(StoreActions.loadRetailersFailure({ error })))
+          map(data => MerchantActions.loadRetailersSuccess({ data })),
+          catchError(error => of(MerchantActions.loadRetailersFailure({ error })))
         )
       )
     );
@@ -122,11 +122,11 @@ export class MerchantEffects {
 
   createStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.createMerchant),
+      ofType(MerchantActions.createMerchant),
       exhaustMap(({ data }) =>
         this.service.create(data).pipe(
-          map(store => StoreActions.createMerchantSuccess({ data: store })),
-          catchError(error => of(StoreActions.createMerchantFailure({ error })))
+          map(store => MerchantActions.createMerchantSuccess({ data: store })),
+          catchError(error => of(MerchantActions.createMerchantFailure({ error })))
         )
       )
     );
@@ -135,7 +135,7 @@ export class MerchantEffects {
   createStoreSuccessAndRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(StoreActions.createMerchantSuccess),
+        ofType(MerchantActions.createMerchantSuccess),
         tap(({ data }) => this.router.navigate(['stores', data.code]))
       );
     },
@@ -144,17 +144,17 @@ export class MerchantEffects {
 
   selectStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.selectMerchant),
+      ofType(MerchantActions.getByCode),
       exhaustMap(({ code }) =>
         this.service.getBy(code).pipe(
-          map(store => StoreActions.selectMerchantSuccess({ data: store })),
+          map(store => MerchantActions.getByCodeSuccess({ data: store })),
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
-              return of(StoreActions.selectMerchantFailure({ error: error.error.message }));
+              return of(MerchantActions.getByCodeFailure({ error: error.error.message }));
             }
             console.log(error);
 
-            return of(StoreActions.selectMerchantFailure({ error: 'Unknown Error' }));
+            return of(MerchantActions.getByCodeFailure({ error: 'Unknown Error' }));
           })
         )
       )
@@ -163,11 +163,11 @@ export class MerchantEffects {
 
   updateStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.updateMerchant),
+      ofType(MerchantActions.updateMerchant),
       exhaustMap(({ code, data }) =>
         this.service.update(code, data).pipe(
-          map(store => StoreActions.updateMerchantSuccess({ data: store })),
-          catchError(error => of(StoreActions.updateMerchantFailure({ error })))
+          map(store => MerchantActions.updateMerchantSuccess({ data: store })),
+          catchError(error => of(MerchantActions.updateMerchantFailure({ error })))
         )
       )
     );
@@ -176,7 +176,7 @@ export class MerchantEffects {
   updateStoreSuccessAndMessage$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(StoreActions.updateMerchantSuccess),
+        ofType(MerchantActions.updateMerchantSuccess),
         tap(() => this.snack.open('Store updated successfully', 'OK'))
       );
     },
@@ -185,11 +185,11 @@ export class MerchantEffects {
 
   deleteStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.deleteMerchant),
+      ofType(MerchantActions.deleteMerchant),
       exhaustMap(({ code }) =>
         this.service.delete(code).pipe(
-          map(() => StoreActions.deleteMerchantSuccess()),
-          catchError(error => of(StoreActions.deleteMerchantFailure({ error })))
+          map(() => MerchantActions.deleteMerchantSuccess()),
+          catchError(error => of(MerchantActions.deleteMerchantFailure({ error })))
         )
       )
     );
@@ -198,7 +198,7 @@ export class MerchantEffects {
   deleteSuccessAndRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(StoreActions.deleteMerchantSuccess),
+        ofType(MerchantActions.deleteMerchantSuccess),
         tap(() => {
           this.snack.open('Store deleted successfully', 'OK');
           this.router.navigate(['stores', 'list']);
