@@ -10,7 +10,6 @@ import { ShopizerTokenInterceptor } from './shopizer-token-interceptor';
 
 // export * from './sanctum-interceptor';
 export * from './base-url-interceptor';
-export * from './default-interceptor';
 export * from './error-interceptor';
 export * from './logging-interceptor';
 export * from './noop-interceptor';
@@ -27,7 +26,6 @@ export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerLanguageInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerStoreInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ShopizerTokenInterceptor, multi: true },
-  // { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
 ];
