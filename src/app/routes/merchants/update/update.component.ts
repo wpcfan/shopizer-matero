@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
-import { filter, map, tap } from 'rxjs';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
+import { filter, map, take, tap } from 'rxjs';
 import * as MerchantActions from '../+state/actions/merchant.actions';
 import * as fromMerchant from '../+state/selectors/merchant.selectors';
 
@@ -34,7 +36,12 @@ export class MerchantsUpdateComponent {
     map(params => params.get('code') as string),
     tap(code => this.store.dispatch(MerchantActions.getByCode({ code })))
   );
-  constructor(private store: Store, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
     this.form = this.fb.nonNullable.group({
       name: ['', [Validators.required]],
       code: ['', [Validators.required]],
@@ -67,5 +74,23 @@ export class MerchantsUpdateComponent {
       return;
     }
     this.store.dispatch(MerchantActions.updateMerchant({ code, data: this.form.value }));
+  }
+
+  delete(code: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Store',
+        message: 'Are you sure you want to delete this store?',
+        type: 'warning',
+      },
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(result => {
+        if (result) {
+          this.store.dispatch(MerchantActions.deleteMerchant({ code }));
+        }
+      });
   }
 }

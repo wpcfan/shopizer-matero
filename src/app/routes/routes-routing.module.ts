@@ -33,7 +33,7 @@ const routes: Routes = [
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
       },
       {
-        path: 'stores',
+        path: 'merchants',
         loadChildren: () => import('./merchants/merchants.module').then(m => m.MerchantsModule),
       },
       {

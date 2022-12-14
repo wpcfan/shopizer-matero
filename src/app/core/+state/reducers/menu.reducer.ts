@@ -40,19 +40,19 @@ export const initialState: State = {
       ],
     },
     {
-      route: '/stores',
-      name: 'Stores',
+      route: '/merchants',
+      name: 'Merchants',
       type: 'sub',
       icon: 'storefront',
       children: [
         {
           route: 'list',
-          name: 'Store list',
+          name: 'Merchant list',
           type: 'link',
         },
         {
           route: 'create',
-          name: 'Create store',
+          name: 'Create merchant',
           type: 'link',
         },
       ],

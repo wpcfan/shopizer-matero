@@ -86,7 +86,7 @@ export class MerchantsListComponent extends BaseCrudTable<Merchant> {
     this.handleEdit(row);
   }
   public handleEdit(row: Merchant): void {
-    this.router.navigate(['stores', 'update', row.code]);
+    this.router.navigate(['merchants', 'update', row.code]);
   }
   public handleAdd(): void {}
   constructor(private store: Store, private router: Router) {

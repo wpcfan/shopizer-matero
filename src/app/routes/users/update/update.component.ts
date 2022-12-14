@@ -54,6 +54,9 @@ export class UsersUpdateComponent {
   }
 
   update(id: number) {
+    if (this.form.invalid) {
+      return;
+    }
     this.store.dispatch(UserActions.updateUser({ data: this.form.value, id }));
   }
 

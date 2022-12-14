@@ -122,13 +122,13 @@
     "agree": "I have read and agree to the terms of service",
     "have_an_account": "Already have an account",
     "register": "Create account",
-    "adminInformation": "Store administrator information",
-    "storeInformation": "Store information",
+    "adminInformation": "Merchant administrator information",
+    "storeInformation": "Merchant information",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",
-    "name": "Store name",
-    "code": "Store code",
+    "name": "Merchant name",
+    "code": "Merchant code",
     "address": "Address",
     "city": "City",
     "stateProvince": "State / province",
@@ -143,7 +143,7 @@
     "SUPERADMIN": "Super Admin",
     "ADMIN": "Admin",
     "ADMIN_RETAILER": "Admin Retailer",
-    "ADMIN_STORE": "Admin Store",
+    "ADMIN_STORE": "Admin Merchant",
     "ADMIN_CATALOGUE": "Admin Catalogue",
     "ADMIN_ORDER": "Admin Order",
     "ADMIN_CONTENT": "Admin Content",
@@ -198,17 +198,17 @@
       "subtitle": "update user's password"
     }
   },
-  "stores": {
+  "merchants": {
     "list": {
-      "title": "Store list"
+      "title": "Merchant list"
     },
     "create": {
-      "title": "Create store",
+      "title": "Create merchant",
       "submit": "Create",
-      "name": "Store name",
-      "code": "Store code",
-      "phone": "Store phone",
-      "email": "Store email",
+      "name": "Merchant name",
+      "code": "Merchant code",
+      "phone": "Merchant phone",
+      "email": "Merchant email",
       "address": {
         "address": "address",
         "city": "City",

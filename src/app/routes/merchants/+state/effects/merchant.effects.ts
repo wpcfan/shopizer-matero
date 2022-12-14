@@ -16,8 +16,8 @@ export class MerchantEffects {
       ofType(routerNavigatedAction),
       filter(
         ({ payload }) =>
-          payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\w+/.test(payload.routerState.url)
+          payload.routerState.url === '/merchants/create' ||
+          /\/merchants\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => AuthActions.loadCountries())
     );
@@ -28,8 +28,8 @@ export class MerchantEffects {
       ofType(routerNavigatedAction),
       filter(
         ({ payload }) =>
-          payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\w+/.test(payload.routerState.url)
+          payload.routerState.url === '/merchants/create' ||
+          /\/merchants\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => AuthActions.loadLanguages())
     );
@@ -40,8 +40,8 @@ export class MerchantEffects {
       ofType(routerNavigatedAction),
       filter(
         ({ payload }) =>
-          payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\w+/.test(payload.routerState.url)
+          payload.routerState.url === '/merchants/create' ||
+          /\/merchants\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => MerchantActions.loadCurrencies())
     );
@@ -52,8 +52,8 @@ export class MerchantEffects {
       ofType(routerNavigatedAction),
       filter(
         ({ payload }) =>
-          payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\w+/.test(payload.routerState.url)
+          payload.routerState.url === '/merchants/create' ||
+          /\/merchants\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => MerchantActions.loadMeasures())
     );
@@ -64,9 +64,9 @@ export class MerchantEffects {
       ofType(routerNavigatedAction),
       filter(
         ({ payload }) =>
-          payload.routerState.url === '/stores/list' ||
-          payload.routerState.url === '/stores/create' ||
-          /\/stores\/update\/\w+/.test(payload.routerState.url)
+          payload.routerState.url === '/merchants/list' ||
+          payload.routerState.url === '/merchants/create' ||
+          /\/merchants\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => MerchantActions.loadRetailers())
     );
@@ -136,7 +136,7 @@ export class MerchantEffects {
     () => {
       return this.actions$.pipe(
         ofType(MerchantActions.createMerchantSuccess),
-        tap(({ data }) => this.router.navigate(['stores', data.code]))
+        tap(({ data }) => this.router.navigate(['merchants', data.code]))
       );
     },
     { dispatch: false }
@@ -200,8 +200,8 @@ export class MerchantEffects {
       return this.actions$.pipe(
         ofType(MerchantActions.deleteMerchantSuccess),
         tap(() => {
-          this.snack.open('Store deleted successfully', 'OK');
-          this.router.navigate(['stores', 'list']);
+          this.snack.open('Merchant deleted successfully', 'OK', { duration: 2000 });
+          this.router.navigate(['merchants', 'list']);
         })
       );
     },
