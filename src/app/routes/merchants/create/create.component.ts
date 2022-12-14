@@ -2,15 +2,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
-import * as StoreActions from '../+state/actions/store.actions';
-import * as fromStore from '../+state/selectors/store.selectors';
+import * as StoreActions from '../+state/actions/merchant.actions';
+import * as fromStore from '../+state/selectors/merchant.selectors';
 @Component({
   selector: 'app-stores-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StoresCreateComponent {
+export class MerchantsCreateComponent {
   form: FormGroup;
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
@@ -53,7 +53,7 @@ export class StoresCreateComponent {
     }
     const formattedDate = this.form.value.inBusinessSince.format('YYYY-MM-DD');
     this.store.dispatch(
-      StoreActions.createStore({ data: { ...this.form.value, inBusinessSince: formattedDate } })
+      StoreActions.createMerchant({ data: { ...this.form.value, inBusinessSince: formattedDate } })
     );
   }
 }

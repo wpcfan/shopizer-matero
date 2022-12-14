@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Store } from '@ngrx/store';
-import { map, tap } from 'rxjs';
-import * as StoreActions from '../+state/actions/store.actions';
-import * as fromStore from '../+state/selectors/store.selectors';
+import { filter, map, tap } from 'rxjs';
+import * as StoreActions from '../+state/actions/merchant.actions';
+import * as fromStore from '../+state/selectors/merchant.selectors';
+import { MerchantService } from '../+state/services/merchant.service';
 
 @Component({
   selector: 'app-stores-update',
@@ -13,7 +14,7 @@ import * as fromStore from '../+state/selectors/store.selectors';
   styleUrls: ['./update.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StoresUpdateComponent {
+export class MerchantsUpdateComponent {
   form: FormGroup;
   groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
@@ -22,20 +23,24 @@ export class StoresUpdateComponent {
   dimensions$ = this.store.select(fromStore.selectDimensions);
   weights$ = this.store.select(fromStore.selectWeights);
   retailerStores$ = this.store.select(fromStore.selectRetailers);
-  selectedStore$ = this.store.select(fromStore.selectSelectedStore).pipe(
+  selectedStore$ = this.store.select(fromStore.selectSelectedMerchant).pipe(
     tap(store => {
       if (store) {
         this.form.patchValue(store);
       }
     })
   );
-  code$ = this.route.params.pipe(
-    map(params => params.code as string),
-    tap(code => {
-      this.store.dispatch(StoreActions.selectMerchant({ code }));
-    })
+  code$ = this.route.paramMap.pipe(
+    filter(params => params.has('code')),
+    map(params => params.get('code') as string),
+    tap(code => {})
   );
-  constructor(private store: Store, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private service: MerchantService
+  ) {
     this.form = this.fb.nonNullable.group({
       name: ['', [Validators.required]],
       code: ['', [Validators.required]],
@@ -59,6 +64,9 @@ export class StoresUpdateComponent {
       retailer: [false],
       retailerStore: [''],
     });
+    this.service.getBy('DEFAULT').subscribe(store => {
+      console.log(store);
+    });
   }
 
   update(ev: Event, code: string) {
@@ -67,6 +75,6 @@ export class StoresUpdateComponent {
     if (!this.form.valid) {
       return;
     }
-    this.store.dispatch(StoreActions.updateStore({ code, data: this.form.value }));
+    this.store.dispatch(StoreActions.updateMerchant({ code, data: this.form.value }));
   }
 }

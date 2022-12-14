@@ -1,11 +1,11 @@
 import { Currency, Merchant } from '@models';
 import { createReducer, on } from '@ngrx/store';
-import * as StoreActions from '../actions';
+import * as MerchantActions from '../actions';
 
-export const storeFeatureKey = 'store';
+export const merchantFeatureKey = 'merchant';
 
 export interface State {
-  stores: Merchant[];
+  merchants: Merchant[];
   currencies: Currency[];
   dimensions: string[];
   weights: string[];
@@ -15,11 +15,11 @@ export interface State {
   page: number;
   loading: boolean;
   filters?: Record<string, string>;
-  selectedStore?: Merchant;
+  selectedMerchant?: Merchant;
 }
 
 export const initialState: State = {
-  stores: [],
+  merchants: [],
   currencies: [],
   dimensions: [],
   weights: [],
@@ -33,48 +33,48 @@ export const reducer = createReducer(
   initialState,
 
   on(
-    StoreActions.loadStores,
+    MerchantActions.loadMerchants,
     (state): State => ({
       ...state,
       loading: true,
     })
   ),
   on(
-    StoreActions.loadStoresSuccess,
+    MerchantActions.loadMerchantsSuccess,
     (state, { data }): State => ({
       ...state,
-      stores: data.data,
+      merchants: data.data,
       total: data.recordsTotal,
       page: Math.floor(data.recordsTotal / data.number),
       loading: false,
     })
   ),
   on(
-    StoreActions.loadStoresFailure,
+    MerchantActions.loadMerchantsFailure,
     (state, { error }): State => ({ ...state, error, loading: false })
   ),
   on(
-    StoreActions.loadCurrenciesSuccess,
+    MerchantActions.loadCurrenciesSuccess,
     (state, { data }): State => ({ ...state, currencies: data })
   ),
   on(
-    StoreActions.loadMeasuresSuccess,
+    MerchantActions.loadMeasuresSuccess,
     (state, { data }): State => ({
       ...state,
       dimensions: data.dimensions,
       weights: data.weights,
     })
   ),
-  on(StoreActions.loadCurrenciesFailure, (state, { error }): State => ({ ...state, error })),
-  on(StoreActions.loadMeasuresFailure, (state, { error }): State => ({ ...state, error })),
+  on(MerchantActions.loadCurrenciesFailure, (state, { error }): State => ({ ...state, error })),
+  on(MerchantActions.loadMeasuresFailure, (state, { error }): State => ({ ...state, error })),
   on(
-    StoreActions.loadRetailersSuccess,
+    MerchantActions.loadRetailersSuccess,
     (state, { data }): State => ({ ...state, retailers: data })
   ),
-  on(StoreActions.loadRetailersFailure, (state, { error }): State => ({ ...state, error })),
+  on(MerchantActions.loadRetailersFailure, (state, { error }): State => ({ ...state, error })),
   on(
-    StoreActions.selectMerchantSuccess,
-    (state, { data }): State => ({ ...state, selectedStore: data })
+    MerchantActions.selectMerchantSuccess,
+    (state, { data }): State => ({ ...state, selectedMerchant: data })
   ),
-  on(StoreActions.selectMerchantFailure, (state, { error }): State => ({ ...state, error }))
+  on(MerchantActions.selectMerchantFailure, (state, { error }): State => ({ ...state, error }))
 );

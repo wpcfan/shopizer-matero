@@ -7,10 +7,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { catchError, exhaustMap, filter, map, of, tap } from 'rxjs';
 import * as StoreActions from '../actions';
-import { StoreService } from '../services/store.service';
+import { MerchantService } from '../services/merchant.service';
 
 @Injectable()
-export class StoreEffects {
+export class MerchantEffects {
   loadCountriesWhenRoutedToCreateOrEditStore$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(routerNavigatedAction),
@@ -74,11 +74,11 @@ export class StoreEffects {
 
   loadStores$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.loadStores),
+      ofType(StoreActions.loadMerchants),
       exhaustMap(({ page, params }) =>
-        this.storeService.stores(page, params).pipe(
-          map(data => StoreActions.loadStoresSuccess({ data })),
-          catchError(error => of(StoreActions.loadStoresFailure({ error })))
+        this.service.merchants(page, params).pipe(
+          map(data => StoreActions.loadMerchantsSuccess({ data })),
+          catchError(error => of(StoreActions.loadMerchantsFailure({ error })))
         )
       )
     );
@@ -88,7 +88,7 @@ export class StoreEffects {
     return this.actions$.pipe(
       ofType(StoreActions.loadCurrencies),
       exhaustMap(() =>
-        this.storeService.currencies().pipe(
+        this.service.currencies().pipe(
           map(data => StoreActions.loadCurrenciesSuccess({ data })),
           catchError(error => of(StoreActions.loadCurrenciesFailure({ error })))
         )
@@ -100,7 +100,7 @@ export class StoreEffects {
     return this.actions$.pipe(
       ofType(StoreActions.loadMeasures),
       exhaustMap(() =>
-        this.storeService.measures().pipe(
+        this.service.measures().pipe(
           map(data => StoreActions.loadMeasuresSuccess({ data })),
           catchError(error => of(StoreActions.loadMeasuresFailure({ error })))
         )
@@ -112,7 +112,7 @@ export class StoreEffects {
     return this.actions$.pipe(
       ofType(StoreActions.loadRetailers),
       exhaustMap(() =>
-        this.storeService.retailers().pipe(
+        this.service.retailers().pipe(
           map(data => StoreActions.loadRetailersSuccess({ data })),
           catchError(error => of(StoreActions.loadRetailersFailure({ error })))
         )
@@ -122,11 +122,11 @@ export class StoreEffects {
 
   createStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.createStore),
+      ofType(StoreActions.createMerchant),
       exhaustMap(({ data }) =>
-        this.storeService.create(data).pipe(
-          map(store => StoreActions.createStoreSuccess({ data: store })),
-          catchError(error => of(StoreActions.createStoreFailure({ error })))
+        this.service.create(data).pipe(
+          map(store => StoreActions.createMerchantSuccess({ data: store })),
+          catchError(error => of(StoreActions.createMerchantFailure({ error })))
         )
       )
     );
@@ -135,7 +135,7 @@ export class StoreEffects {
   createStoreSuccessAndRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(StoreActions.createStoreSuccess),
+        ofType(StoreActions.createMerchantSuccess),
         tap(({ data }) => this.router.navigate(['stores', data.code]))
       );
     },
@@ -146,7 +146,7 @@ export class StoreEffects {
     return this.actions$.pipe(
       ofType(StoreActions.selectMerchant),
       exhaustMap(({ code }) =>
-        this.storeService.getByCode(code).pipe(
+        this.service.getBy(code).pipe(
           map(store => StoreActions.selectMerchantSuccess({ data: store })),
           catchError(error => {
             if (error instanceof HttpErrorResponse) {
@@ -163,11 +163,11 @@ export class StoreEffects {
 
   updateStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.updateStore),
+      ofType(StoreActions.updateMerchant),
       exhaustMap(({ code, data }) =>
-        this.storeService.update(code, data).pipe(
-          map(store => StoreActions.updateStoreSuccess({ data: store })),
-          catchError(error => of(StoreActions.updateStoreFailure({ error })))
+        this.service.update(code, data).pipe(
+          map(store => StoreActions.updateMerchantSuccess({ data: store })),
+          catchError(error => of(StoreActions.updateMerchantFailure({ error })))
         )
       )
     );
@@ -176,7 +176,7 @@ export class StoreEffects {
   updateStoreSuccessAndMessage$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(StoreActions.updateStoreSuccess),
+        ofType(StoreActions.updateMerchantSuccess),
         tap(() => this.snack.open('Store updated successfully', 'OK'))
       );
     },
@@ -185,11 +185,11 @@ export class StoreEffects {
 
   deleteStore$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoreActions.deleteStore),
+      ofType(StoreActions.deleteMerchant),
       exhaustMap(({ code }) =>
-        this.storeService.delete(code).pipe(
-          map(() => StoreActions.deleteStoreSuccess()),
-          catchError(error => of(StoreActions.deleteStoreFailure({ error })))
+        this.service.delete(code).pipe(
+          map(() => StoreActions.deleteMerchantSuccess()),
+          catchError(error => of(StoreActions.deleteMerchantFailure({ error })))
         )
       )
     );
@@ -198,7 +198,7 @@ export class StoreEffects {
   deleteSuccessAndRedirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(StoreActions.deleteStoreSuccess),
+        ofType(StoreActions.deleteMerchantSuccess),
         tap(() => {
           this.snack.open('Store deleted successfully', 'OK');
           this.router.navigate(['stores', 'list']);
@@ -210,7 +210,7 @@ export class StoreEffects {
 
   constructor(
     private actions$: Actions,
-    private storeService: StoreService,
+    private service: MerchantService,
     private router: Router,
     private snack: MatSnackBar
   ) {}

@@ -7,17 +7,17 @@ import { Store } from '@ngrx/store';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
 import { Observable } from 'rxjs';
-import * as StoreActions from '../+state/actions/store.actions';
-import { State } from '../+state/reducers/store.reducer';
-import * as fromStore from '../+state/selectors/store.selectors';
+import * as StoreActions from '../+state/actions/merchant.actions';
+import { State } from '../+state/reducers/merchant.reducer';
+import * as fromStore from '../+state/selectors/merchant.selectors';
 @Component({
   selector: 'app-stores-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StoresListComponent extends BaseCrudTable<Merchant> {
-  state$: Observable<State> = this.store.select(fromStore.selectStoreState);
+export class MerchantsListComponent extends BaseCrudTable<Merchant> {
+  state$: Observable<State> = this.store.select(fromStore.selectMerchantState);
   public columns: ColumnConfig[] = [
     {
       name: 'id',
@@ -57,7 +57,7 @@ export class StoresListComponent extends BaseCrudTable<Merchant> {
     },
   ];
   public handlePageChange(ev: PageEvent): void {
-    this.store.dispatch(StoreActions.loadStores({ page: ev.pageIndex }));
+    this.store.dispatch(StoreActions.loadMerchants({ page: ev.pageIndex }));
   }
   public handleSortChange(ev: Record<string, Sort>): void {}
   public handleDelete(row: Merchant): void {}
@@ -77,9 +77,9 @@ export class StoresListComponent extends BaseCrudTable<Merchant> {
     }
 
     if (Object.keys(params).length > 0) {
-      this.store.dispatch(StoreActions.loadStores({ page: 0, params }));
+      this.store.dispatch(StoreActions.loadMerchants({ page: 0, params }));
     } else {
-      this.store.dispatch(StoreActions.loadStores({ page: 0 }));
+      this.store.dispatch(StoreActions.loadMerchants({ page: 0 }));
     }
   }
   public handleItem(row: Merchant): void {
@@ -91,6 +91,6 @@ export class StoresListComponent extends BaseCrudTable<Merchant> {
   public handleAdd(): void {}
   constructor(private store: Store, private router: Router) {
     super();
-    this.store.dispatch(StoreActions.loadStores({ page: 0 }));
+    this.store.dispatch(StoreActions.loadMerchants({ page: 0 }));
   }
 }

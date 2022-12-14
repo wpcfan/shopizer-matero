@@ -5,11 +5,15 @@ import { Currency, Measure, Merchant, Pageable } from '@models';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
-export class StoreService {
+export class MerchantService {
   url = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  stores(page = 0, filterParams?: Record<string, string>, pageSize = environment.defaultPageSize) {
+  merchants(
+    page = 0,
+    filterParams?: Record<string, string>,
+    pageSize = environment.defaultPageSize
+  ) {
     const params = { count: pageSize.toString(), page: page.toString() };
     if (filterParams) {
       Object.assign(params, filterParams);
@@ -49,7 +53,7 @@ export class StoreService {
     return this.http.post<Merchant>(`${this.url}/v1/private/store`, store);
   }
 
-  getByCode(code: string) {
+  getBy(code: string) {
     return this.http.get<Merchant>(`${this.url}/v1/private/store/${code}`);
   }
 

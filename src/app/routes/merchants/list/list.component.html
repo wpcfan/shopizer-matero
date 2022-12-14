@@ -2,7 +2,7 @@
 <ng-container *ngIf="state$ | async as state">
   <ngx-dyna-table
     #table
-    [data]="state.stores"
+    [data]="state.merchants"
     [columns]="columns"
     [pageIndex]="state.page"
     [pageSize]="pageSize"
