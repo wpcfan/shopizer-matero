@@ -66,4 +66,14 @@ export class MerchantService {
   delete(code: string) {
     return this.http.delete(`${this.url}/v1/private/store/${code}`);
   }
+
+  uploadLogo(code: string, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<void>(`${this.url}/v1/private/store/${code}/marketing/logo`, formData);
+  }
+
+  removeLogo(code: string) {
+    return this.http.delete<void>(`${this.url}/v1/private/store/${code}/marketing/logo`);
+  }
 }

@@ -2,6 +2,11 @@ import { Address } from './address';
 import { Audit } from './audit';
 import { Language } from './language';
 
+export interface MerchantLogo {
+  name: string;
+  path: string;
+}
+
 export interface Merchant {
   id: number;
   name: string;
@@ -16,7 +21,7 @@ export interface Merchant {
   dimension: 'IN' | 'CM';
   weight: 'LB' | 'KG';
   inBusinessSince: string;
-  logo?: string | null;
+  logo?: MerchantLogo;
   parent?: Merchant | null;
   phone?: string | null;
   readableAudit?: Audit;

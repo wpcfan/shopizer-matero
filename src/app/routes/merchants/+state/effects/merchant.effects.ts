@@ -183,6 +183,30 @@ export class MerchantEffects {
     { dispatch: false }
   );
 
+  uploadStoreLogo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MerchantActions.uploadLogo),
+      exhaustMap(({ code, file }) =>
+        this.service.uploadLogo(code, file).pipe(
+          map(() => MerchantActions.uploadLogoSuccess()),
+          catchError(error => of(MerchantActions.uploadLogoFailure({ error })))
+        )
+      )
+    );
+  });
+
+  removeStoreLogo$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MerchantActions.removeLogo),
+      exhaustMap(({ code }) =>
+        this.service.removeLogo(code).pipe(
+          map(() => MerchantActions.removeLogoSuccess()),
+          catchError(error => of(MerchantActions.removeLogoFailure({ error })))
+        )
+      )
+    );
+  });
+
   deleteStore$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(MerchantActions.deleteMerchant),

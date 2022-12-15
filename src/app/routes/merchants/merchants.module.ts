@@ -7,6 +7,7 @@ import * as fromMerchant from './+state/reducers/merchant.reducer';
 import { MerchantService } from './+state/services/merchant.service';
 import { MerchantsCreateComponent } from './create/create.component';
 import { MerchantsListComponent } from './list/list.component';
+import { MerchantsLogoComponent } from './logo/logo.component';
 import { MerchantsRoutingModule } from './merchants-routing.module';
 import { MerchantsUpdateComponent } from './update/update.component';
 
@@ -14,6 +15,7 @@ const COMPONENTS: any[] = [
   MerchantsCreateComponent,
   MerchantsUpdateComponent,
   MerchantsListComponent,
+  MerchantsLogoComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

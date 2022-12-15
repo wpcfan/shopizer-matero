@@ -64,3 +64,21 @@ export const deleteMerchantFailure = createAction(
   '[Merchant] Delete Merchant Failure',
   props<{ error: string }>()
 );
+
+export const uploadLogo = createAction(
+  '[Merchant] Upload Logo',
+  props<{ code: string; file: File }>()
+);
+
+export const uploadLogoSuccess = createAction('[Merchant] Upload Logo Success');
+export const uploadLogoFailure = createAction(
+  '[Merchant] Upload Logo Failure',
+  props<{ error: string }>()
+);
+
+export const removeLogo = createAction('[Merchant] Remove Logo', props<{ code: string }>());
+export const removeLogoSuccess = createAction('[Merchant] Remove Logo Success');
+export const removeLogoFailure = createAction(
+  '[Merchant] Remove Logo Failure',
+  props<{ error: string }>()
+);

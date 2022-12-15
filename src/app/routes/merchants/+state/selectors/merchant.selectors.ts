@@ -1,3 +1,4 @@
+import { Merchant } from '@models';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromMerchant from '../reducers/merchant.reducer';
 
@@ -53,4 +54,9 @@ export const selectWeights = createSelector(
 export const selectRetailers = createSelector(
   selectMerchantState,
   (state: fromMerchant.State) => state.retailers
+);
+
+export const selectMerchantLogo = createSelector(
+  selectSelectedMerchant,
+  (merchant?: Merchant) => merchant?.logo?.path
 );

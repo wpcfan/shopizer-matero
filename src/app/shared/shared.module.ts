@@ -17,6 +17,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DynaTableModule } from './components/dyna-table';
 import { ErrorCodeComponent } from './components/error-code/error-code.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
@@ -43,6 +44,7 @@ const COMPONENTS: any[] = [
   PageHeaderComponent,
   ErrorCodeComponent,
   ConfirmDialogComponent,
+  FileUploadComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];

@@ -204,6 +204,10 @@
             {{ 'merchants.create.submit' | translate }}
           </button>
 
+          <button class="w-full" mat-button [routerLink]="['/merchants', 'logo', store.code]">
+            {{ 'users.update.logo' | translate }}
+          </button>
+
           <button
             class="w-full"
             mat-raised-button
