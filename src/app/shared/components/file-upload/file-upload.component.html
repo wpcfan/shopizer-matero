@@ -1,26 +1,25 @@
-<input
-  type="file"
-  [accept]="fileTypes"
-  class="file-input"
-  (change)="onFileSelected($event)"
-  #fileUpload
-/>
-
-<div class="file-upload">
-  <img [src]="imageUrl" alt="image preview" *ngIf="imageUrl; else noImage" />
-
-  <ng-template #noImage>
-    <div class="no-image">
-      <mat-icon>image</mat-icon>
-      <span>{{ 'fileUpload.noImage' | translate }}</span>
-    </div>
-  </ng-template>
-  <button
-    mat-mini-fab
-    color="primary"
-    class="upload-btn"
-    (click)="$event.preventDefault(); $event.stopPropagation(); fileUpload.click()"
-  >
+<ng-container *ngIf="imageUrl.length > 0; else noImage">
+  <input
+    type="file"
+    [accept]="fileTypes"
+    class="file-input"
+    (change)="onFileSelected($event)"
+    #fileUpload
+  />
+  <div class="file-upload">
+    <button
+      mat-mini-fab
+      color="primary"
+      class="upload-btn"
+      (click)="$event.preventDefault(); $event.stopPropagation(); fileUpload.click()"
+    >
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
+</ng-container>
+<ng-template #noImage>
+  <img [src]="imageUrl" alt="image preview" />
+  <button mat-mini-fab color="primary" class="upload-btn" (click)="remove($event)">
     <mat-icon>attach_file</mat-icon>
   </button>
-</div>
+</ng-template>

@@ -70,14 +70,20 @@ export const uploadLogo = createAction(
   props<{ code: string; file: File }>()
 );
 
-export const uploadLogoSuccess = createAction('[Merchant] Upload Logo Success');
+export const uploadLogoSuccess = createAction(
+  '[Merchant] Upload Logo Success',
+  props<{ code: string }>()
+);
 export const uploadLogoFailure = createAction(
   '[Merchant] Upload Logo Failure',
   props<{ error: string }>()
 );
 
 export const removeLogo = createAction('[Merchant] Remove Logo', props<{ code: string }>());
-export const removeLogoSuccess = createAction('[Merchant] Remove Logo Success');
+export const removeLogoSuccess = createAction(
+  '[Merchant] Remove Logo Success',
+  props<{ code: string }>()
+);
 export const removeLogoFailure = createAction(
   '[Merchant] Remove Logo Failure',
   props<{ error: string }>()

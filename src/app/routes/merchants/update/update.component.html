@@ -195,6 +195,7 @@
 
         <div class="button-row">
           <button
+            type="button"
             class="w-full"
             mat-raised-button
             color="primary"
@@ -204,11 +205,17 @@
             {{ 'merchants.create.submit' | translate }}
           </button>
 
-          <button class="w-full" mat-button [routerLink]="['/merchants', 'logo', store.code]">
+          <button
+            type="button"
+            class="w-full"
+            mat-button
+            [routerLink]="['/merchants', 'logo', store.code]"
+          >
             {{ 'users.update.logo' | translate }}
           </button>
 
           <button
+            type="button"
             class="w-full"
             mat-raised-button
             color="warn"
@@ -219,6 +226,7 @@
           </button>
 
           <button
+            type="button"
             class="w-full"
             mat-raised-button
             color="accent"

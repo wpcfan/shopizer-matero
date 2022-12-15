@@ -22,7 +22,7 @@ export class MerchantsLogoComponent {
     this.store.dispatch(MerchantActions.uploadLogo({ file, code }));
   }
 
-  remove(code: string) {
+  onFileRemoved(code: string) {
     this.store.dispatch(MerchantActions.removeLogo({ code }));
   }
 }

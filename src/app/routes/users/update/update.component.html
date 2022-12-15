@@ -67,6 +67,7 @@
 
       <div class="button-row">
         <button
+          type="button"
           class="w-full"
           mat-raised-button
           color="primary"
@@ -76,15 +77,26 @@
           {{ 'users.update.submit' | translate }}
         </button>
 
-        <button class="w-full" mat-raised-button [routerLink]="['/users', id, 'password']">
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          [routerLink]="['/users', id, 'password']"
+        >
           {{ 'users.update.change_password' | translate }}
         </button>
 
-        <button class="w-full" mat-raised-button color="warn" (click)="delete(id)">
+        <button type="button" class="w-full" mat-raised-button color="warn" (click)="delete(id)">
           {{ 'users.update.delete' | translate }}
         </button>
 
-        <button class="w-full" mat-raised-button color="accent" [routerLink]="['/users', 'list']">
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          color="accent"
+          [routerLink]="['/users', 'list']"
+        >
           {{ 'users.update.back_to_list' | translate }}
         </button>
       </div>

@@ -8,7 +8,6 @@ import { routerNavigatedAction } from '@ngrx/router-store';
 import { catchError, exhaustMap, filter, map, of, tap } from 'rxjs';
 import * as MerchantActions from '../actions';
 import { MerchantService } from '../services/merchant.service';
-
 @Injectable()
 export class MerchantEffects {
   loadCountriesWhenRoutedToCreateOrEditStore$ = createEffect(() => {
@@ -188,10 +187,17 @@ export class MerchantEffects {
       ofType(MerchantActions.uploadLogo),
       exhaustMap(({ code, file }) =>
         this.service.uploadLogo(code, file).pipe(
-          map(() => MerchantActions.uploadLogoSuccess()),
+          map(() => MerchantActions.uploadLogoSuccess({ code })),
           catchError(error => of(MerchantActions.uploadLogoFailure({ error })))
         )
       )
+    );
+  });
+
+  uploadStoreLogoSuccessAndGetSelectedStore$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MerchantActions.uploadLogoSuccess),
+      map(({ code }) => MerchantActions.getByCode({ code }))
     );
   });
 
@@ -200,10 +206,17 @@ export class MerchantEffects {
       ofType(MerchantActions.removeLogo),
       exhaustMap(({ code }) =>
         this.service.removeLogo(code).pipe(
-          map(() => MerchantActions.removeLogoSuccess()),
+          map(() => MerchantActions.removeLogoSuccess({ code })),
           catchError(error => of(MerchantActions.removeLogoFailure({ error })))
         )
       )
+    );
+  });
+
+  removeStoreLogoSuccessAndGetSelectedStore$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MerchantActions.removeLogoSuccess),
+      map(({ code }) => MerchantActions.getByCode({ code }))
     );
   });
 
