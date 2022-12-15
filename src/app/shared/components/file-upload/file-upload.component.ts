@@ -9,9 +9,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 export class FileUploadComponent {
   fileName = '';
   @Input() fileTypes = ['image/png', 'image/jpeg'];
-  @Input() imageUrl = '';
   @Output() fileSelected = new EventEmitter<File>();
-  @Output() fileRemoved = new EventEmitter<void>();
 
   constructor() {}
 
@@ -25,11 +23,5 @@ export class FileUploadComponent {
         this.fileSelected.emit(file);
       }
     }
-  }
-
-  remove(ev: Event) {
-    ev.preventDefault();
-    ev.stopPropagation();
-    this.fileRemoved.emit();
   }
 }

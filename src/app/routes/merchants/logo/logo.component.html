@@ -1,11 +1,31 @@
 <page-header></page-header>
 
 <ng-container *ngIf="code$ | async as code">
-  <ng-container *ngIf="logo$ | async as logo">
-    <app-file-upload
-      [imageUrl]="logo"
-      (fileSelected)="onFileSelected($event, code)"
-      (fileRemoved)="onFileRemoved(code)"
-    ></app-file-upload>
-  </ng-container>
+  <mat-card class="preview" *ngIf="logo$ | async as logo; else noImage">
+    <img [src]="logo" alt="logo preview" />
+    <div class="button-row">
+      <button type="button" class="w-full" mat-button (click)="onFileRemoved(code)">remove</button>
+      <button
+        type="button"
+        class="w-full"
+        mat-raised-button
+        color="accent"
+        [routerLink]="['/merchants', 'update', code]"
+      >
+        {{ 'common.back' | translate }}
+      </button>
+      <button
+        type="button"
+        class="w-full"
+        mat-raised-button
+        color="accent"
+        [routerLink]="['/merchants', 'list']"
+      >
+        {{ 'users.update.back_to_list' | translate }}
+      </button>
+    </div>
+  </mat-card>
+  <ng-template #noImage>
+    <app-file-upload (fileSelected)="onFileSelected($event, code)"></app-file-upload>
+  </ng-template>
 </ng-container>

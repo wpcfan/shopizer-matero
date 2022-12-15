@@ -58,5 +58,5 @@ export const selectRetailers = createSelector(
 
 export const selectMerchantLogo = createSelector(
   selectSelectedMerchant,
-  (merchant?: Merchant) => merchant?.logo?.path ?? ''
+  (merchant?: Merchant) => merchant?.logo?.path
 );

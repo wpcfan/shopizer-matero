@@ -1,0 +1,14 @@
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  button {
+    margin: 10px 20px;
+  }
+}

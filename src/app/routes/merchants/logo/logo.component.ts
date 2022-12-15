@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, map } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 import * as MerchantActions from '../../merchants/+state/actions';
 import * as fromMerchants from '../../merchants/+state/selectors/merchant.selectors';
 @Component({
@@ -11,10 +11,18 @@ import * as fromMerchants from '../../merchants/+state/selectors/merchant.select
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MerchantsLogoComponent {
-  code$ = this.route.paramMap.pipe(
-    filter(params => params.has('code')),
-    map(params => params.get('code'))
-  );
+  code$ = this.route.paramMap
+    .pipe(
+      filter(params => params.has('code')),
+      map(params => params.get('code'))
+    )
+    .pipe(
+      tap(code => {
+        if (code) {
+          this.store.dispatch(MerchantActions.getByCode({ code }));
+        }
+      })
+    );
   logo$ = this.store.select(fromMerchants.selectMerchantLogo);
   constructor(private route: ActivatedRoute, private store: Store) {}
 
