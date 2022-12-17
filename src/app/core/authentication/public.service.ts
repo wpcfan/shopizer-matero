@@ -16,6 +16,10 @@ export class PublicService {
     return this.http.get<Language[]>(`${this.url}/languages`);
   }
 
+  storeLanguages() {
+    return this.http.get<Language[]>(`${this.url}/store/languages`);
+  }
+
   countries() {
     return this.http.get<Country[]>(`${this.url}/country`);
   }

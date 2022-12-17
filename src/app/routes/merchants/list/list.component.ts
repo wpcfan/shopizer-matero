@@ -62,7 +62,6 @@ export class MerchantsListComponent extends BaseCrudTable<Merchant> {
   public handleSortChange(ev: Record<string, Sort>): void {}
   public handleDelete(row: Merchant): void {}
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
-    console.log(appliedFilters);
     const params: Record<string, string> = {};
     for (const key in appliedFilters) {
       const element = appliedFilters[key];

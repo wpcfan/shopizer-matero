@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MaterialExtensionsModule } from '../material-extensions.module';
 import { MaterialModule } from '../material.module';
 
+import { EditorModule } from '@tinymce/tinymce-angular';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DynaTableModule } from './components/dyna-table';
@@ -38,6 +39,7 @@ const MODULES: any[] = [
   ToastrModule,
   TranslateModule,
   DynaTableModule,
+  EditorModule,
 ];
 const COMPONENTS: any[] = [
   BreadcrumbComponent,

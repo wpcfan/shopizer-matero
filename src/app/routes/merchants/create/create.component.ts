@@ -14,7 +14,6 @@ import * as fromMerchant from '../+state/selectors/merchant.selectors';
 })
 export class MerchantsCreateComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  groups$ = this.store.select(fromProfile.selectGroups);
   languages$ = this.store.select(fromProfile.selectLanguages);
   countries$ = this.store.select(fromProfile.selectCountries);
   currencies$ = this.store.select(fromMerchant.selectCurrencies);

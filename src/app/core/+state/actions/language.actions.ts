@@ -12,3 +12,15 @@ export const loadLanguagesFailure = createAction(
   '[Profile] Load Languages Failure',
   props<{ error: string }>()
 );
+
+export const loadStoreLanguages = createAction('[Profile] Load Store Languages');
+
+export const loadStoreLanguagesSuccess = createAction(
+  '[Profile] Load Store Languages Success',
+  props<{ data: Language[] }>()
+);
+
+export const loadStoreLanguagesFailure = createAction(
+  '[Profile] Load Store Languages Failure',
+  props<{ error: string }>()
+);

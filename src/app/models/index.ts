@@ -1,5 +1,6 @@
 export * from './address';
 export * from './audit';
+export * from './category';
 export * from './country';
 export * from './currency';
 export * from './group';

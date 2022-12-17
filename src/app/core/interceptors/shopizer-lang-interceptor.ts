@@ -8,7 +8,11 @@ import { Observable } from 'rxjs';
 export class ShopizerLanguageInterceptor implements HttpInterceptor {
   constructor(private local: LocalStorageService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!req.url.includes(environment.apiUrl) || req.url.includes('/v1/languages')) {
+    if (
+      !req.url.includes(environment.apiUrl) ||
+      req.url.includes('/v1/languages') ||
+      req.params.has('lang')
+    ) {
       return next.handle(req);
     }
     const language = this.local.get('settings').language ?? environment.defaultLanguage;

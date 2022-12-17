@@ -79,6 +79,23 @@ export class ProfileEffects {
     );
   });
 
+  storeLanguages$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.loadStoreLanguages),
+      exhaustMap(() =>
+        this.profileService.storeLanguages().pipe(
+          map(data => AuthActions.loadStoreLanguagesSuccess({ data })),
+          catchError(error => {
+            if (error instanceof HttpErrorResponse) {
+              return of(AuthActions.loadStoreLanguagesFailure({ error: error.error.message }));
+            }
+            return of(AuthActions.loadStoreLanguagesFailure({ error: 'Unknown Error' }));
+          })
+        )
+      )
+    );
+  });
+
   stores$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.loadStores),

@@ -8,6 +8,7 @@ export interface State {
   profile?: Profile;
   groups: Group[];
   languages: Language[];
+  storeLanguages: Language[];
   countries: Country[];
   zones: Zone[];
   stores: Merchant[];
@@ -17,6 +18,7 @@ export interface State {
 export const initialState: State = {
   groups: [],
   languages: [],
+  storeLanguages: [],
   countries: [],
   zones: [],
   stores: [],
@@ -41,5 +43,10 @@ export const reducer = createReducer(
   ),
   on(ProfileActions.loadCountriesFailure, (state, { error }): State => ({ ...state, error })),
   on(ProfileActions.loadZonesSuccess, (state, { data }): State => ({ ...state, zones: data })),
-  on(ProfileActions.loadZonesFailure, (state, { error }): State => ({ ...state, error }))
+  on(ProfileActions.loadZonesFailure, (state, { error }): State => ({ ...state, error })),
+  on(
+    ProfileActions.loadStoreLanguagesSuccess,
+    (state, { data }): State => ({ ...state, storeLanguages: data })
+  ),
+  on(ProfileActions.loadStoreLanguagesFailure, (state, { error }): State => ({ ...state, error }))
 );

@@ -22,6 +22,10 @@ export class ProfileService {
     return this.publicService.languages();
   }
 
+  storeLanguages() {
+    return this.publicService.storeLanguages();
+  }
+
   countries() {
     return this.publicService.countries();
   }
