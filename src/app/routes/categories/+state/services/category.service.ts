@@ -3,18 +3,7 @@ import { Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 import { environment } from '@env/environment';
 import { Category, Pageable } from '@models';
-import { flatMap } from 'lodash';
 import { map, Observable } from 'rxjs';
-
-const getFlatCategories = (categories: Category[]): Category[] => {
-  return flatMap(
-    categories.map(category =>
-      category.children && category.children.length > 0
-        ? [category, ...getFlatCategories(category.children)]
-        : [category]
-    )
-  );
-};
 
 @Injectable()
 export class CategoryService {
@@ -43,18 +32,20 @@ export class CategoryService {
             recordsTotal: it.recordsTotal,
             recordsFiltered: it.recordsFiltered,
             number: it.number,
-            data: getFlatCategories(it.categories),
+            data: it.categories,
           } as Pageable<Category>;
         })
       );
   }
 
   update(id: number, category: Partial<Category>, lang: string) {
-    return this.http.put<Category>(`${this.url}/v1/category/${id}`, category, { params: { lang } });
+    return this.http.put<Category>(`${this.url}/v1/private/category/${id}`, category, {
+      params: { lang },
+    });
   }
 
   delete(id: number) {
-    return this.http.delete(`${this.url}/v1/category/${id}`);
+    return this.http.delete(`${this.url}/v1/private/category/${id}`);
   }
 
   create(category: Partial<Category>) {
@@ -80,6 +71,14 @@ export class CategoryService {
         number: number;
         categories: Category[];
       }>(`${this.url}/v1/category`, { params: { count: '1000' } })
-      .pipe(map(it => getFlatCategories(it.categories)));
+      .pipe(map(it => it.categories));
+  }
+
+  toggleVisible(id: number, visible: boolean) {
+    return this.http.patch(`${this.url}/v1/private/category/${id}/visible`, { visible });
+  }
+
+  moveToParent(id: number, parentId: number) {
+    return this.http.put(`${this.url}/v1/private/category/${id}/move/${parentId}`, null);
   }
 }

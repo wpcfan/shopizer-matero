@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -39,8 +40,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PaginatorI18nService } from '@shared/services/paginator-i18n.service';
 
 @NgModule({
@@ -81,6 +82,7 @@ import { PaginatorI18nService } from '@shared/services/paginator-i18n.service';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    DragDropModule,
   ],
   providers: [
     {

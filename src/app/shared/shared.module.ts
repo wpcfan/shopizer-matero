@@ -20,6 +20,7 @@ import { DynaTableModule } from './components/dyna-table';
 import { ErrorCodeComponent } from './components/error-code/error-code.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { SimpleTreeComponent } from './components/simple-tree/simple-tree.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
@@ -47,6 +48,7 @@ const COMPONENTS: any[] = [
   ErrorCodeComponent,
   ConfirmDialogComponent,
   FileUploadComponent,
+  SimpleTreeComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];

@@ -8,7 +8,6 @@ import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dy
 import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
 import { Observable } from 'rxjs';
 import * as CategoryActions from '../+state/actions/category.actions';
-import { State } from '../+state/reducers/category.reducer';
 import * as fromCategory from '../+state/selectors/category.selectors';
 @Component({
   selector: 'app-categories-list',
@@ -94,7 +93,8 @@ export class CategoriesListComponent extends BaseCrudTable<Category> {
     this.router.navigate(['categories', 'update', row.id]);
   }
   public handleAdd(): void {}
-  state$: Observable<State> = this.store.select(fromCategory.selectCategoryState);
+  categories$: Observable<Category[]> = this.store.select(fromCategory.selectFlatCategories);
+  state$ = this.store.select(fromCategory.selectCategoryState);
   constructor(private store: Store, private router: Router) {
     super();
     this.store.dispatch(CategoryActions.loadCategories({ page: 0 }));

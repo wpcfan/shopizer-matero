@@ -36,12 +36,15 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" *ngIf="categories$ | async as categories">
+        <mat-form-field
+          appearance="outline"
+          *ngIf="parentIdAndCategories$ | async as parentIdAndCategories"
+        >
           <mat-label>{{ 'categories.create.parent' | translate }}</mat-label>
-          <mat-select formControlName="parent">
+          <mat-select formControlName="parent" [compareWith]="compareFn">
             <mat-option [value]="null">{{ 'categories.create.parent' | translate }}</mat-option>
             <mat-option
-              *ngFor="let category of categories"
+              *ngFor="let category of parentIdAndCategories.categories"
               [value]="{ id: category.id, code: category.code }"
             >
               {{ category.code }}

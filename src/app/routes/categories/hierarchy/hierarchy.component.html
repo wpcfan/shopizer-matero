@@ -1,0 +1,20 @@
+<page-header
+  [title]="'categories.hierarchy.title' | translate"
+  [hideBreadcrumb]="false"
+></page-header>
+
+<ngx-simple-tree
+  [dataSource]="tree$"
+  (nodeSelected)="onNodeSelected($event)"
+  [menuTemplate]="menu"
+></ngx-simple-tree>
+
+<ng-template #menu let-node>
+  <button mat-menu-item *ngIf="!!node.value?.parent?.id" (click)="handleAddSibling(node.value)">
+    增加同级节点
+  </button>
+  <button mat-menu-item (click)="handleAddChild(node.value)">增加下级节点</button>
+  <button mat-menu-item *ngIf="!!node.value?.parent?.id" (click)="handleDeleteNode(node.value)">
+    删除此节点
+  </button>
+</ng-template>

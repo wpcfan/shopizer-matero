@@ -73,6 +73,11 @@ export const initialState: State = {
           name: 'Create category',
           type: 'link',
         },
+        {
+          route: 'hierarchy',
+          name: 'Category hierarchy',
+          type: 'link',
+        },
       ],
     },
     {

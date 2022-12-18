@@ -96,7 +96,8 @@ export class CategoryEffects {
       ofType(routerNavigatedAction),
       filter(
         ({ payload }) =>
-          payload.routerState.url === '/categories/create' ||
+          payload.routerState.url.includes('/categories/create') ||
+          payload.routerState.url === '/categories/hierarchy' ||
           /\/categories\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => CategoryActions.loadAll())

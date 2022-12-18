@@ -2,7 +2,10 @@
   "common": {
     "cancel": "取消",
     "ok": "确定",
-    "back": "返回"
+    "back": "返回",
+    "submit": "提交",
+    "delete": "删除",
+    "back_to_list": "返回列表"
   },
   "language": {
     "en": "English",
@@ -188,9 +191,6 @@
     },
     "update": {
       "title": "更新用户",
-      "submit": "更新用户",
-      "delete": "删除用户",
-      "back_to_list": "返回用户列表",
       "change_password": "更改密码"
     },
     "change_password": {

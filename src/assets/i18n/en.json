@@ -2,7 +2,10 @@
   "common": {
     "cancel": "Cancel",
     "ok": "OK",
-    "back": "Back"
+    "back": "Back",
+    "submit": "Submit",
+    "delete": "Delete",
+    "back_to_list": "Back to list"
   },
   "language": {
     "en": "English",
@@ -188,9 +191,6 @@
     },
     "update": {
       "title": "Update user",
-      "submit": "Update",
-      "delete": "Delete",
-      "back_to_list": "Back to list",
       "change_password": "Change password"
     },
     "change_password": {

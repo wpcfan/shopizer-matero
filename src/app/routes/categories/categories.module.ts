@@ -7,6 +7,7 @@ import * as fromCategory from './+state/reducers/category.reducer';
 import { CategoryService } from './+state/services/category.service';
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoriesCreateComponent } from './create/create.component';
+import { CategoriesHierarchyComponent } from './hierarchy/hierarchy.component';
 import { CategoriesListComponent } from './list/list.component';
 import { CategoriesUpdateComponent } from './update/update.component';
 
@@ -14,6 +15,7 @@ const COMPONENTS: any[] = [
   CategoriesListComponent,
   CategoriesCreateComponent,
   CategoriesUpdateComponent,
+  CategoriesHierarchyComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

@@ -202,7 +202,7 @@
             (click)="form.valid ? update($event, store.code) : null"
             [disabled]="form.invalid"
           >
-            {{ 'merchants.create.submit' | translate }}
+            {{ 'common.submit' | translate }}
           </button>
 
           <button
@@ -222,7 +222,7 @@
             [disabled]="disableDelete"
             (click)="delete(store.code)"
           >
-            {{ 'users.update.delete' | translate }}
+            {{ 'common.delete' | translate }}
           </button>
 
           <button
@@ -232,7 +232,7 @@
             color="accent"
             [routerLink]="['/merchants', 'list']"
           >
-            {{ 'users.update.back_to_list' | translate }}
+            {{ 'common.back_to_list' | translate }}
           </button>
         </div>
       </form>

@@ -74,7 +74,7 @@
           (click)="form.valid ? update(id) : null"
           [disabled]="form.invalid"
         >
-          {{ 'users.update.submit' | translate }}
+          {{ 'common.submit' | translate }}
         </button>
 
         <button
@@ -87,7 +87,7 @@
         </button>
 
         <button type="button" class="w-full" mat-raised-button color="warn" (click)="delete(id)">
-          {{ 'users.update.delete' | translate }}
+          {{ 'common.delete' | translate }}
         </button>
 
         <button
@@ -97,7 +97,7 @@
           color="accent"
           [routerLink]="['/users', 'list']"
         >
-          {{ 'users.update.back_to_list' | translate }}
+          {{ 'common.back_to_list' | translate }}
         </button>
       </div>
     </form>

@@ -27,7 +27,7 @@ export class CategoriesUpdateComponent implements OnInit {
   };
   languages$ = this.store.select(fromProfile.selectStoreLanguages);
   stores$ = this.store.select(fromProfile.selectStores);
-  categories$ = this.store.select(fromCategory.selectAllCategories);
+  categories$ = this.store.select(fromCategory.selectAllFlatCategories);
   selectedCategory$!: Observable<Category | undefined>;
   idAndLang$ = combineLatest([
     this.route.paramMap.pipe(
@@ -79,7 +79,7 @@ export class CategoriesUpdateComponent implements OnInit {
             sortOrder: category.sortOrder,
             visible: category.visible,
             featured: category.featured,
-            parent: category.parent,
+            parent: { id: category.parent?.id, code: category.parent?.code },
             store: category.store,
             descriptions: [category.description],
           });
@@ -107,5 +107,13 @@ export class CategoriesUpdateComponent implements OnInit {
     this.router.navigate(['/categories', 'update', this.form.value.code], {
       queryParams: { lang: ev.value },
     });
+  }
+
+  delete(id: string) {
+    this.store.dispatch(CategoryActions.deleteCategory({ id: parseInt(id) }));
+  }
+
+  compareFn(c1: Category, c2: Category): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 }
