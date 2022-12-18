@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AsyncValidatorFn, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { environment } from '@env/environment';
 import { Language } from '@models';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import * as CategoryActions from '../+state/actions/category.actions';
 import * as fromCategory from '../+state/selectors/category.selectors';
+import { CategoryService } from '../+state/services/category.service';
 @Component({
   selector: 'app-categories-create',
   templateUrl: './create.component.html',
@@ -29,11 +30,15 @@ export class CategoriesCreateComponent implements OnInit {
   form!: FormGroup;
   descriptions: FormArray = this.fb.array([]);
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required]],
+      code: ['', [Validators.required], [this.codeValidator()]],
       sortOrder: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
       visible: [true, [Validators.required]],
       featured: [false, [Validators.required]],
@@ -51,6 +56,10 @@ export class CategoriesCreateComponent implements OnInit {
         });
       })
     );
+  }
+
+  codeValidator(): AsyncValidatorFn {
+    return control => this.categoryService.unique(control.value);
   }
 
   createDescription(language: string) {
