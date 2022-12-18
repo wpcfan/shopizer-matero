@@ -12,8 +12,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, Observable, Subscription } from 'rxjs';
 import { getFlatNodes, getFlatNodeStates, SimpleTreeNode } from './model';
 
 @Component({
@@ -30,12 +29,16 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
   @Input() selectedNodeId!: string;
   @Input() enableDragDrop = false;
   @Output() nodeSelected = new EventEmitter<any>();
+  @Output() dragAndDrop = new EventEmitter<CdkDragDrop<SimpleTreeNode[]>>();
+
   menuToggle!: { [id: string]: boolean };
   treeNodeStates!: { [id: string]: boolean };
   nestedTreeControl!: NestedTreeControl<SimpleTreeNode>;
   nestedDataSource!: MatTreeNestedDataSource<SimpleTreeNode>;
   subs: Subscription[] = [];
+
   constructor(private cd: ChangeDetectorRef) {}
+
   ngOnInit(): void {
     this.nestedDataSource = new MatTreeNestedDataSource();
 
@@ -63,10 +66,12 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
     );
     this.nestedTreeControl = new NestedTreeControl<SimpleTreeNode>(this.getChildren);
   }
+
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
     this.subs = [];
   }
+
   hasNestedChild = (_: number, nodeData: SimpleTreeNode) => nodeData.children.length > 0;
 
   private getChildren = (node: SimpleTreeNode) => node.children;
@@ -93,7 +98,7 @@ export class SimpleTreeComponent implements OnInit, OnDestroy {
     };
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
+  drop(event: CdkDragDrop<SimpleTreeNode[]>) {
+    this.dragAndDrop.emit(event);
   }
 }
