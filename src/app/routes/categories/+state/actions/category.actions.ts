@@ -16,7 +16,10 @@ export const loadCategoriesFailure = createAction(
   props<{ error: string }>()
 );
 
-export const getById = createAction('[Category] Get Category By Id', props<{ id: number }>());
+export const getById = createAction(
+  '[Category] Get Category By Id',
+  props<{ id: number; lang: string }>()
+);
 
 export const getByIdSuccess = createAction(
   '[Category] Get Category By Id Success',
@@ -45,7 +48,7 @@ export const createCategoryFailure = createAction(
 
 export const updateCategory = createAction(
   '[Category] Update Category',
-  props<{ id: number; data: Partial<Category> }>()
+  props<{ id: number; data: Partial<Category>; lang: string }>()
 );
 
 export const updateCategorySuccess = createAction(

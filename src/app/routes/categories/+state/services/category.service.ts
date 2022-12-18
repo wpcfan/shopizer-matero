@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 import { environment } from '@env/environment';
 import { Category, Pageable } from '@models';
 import { flatMap } from 'lodash';
@@ -48,8 +49,8 @@ export class CategoryService {
       );
   }
 
-  update(id: number, category: Partial<Category>) {
-    return this.http.put<Category>(`${this.url}/v1/category/${id}`, category);
+  update(id: number, category: Partial<Category>, lang: string) {
+    return this.http.put<Category>(`${this.url}/v1/category/${id}`, category, { params: { lang } });
   }
 
   delete(id: number) {
@@ -60,12 +61,14 @@ export class CategoryService {
     return this.http.post<Category>(`${this.url}/v1/private/category`, category);
   }
 
-  getById(id: number) {
-    return this.http.get<Category>(`${this.url}/v1/category/${id}`);
+  getById(id: number, lang: string) {
+    return this.http.get<Category>(`${this.url}/v1/category/${id}`, { params: { lang } });
   }
 
-  unique(code: string) {
-    return this.http.get(`${this.url}/v1/category/unique`, { params: { code } });
+  unique(code: string): Observable<ValidationErrors | null> {
+    return this.http
+      .get<{ exists: boolean }>(`${this.url}/v1/private/category/unique`, { params: { code } })
+      .pipe(map(res => (res.exists ? { unique: true } : null)));
   }
 
   allCategories(): Observable<Category[]> {

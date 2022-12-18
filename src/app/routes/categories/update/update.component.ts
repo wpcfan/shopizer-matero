@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { environment } from '@env/environment';
 import { Category } from '@models';
 import { Store } from '@ngrx/store';
-import { filter, map, Observable, tap } from 'rxjs';
+import { combineLatest, filter, map, Observable, tap } from 'rxjs';
 import * as CategoryActions from '../+state/actions/category.actions';
 import * as fromCategory from '../+state/selectors/category.selectors';
 @Component({
@@ -28,15 +29,25 @@ export class CategoriesUpdateComponent implements OnInit {
   stores$ = this.store.select(fromProfile.selectStores);
   categories$ = this.store.select(fromCategory.selectAllCategories);
   selectedCategory$!: Observable<Category | undefined>;
-  id$ = this.route.paramMap.pipe(
-    filter(params => params.has('id')),
-    map(params => params.get('id') as string),
-    tap(id => this.store.dispatch(CategoryActions.getById({ id: parseInt(id) })))
+  idAndLang$ = combineLatest([
+    this.route.paramMap.pipe(
+      filter(params => params.has('id')),
+      map(params => params.get('id') as string)
+    ),
+    this.route.queryParamMap.pipe(map(params => params.get('lang') ?? environment.defaultLanguage)),
+  ]).pipe(
+    map(([id, lang]) => ({ id, lang })),
+    tap(({ id, lang }) => this.store.dispatch(CategoryActions.getById({ id: parseInt(id), lang })))
   );
   form!: FormGroup;
   descriptions!: FormArray;
 
-  constructor(private store: Store, private fb: FormBuilder, private route: ActivatedRoute) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.descriptions = this.fb.array([
@@ -81,14 +92,20 @@ export class CategoriesUpdateComponent implements OnInit {
     return this.descriptions.controls[index] as FormGroup;
   }
 
-  update(ev: Event, id: string) {
+  update(ev: Event, id: string, lang: string) {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.form.invalid) {
       return;
     }
     this.store.dispatch(
-      CategoryActions.updateCategory({ id: parseInt(id), data: this.form.value })
+      CategoryActions.updateCategory({ id: parseInt(id), data: this.form.value, lang })
     );
+  }
+
+  hanldeCountryChange(ev: MatSelectChange) {
+    this.router.navigate(['/categories', 'update', this.form.value.code], {
+      queryParams: { lang: ev.value },
+    });
   }
 }
