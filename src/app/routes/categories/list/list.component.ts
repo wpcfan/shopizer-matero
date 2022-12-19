@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Category } from '@models';
 import { Store } from '@ngrx/store';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
-import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
 import { Observable } from 'rxjs';
 import * as CategoryActions from '../+state/actions/category.actions';
 import * as fromCategory from '../+state/selectors/category.selectors';
@@ -67,18 +66,7 @@ export class CategoriesListComponent extends BaseCrudTable<Category> {
   public handleSortChange(ev: Record<string, Sort>): void {}
   public handleDelete(row: Category): void {}
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
-    const params: Record<string, string> = {};
-    for (const key in appliedFilters) {
-      const element = appliedFilters[key];
-      if (element) {
-        if (element instanceof TextFilter) {
-          params[key] = (element as TextFilter).value;
-        }
-        if (element instanceof SelectFilter) {
-          params[key] = (element as SelectFilter).value;
-        }
-      }
-    }
+    const params = this.filterParams(appliedFilters);
 
     if (Object.keys(params).length > 0) {
       this.store.dispatch(CategoryActions.loadCategories({ page: 0, params }));

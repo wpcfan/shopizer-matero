@@ -8,7 +8,6 @@ import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
-import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
 import * as UserActions from '../+state/actions/user.actions';
 import { State } from '../+state/reducers/user.reducer';
 import * as fromUser from '../+state/selectors/user.selectors';
@@ -68,19 +67,7 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
   public handleSortChange(ev: Record<string, Sort>): void {}
   public handleDelete(row: Profile): void {}
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
-    console.log(appliedFilters);
-    const params: Record<string, string> = {};
-    for (const key in appliedFilters) {
-      const element = appliedFilters[key];
-      if (element) {
-        if (element instanceof TextFilter) {
-          params[key] = (element as TextFilter).value;
-        }
-        if (element instanceof SelectFilter) {
-          params[key] = (element as SelectFilter).value;
-        }
-      }
-    }
+    const params = this.filterParams(appliedFilters);
 
     if (Object.keys(params).length > 0) {
       this.store.dispatch(UserActions.loadUsers({ page: 0, params }));

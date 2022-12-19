@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Merchant } from '@models';
 import { Store } from '@ngrx/store';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
-import { SelectFilter, TextFilter } from '@shared/components/dyna-table/table-filter';
 import { Observable } from 'rxjs';
 import * as MerchantActions from '../+state/actions/merchant.actions';
 import { State } from '../+state/reducers/merchant.reducer';
@@ -62,18 +61,7 @@ export class MerchantsListComponent extends BaseCrudTable<Merchant> {
   public handleSortChange(ev: Record<string, Sort>): void {}
   public handleDelete(row: Merchant): void {}
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
-    const params: Record<string, string> = {};
-    for (const key in appliedFilters) {
-      const element = appliedFilters[key];
-      if (element) {
-        if (element instanceof TextFilter) {
-          params[key] = (element as TextFilter).value;
-        }
-        if (element instanceof SelectFilter) {
-          params[key] = (element as SelectFilter).value;
-        }
-      }
-    }
+    const params = this.filterParams(appliedFilters);
 
     if (Object.keys(params).length > 0) {
       this.store.dispatch(MerchantActions.loadMerchants({ page: 0, params }));

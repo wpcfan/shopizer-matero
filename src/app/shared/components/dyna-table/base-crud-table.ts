@@ -5,6 +5,7 @@ import { ColumnConfig } from './column-config.model';
 import { ColumnFilter } from './column-filter.model';
 import { DynaTableComponent } from './dyna-table.component';
 import { Entity } from './models/entity.model';
+import { SelectFilter, TextFilter } from './table-filter';
 
 @Directive()
 export abstract class BaseCrudTable<T extends Entity> {
@@ -61,4 +62,20 @@ export abstract class BaseCrudTable<T extends Entity> {
   }
 
   protected handleRemoveState(ids: string[]) {}
+
+  filterParams(appliedFilters: Record<string, ColumnFilter>): Record<string, string> {
+    const params: Record<string, string> = {};
+    for (const key in appliedFilters) {
+      const element = appliedFilters[key];
+      if (element) {
+        if (element instanceof TextFilter) {
+          params[key] = (element as TextFilter).value;
+        }
+        if (element instanceof SelectFilter) {
+          params[key] = (element as SelectFilter).value;
+        }
+      }
+    }
+    return params;
+  }
 }

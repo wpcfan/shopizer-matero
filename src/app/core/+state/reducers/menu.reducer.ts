@@ -81,6 +81,24 @@ export const initialState: State = {
       ],
     },
     {
+      route: '/brands',
+      name: 'brands',
+      type: 'sub',
+      icon: 'factory',
+      children: [
+        {
+          route: 'list',
+          name: 'Brand list',
+          type: 'link',
+        },
+        {
+          route: 'create',
+          name: 'Create brand',
+          type: 'link',
+        },
+      ],
+    },
+    {
       route: '/products',
       name: 'products',
       type: 'sub',

@@ -6,6 +6,7 @@ export * from './currency';
 export * from './group';
 export * from './language';
 export * from './login-res';
+export * from './manufacturer';
 export * from './measure';
 export * from './menu';
 export * from './merchant';

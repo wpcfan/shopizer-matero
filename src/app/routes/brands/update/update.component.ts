@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-brands-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.scss']
+  styleUrls: ['./update.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrandsUpdateComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
