@@ -21,6 +21,7 @@ import { BrandingComponent } from './widgets/branding.component';
 import { NotificationComponent } from './widgets/notification.component';
 import { TranslateComponent } from './widgets/translate.component';
 import { UserComponent } from './widgets/user.component';
+import { StoreSelectComponent } from './store-select/store-select.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { UserComponent } from './widgets/user.component';
     NotificationComponent,
     TranslateComponent,
     UserComponent,
+    StoreSelectComponent,
   ],
   imports: [SharedModule],
 })

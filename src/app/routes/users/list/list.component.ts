@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Profile, SelectOption } from '@models';
+import { Profile } from '@models';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, map, Observable, tap } from 'rxjs';
 
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { Router } from '@angular/router';
-import * as fromProfile from '@core/+state/selectors/profile.selectors';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '@env/environment';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 import * as UserActions from '../+state/actions/user.actions';
 import { State } from '../+state/reducers/user.reducer';
@@ -20,8 +20,11 @@ import * as fromUser from '../+state/selectors/user.selectors';
 })
 export class UsersListComponent extends BaseCrudTable<Profile> {
   state$: Observable<State> = this.store.select(fromUser.selectUserState);
-  store$: Observable<SelectOption[]> = this.store.select(fromProfile.selectStoreOptions);
-
+  storeParam$ = this.route.queryParamMap.pipe(
+    map(params => params.get('store') ?? localStorage.getItem('store') ?? environment.defaultStore),
+    distinctUntilChanged(),
+    tap(_ => this.store.dispatch(UserActions.loadUsers({ page: 0 })))
+  );
   public columns: ColumnConfig[] = [
     {
       name: 'id',
@@ -49,9 +52,8 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
       name: 'store',
       header: 'Store',
       cell: (e: Profile) => e.merchant,
-      type: 'select',
-      filterable: true,
-      filterOptions: this.store$,
+      type: 'string',
+      filterable: false,
     },
     {
       name: 'active',
@@ -82,8 +84,7 @@ export class UsersListComponent extends BaseCrudTable<Profile> {
     this.router.navigate(['users', row.id]);
   }
   public handleAdd(): void {}
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private router: Router, private route: ActivatedRoute) {
     super();
-    this.store.dispatch(UserActions.loadUsers({ page: 0 }));
   }
 }

@@ -1,0 +1,11 @@
+<ng-container *ngIf="storeParam$ | async">
+  <mat-select
+    [(ngModel)]="selectedStore"
+    (selectionChange)="handleStoreChange($event)"
+    [placeholder]="'Please select store'"
+  >
+    <mat-option *ngFor="let store of stores$ | async" [value]="store.value">
+      {{ store.label }}
+    </mat-option>
+  </mat-select>
+</ng-container>

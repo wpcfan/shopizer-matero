@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Manufacturer } from '@models';
 import { Store } from '@ngrx/store';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 
+import { environment } from '@env/environment';
+import { distinctUntilChanged, map, tap } from 'rxjs';
 import * as BrandActions from '../+state/actions/brand.actions';
 import * as fromBrand from '../+state/selectors/brand.selectors';
 
@@ -17,6 +19,11 @@ import * as fromBrand from '../+state/selectors/brand.selectors';
 })
 export class BrandsListComponent extends BaseCrudTable<Manufacturer> {
   state$ = this.store.select(fromBrand.selectBrandState);
+  storeParam$ = this.route.queryParamMap.pipe(
+    map(params => params.get('store') ?? localStorage.getItem('store') ?? environment.defaultStore),
+    distinctUntilChanged(),
+    tap(_ => this.store.dispatch(BrandActions.loadBrands({ page: 0 })))
+  );
   public columns: ColumnConfig[] = [
     {
       name: 'id',
@@ -68,8 +75,8 @@ export class BrandsListComponent extends BaseCrudTable<Manufacturer> {
   public handleAdd(): void {
     this.router.navigate(['brands', 'create']);
   }
-  constructor(private store: Store, private router: Router) {
+
+  constructor(private store: Store, private router: Router, private route: ActivatedRoute) {
     super();
-    this.store.dispatch(BrandActions.loadBrands({ page: 0 }));
   }
 }
