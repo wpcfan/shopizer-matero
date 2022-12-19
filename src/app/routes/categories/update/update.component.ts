@@ -16,15 +16,6 @@ import * as fromCategory from '../+state/selectors/category.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoriesUpdateComponent implements OnInit {
-  apiKey = environment.tinyMCEApiKey;
-  tinyMCEConfig = {
-    selector: 'textarea', // change this value according to your HTML
-    menu: {
-      main: { title: 'Menu', items: 'code' },
-    },
-    plugins: 'code', // required by the code menu item
-    menubar: 'main', // adds main to the menu bar
-  };
   languages$ = this.store.select(fromProfile.selectStoreLanguages);
   stores$ = this.store.select(fromProfile.selectStores);
   categories$ = this.store.select(fromCategory.selectAllFlatCategories);

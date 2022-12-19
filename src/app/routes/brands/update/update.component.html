@@ -1,3 +1,134 @@
-<page-header></page-header>
+<page-header [title]="'brands.update.title' | translate" [hideBreadcrumb]="false"></page-header>
 
-<p>update works!</p>
+<div class="w-full h-full" fxLayout="row wrap" *ngIf="idAndLang$ | async as idAndLang">
+  <mat-card class="mat-elevation-z4 m-auto" style="max-width: 90%">
+    <form class="form-field-full" [formGroup]="form" *ngIf="selected$ | async as brand">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'brands.create.code' | translate }}</mat-label>
+        <input matInput formControlName="code" />
+        <mat-error *ngIf="form.controls.code.errors?.required">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.code.errors?.unique">
+          {{ 'validations.exist' | translate : { value: form.controls.sortOrder.value } }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'brands.create.order' | translate }}</mat-label>
+        <input matInput formControlName="order" />
+        <mat-error *ngIf="form.controls.order.invalid">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div formArrayName="descriptions" *ngIf="languages$ | async as languages">
+        <ng-container *ngFor="let language of languages; let i = index" [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.language' | translate }}</mat-label>
+            <mat-select formControlName="language" (selectionChange)="hanldeCountryChange($event)">
+              <mat-option *ngFor="let language of languages" [value]="language.code">
+                {{ language.code }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.description.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.title' | translate }}</mat-label>
+            <input matInput formControlName="title" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.description.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.name' | translate }}</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.name.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.friendly_url' | translate }}</mat-label>
+            <input matInput formControlName="friendlyUrl" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.friendlyUrl.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.highlights' | translate }}</mat-label>
+            <input matInput formControlName="highlights" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.highlights.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.meta_description' | translate }}</mat-label>
+            <input matInput formControlName="metaDescription" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.metaDescription.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'brands.create.keyWords' | translate }}</mat-label>
+            <input matInput formControlName="keyWords" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.keyWords.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <div appearance="outline">
+            <mat-label>{{ 'brands.create.description' | translate }}</mat-label>
+            <app-rich-editor formControlName="description"></app-rich-editor>
+            <mat-error
+              *ngIf="
+                getIndexedFormGroup(i).controls.description.dirty &&
+                getIndexedFormGroup(i).controls.description.errors?.required
+              "
+            >
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          color="primary"
+          (click)="update($event, idAndLang.id, idAndLang.lang)"
+        >
+          {{ 'common.submit' | translate }}
+        </button>
+
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          color="warn"
+          (click)="delete(idAndLang.id)"
+        >
+          {{ 'common.delete' | translate }}
+        </button>
+
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          color="accent"
+          [routerLink]="['/users', 'list']"
+        >
+          {{ 'common.back_to_list' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

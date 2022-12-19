@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as AuthActions from '@core/+state/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { catchError, exhaustMap, filter, map, of, tap } from 'rxjs';
@@ -101,30 +100,6 @@ export class CategoryEffects {
           /\/categories\/update\/\w+/.test(payload.routerState.url)
       ),
       map(() => CategoryActions.loadAll())
-    );
-  });
-
-  loadStoreLanguagesWhenRoutedToCreateOrEditCategories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(routerNavigatedAction),
-      filter(
-        ({ payload }) =>
-          payload.routerState.url === '/categories/create' ||
-          /\/categories\/update\/\d+/.test(payload.routerState.url)
-      ),
-      map(() => AuthActions.loadStoreLanguages())
-    );
-  });
-
-  loadStoresWhenRoutedToCreateOrEditCategories$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(routerNavigatedAction),
-      filter(
-        ({ payload }) =>
-          payload.routerState.url === '/categories/create' ||
-          /\/categories\/update\/\d+/.test(payload.routerState.url)
-      ),
-      map(() => AuthActions.loadStores())
     );
   });
 

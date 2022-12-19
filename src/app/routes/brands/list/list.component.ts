@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 
 import { environment } from '@env/environment';
+import { LocalStorageService } from '@shared';
 import { distinctUntilChanged, map, tap } from 'rxjs';
 import * as BrandActions from '../+state/actions/brand.actions';
 import * as fromBrand from '../+state/selectors/brand.selectors';
@@ -67,16 +68,21 @@ export class BrandsListComponent extends BaseCrudTable<Manufacturer> {
     }
   }
   public handleItem(row: Manufacturer): void {
-    throw new Error('Method not implemented.');
+    this.handleEdit(row);
   }
   public handleEdit(row: Manufacturer): void {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['/brands', 'update', row.id], {
+      queryParams: { lang: this.local.get('setting').language },
+    });
   }
-  public handleAdd(): void {
-    this.router.navigate(['brands', 'create']);
-  }
+  public handleAdd(): void {}
 
-  constructor(private store: Store, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute,
+    private local: LocalStorageService
+  ) {
     super();
   }
 }

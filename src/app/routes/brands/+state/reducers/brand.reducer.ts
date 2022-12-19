@@ -37,5 +37,7 @@ export const reducer = createReducer(
   on(
     BrandsActions.loadBrandsFailure,
     (state, action): State => ({ ...state, error: action.error, loading: false })
-  )
+  ),
+  on(BrandsActions.getByIdSuccess, (state, action): State => ({ ...state, selected: action.data })),
+  on(BrandsActions.getByIdFailure, (state, action): State => ({ ...state, error: action.error }))
 );

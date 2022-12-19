@@ -71,7 +71,17 @@ export class BrandEffects {
     () => {
       return this.actions$.pipe(
         ofType(BrandsActions.deleteBrandSuccess),
-        tap(() => this.router.navigate(['/categories', 'list']))
+        tap(() => this.router.navigate(['/brands', 'list']))
+      );
+    },
+    { dispatch: false }
+  );
+
+  createSuccessAndRedirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(BrandsActions.createBrandSuccess),
+        tap(({ data }) => this.router.navigate(['/brands', 'update', data.id]))
       );
     },
     { dispatch: false }

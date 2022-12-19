@@ -128,11 +128,7 @@
 
                 <div appearance="outline">
                   <mat-label>{{ 'categories.create.description' | translate }}</mat-label>
-                  <editor
-                    [apiKey]="apiKey"
-                    [init]="tinyMCEConfig"
-                    formControlName="description"
-                  ></editor>
+                  <app-rich-editor formControlName="description"></app-rich-editor>
                   <mat-error
                     *ngIf="
                       getIndexedFormGroup(i).controls.description.dirty &&

@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AsyncValidatorFn, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
-import { environment } from '@env/environment';
 import { Category, Language } from '@models';
 import { Store } from '@ngrx/store';
 import { combineLatest, filter, map, Observable, tap } from 'rxjs';
@@ -16,15 +15,6 @@ import { CategoryService } from '../+state/services/category.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoriesCreateComponent implements OnInit {
-  apiKey = environment.tinyMCEApiKey;
-  tinyMCEConfig = {
-    selector: 'textarea', // change this value according to your HTML
-    menu: {
-      main: { title: 'Menu', items: 'code' },
-    },
-    plugins: 'code', // required by the code menu item
-    menubar: 'main', // adds main to the menu bar
-  };
   languages$!: Observable<Language[]>;
   stores$ = this.store.select(fromProfile.selectStores);
   parentIdAndCategories$!: Observable<{ parentId: string | null; categories: Category[] }>;
@@ -35,7 +25,7 @@ export class CategoriesCreateComponent implements OnInit {
     private store: Store,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private categoryService: CategoryService
+    private service: CategoryService
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +66,7 @@ export class CategoriesCreateComponent implements OnInit {
   }
 
   codeValidator(): AsyncValidatorFn {
-    return control => this.categoryService.unique(control.value);
+    return control => this.service.unique(control.value);
   }
 
   createDescription(language: string) {

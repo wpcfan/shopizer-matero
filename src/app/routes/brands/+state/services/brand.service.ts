@@ -38,26 +38,26 @@ export class BrandService {
   }
 
   update(id: number, manufacturer: Partial<Manufacturer>, lang: string) {
-    return this.http.put<Manufacturer>(`${this.url}/v1/private/manufacturer/${id}`, manufacturer, {
+    return this.http.put<Manufacturer>(`${this.url}/private/manufacturer/${id}`, manufacturer, {
       params: { lang },
     });
   }
 
   delete(id: number) {
-    return this.http.delete(`${this.url}/v1/private/manufacturer/${id}`);
+    return this.http.delete(`${this.url}/private/manufacturer/${id}`);
   }
 
   create(manufacturer: Partial<Manufacturer>) {
-    return this.http.post<Manufacturer>(`${this.url}/v1/private/manufacturer`, manufacturer);
+    return this.http.post<Manufacturer>(`${this.url}/private/manufacturer`, manufacturer);
   }
 
   getById(id: number, lang: string) {
-    return this.http.get<Manufacturer>(`${this.url}/v1/manufacturer/${id}`, { params: { lang } });
+    return this.http.get<Manufacturer>(`${this.url}/manufacturer/${id}`, { params: { lang } });
   }
 
   unique(code: string): Observable<ValidationErrors | null> {
     return this.http
-      .get<{ exists: boolean }>(`${this.url}/v1/private/manufacturer/unique`, { params: { code } })
+      .get<{ exists: boolean }>(`${this.url}/private/manufacturer/unique`, { params: { code } })
       .pipe(map(res => (res.exists ? { unique: true } : null)));
   }
 }

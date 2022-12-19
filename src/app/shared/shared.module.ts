@@ -13,13 +13,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { MaterialExtensionsModule } from '../material-extensions.module';
 import { MaterialModule } from '../material.module';
 
-import { EditorModule } from '@tinymce/tinymce-angular';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DynaTableModule } from './components/dyna-table';
 import { ErrorCodeComponent } from './components/error-code/error-code.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { RichEditorComponent } from './components/rich-editor/rich-editor.component';
 import { SimpleTreeComponent } from './components/simple-tree/simple-tree.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
@@ -49,6 +50,7 @@ const COMPONENTS: any[] = [
   ConfirmDialogComponent,
   FileUploadComponent,
   SimpleTreeComponent,
+  RichEditorComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
@@ -57,6 +59,7 @@ const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
 @NgModule({
   imports: [...MODULES],
   exports: [...MODULES, ...COMPONENTS, ...DIRECTIVES, ...PIPES],
+  providers: [{ provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }],
   declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC, ...DIRECTIVES, ...PIPES],
 })
 export class SharedModule {}
