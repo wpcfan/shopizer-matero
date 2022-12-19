@@ -25,3 +25,34 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## 3rd-party libraries integration
+
+### TinyMCE
+
+We used TinyMCE for the product description editor. TinyMCE is a commercial product and requires a license to use. You can get a free license for development purposes at [https://www.tiny.cloud/pricing/](https://www.tiny.cloud/pricing/). And TinyMCE provides a guide for angular integration [https://www.tiny.cloud/docs/tinymce/6/angular-ref/](https://www.tiny.cloud/docs/tinymce/6/angular-ref/).
+
+#### Dependencies
+
+1. `@tinymce/tinymce-angular`
+2. `tinymce`
+
+#### Project changes
+
+In order to use tinymce scripts, we need to add the following code in `angular.json` file:
+
+```json
+{
+  "projects": {
+    "shopizer-matero": {
+      "architect": {
+        "build": {
+          "options": {
+            "assets": [{ "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" }]
+          }
+        }
+      }
+    }
+  }
+}
+```
