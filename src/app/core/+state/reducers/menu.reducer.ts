@@ -99,6 +99,24 @@ export const initialState: State = {
       ],
     },
     {
+      route: '/product-types',
+      name: 'Product types',
+      type: 'sub',
+      icon: 'edit_attributes',
+      children: [
+        {
+          route: 'list',
+          name: 'Product type list',
+          type: 'link',
+        },
+        {
+          route: 'create',
+          name: 'Create product type',
+          type: 'link',
+        },
+      ],
+    },
+    {
       route: '/products',
       name: 'products',
       type: 'sub',

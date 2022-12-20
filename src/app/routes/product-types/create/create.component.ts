@@ -1,19 +1,19 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AsyncValidatorFn, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Language } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import * as BrandActions from '../+state/actions/brand.actions';
-import { BrandService } from '../+state/services/brand.service';
+import * as ProductTypeActions from '../+state/actions/product-type.actions';
+import { ProductTypeService } from '../+state/services/product-type.service';
+
 @Component({
-  selector: 'app-brands-create',
+  selector: 'app-product-types-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BrandsCreateComponent implements OnInit {
+export class ProductTypesCreateComponent implements OnInit {
   languages$!: Observable<Language[]>;
   form!: FormGroup;
   descriptions: FormArray = this.fb.array([]);
@@ -21,13 +21,14 @@ export class BrandsCreateComponent implements OnInit {
     private store: Store,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private service: BrandService
+    private service: ProductTypeService
   ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
       code: ['', [Validators.required], [this.codeValidator()]],
-      order: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
+      visible: [true],
+      allowAddToCart: [true],
       descriptions: this.descriptions,
     });
     this.languages$ = this.store.select(fromProfile.selectStoreLanguages).pipe(
@@ -70,6 +71,6 @@ export class BrandsCreateComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.store.dispatch(BrandActions.createBrand({ data: this.form.value }));
+    this.store.dispatch(ProductTypeActions.createProductType({ data: this.form.value }));
   }
 }

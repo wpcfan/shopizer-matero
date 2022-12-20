@@ -1,19 +1,10 @@
-export interface CategoryDescription {
-  id: number;
-  description: string;
-  friendlyUrl?: string;
-  highlights: string;
-  keyWords: string;
-  language: string;
-  metaDescription: string;
-  name: string;
-  title: string;
-}
+import { Description } from './description';
+
 export interface Category {
   id: number;
   code: string;
   depth: number;
-  description: CategoryDescription;
+  description: Description;
   featured: boolean;
   lineage?: string;
   parent?: Category;

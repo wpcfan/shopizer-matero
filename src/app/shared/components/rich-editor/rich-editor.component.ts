@@ -1,12 +1,5 @@
-import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  ValidationErrors,
-  Validator,
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { environment } from '@env/environment';
 
 @Component({
@@ -20,14 +13,9 @@ import { environment } from '@env/environment';
       useExisting: RichEditorComponent,
       multi: true,
     },
-    {
-      provide: NG_VALIDATORS,
-      useFactory: () => forwardRef(() => RichEditorComponent),
-      multi: true,
-    },
   ],
 })
-export class RichEditorComponent implements ControlValueAccessor, Validator {
+export class RichEditorComponent implements ControlValueAccessor {
   content?: string;
   apiKey = environment.tinyMCEApiKey;
   tinyMCEConfig = {
@@ -54,10 +42,6 @@ export class RichEditorComponent implements ControlValueAccessor, Validator {
   }
   setDisabledState?(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
-  }
-
-  validate(control: AbstractControl): ValidationErrors | null {
-    return this.content && typeof this.content === 'string' ? null : { isStringContent: true };
   }
 
   registerOnValidatorChange?(fn: () => void): void {
