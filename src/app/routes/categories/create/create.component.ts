@@ -75,10 +75,10 @@ export class CategoriesCreateComponent implements OnInit {
       title: ['', Validators.required],
       name: ['', Validators.required],
       friendlyUrl: ['', Validators.required],
-      highlights: ['', Validators.required],
-      metaDescription: ['', Validators.required],
-      description: ['', Validators.required],
-      keyWords: ['', Validators.required],
+      highlights: [''],
+      metaDescription: [''],
+      description: [''],
+      keyWords: [''],
     });
   }
 

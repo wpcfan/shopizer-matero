@@ -42,13 +42,13 @@ export class BrandsUpdateComponent implements OnInit {
     this.descriptions = this.fb.array([
       this.fb.group({
         language: ['', Validators.required],
-        title: ['', Validators.required],
+        title: [''],
         name: ['', Validators.required],
-        friendlyUrl: ['', Validators.required],
-        highlights: ['', Validators.required],
-        metaDescription: ['', Validators.required],
-        description: ['', Validators.required],
-        keyWords: ['', Validators.required],
+        friendlyUrl: [''],
+        highlights: [''],
+        metaDescription: [''],
+        description: [''],
+        keyWords: [''],
       }),
     ]);
     this.form = this.fb.group({
@@ -59,6 +59,8 @@ export class BrandsUpdateComponent implements OnInit {
     this.selected$ = this.store.select(fromBrand.selectSelected).pipe(
       tap(brand => {
         if (brand) {
+          console.log(brand);
+
           this.form.patchValue({
             code: brand.code,
             order: brand.order,

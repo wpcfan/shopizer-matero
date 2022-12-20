@@ -59,13 +59,13 @@ export class BrandsCreateComponent implements OnInit {
   createDescription(language: string) {
     return this.fb.group({
       language: [language, Validators.required],
-      title: ['', Validators.required],
+      title: [''],
       name: ['', Validators.required],
-      friendlyUrl: ['', Validators.required],
-      highlights: ['', Validators.required],
-      metaDescription: ['', Validators.required],
-      description: ['', Validators.required],
-      keyWords: ['', Validators.required],
+      friendlyUrl: [''],
+      highlights: [''],
+      metaDescription: [''],
+      description: [''],
+      keyWords: [''],
     });
   }
 
