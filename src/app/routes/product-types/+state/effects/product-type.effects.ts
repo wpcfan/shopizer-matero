@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { LocalStorageService } from '@shared';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import * as ProductTypeActions from '../actions/product-type.actions';
 import { ProductTypeService } from '../services/product-type.service';
@@ -81,7 +82,11 @@ export class ProductTypeEffects {
     () => {
       return this.actions$.pipe(
         ofType(ProductTypeActions.createProductTypeSuccess),
-        tap(({ data }) => this.router.navigate(['/product-types', 'update', data.id]))
+        tap(({ data }) =>
+          this.router.navigate(['/product-types', 'update', data.id], {
+            queryParams: { lang: this.local.get('settings').language },
+          })
+        )
       );
     },
     { dispatch: false }
@@ -90,6 +95,7 @@ export class ProductTypeEffects {
   constructor(
     private actions$: Actions,
     private service: ProductTypeService,
-    private router: Router
+    private router: Router,
+    private local: LocalStorageService
   ) {}
 }

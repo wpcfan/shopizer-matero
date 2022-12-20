@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
+import { LocalStorageService } from '@shared';
 import { catchError, exhaustMap, filter, map, of, tap } from 'rxjs';
 import * as CategoryActions from '../actions/category.actions';
 import { CategoryService } from '../services/category.service';
@@ -103,9 +104,24 @@ export class CategoryEffects {
     );
   });
 
+  createSuccessAndRedirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(CategoryActions.createCategorySuccess),
+        tap(({ data }) =>
+          this.router.navigate(['/categories', 'update', data.id], {
+            queryParams: this.local.get('settings').language,
+          })
+        )
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private local: LocalStorageService
   ) {}
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { LocalStorageService } from '@shared';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import * as BrandsActions from '../actions/brand.actions';
 import { BrandService } from '../services/brand.service';
@@ -81,11 +82,20 @@ export class BrandEffects {
     () => {
       return this.actions$.pipe(
         ofType(BrandsActions.createBrandSuccess),
-        tap(({ data }) => this.router.navigate(['/brands', 'update', data.id]))
+        tap(({ data }) =>
+          this.router.navigate(['/brands', 'update', data.id], {
+            queryParams: this.local.get('settings').language,
+          })
+        )
       );
     },
     { dispatch: false }
   );
 
-  constructor(private actions$: Actions, private service: BrandService, private router: Router) {}
+  constructor(
+    private actions$: Actions,
+    private service: BrandService,
+    private router: Router,
+    private local: LocalStorageService
+  ) {}
 }

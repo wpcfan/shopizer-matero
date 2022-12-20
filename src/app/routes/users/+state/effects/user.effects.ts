@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as AuthActions from '@core/+state/actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
+import { LocalStorageService } from '@shared';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, filter, map, tap } from 'rxjs/operators';
 import * as UserActions from '../actions/user.actions';
@@ -114,7 +115,11 @@ export class UserEffects {
     () => {
       return this.actions$.pipe(
         ofType(UserActions.createUserSuccess),
-        tap(({ data }) => this.router.navigate(['/users', data.id]))
+        tap(({ data }) =>
+          this.router.navigate(['/users', data.id], {
+            queryParams: { lang: this.local.get('settings').language },
+          })
+        )
       );
     },
     { dispatch: false }
@@ -174,6 +179,7 @@ export class UserEffects {
     private actions$: Actions,
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private local: LocalStorageService
   ) {}
 }
