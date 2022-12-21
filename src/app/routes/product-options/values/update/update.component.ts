@@ -58,8 +58,9 @@ export class ProductOptionsValuesUpdateComponent implements OnInit {
       code: ['', [Validators.required]],
       order: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
       sortOrder: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
-      defaulValue: [true],
-      name: ['', [Validators.required]],
+      defaultValue: [true],
+      image: [''],
+      name: [''],
       descriptions: this.descriptions,
     });
     this.selected$ = this.store
@@ -72,6 +73,7 @@ export class ProductOptionsValuesUpdateComponent implements OnInit {
               order: selected.order,
               sortOrder: selected.sortOrder,
               defaultValue: selected.defaultValue,
+              image: selected.image,
               name: selected.name,
               descriptions: [selected.description],
             });
