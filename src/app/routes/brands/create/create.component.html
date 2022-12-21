@@ -14,7 +14,7 @@
           {{ 'validations.required' | translate }}
         </mat-error>
         <mat-error *ngIf="form.controls.code.errors?.unique">
-          {{ 'validations.exist' | translate : { value: form.controls.sortOrder.value } }}
+          {{ 'validations.exist' | translate : { value: form.controls.code.value } }}
         </mat-error>
       </mat-form-field>
 

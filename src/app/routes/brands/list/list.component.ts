@@ -72,7 +72,7 @@ export class BrandsListComponent extends BaseCrudTable<Manufacturer> {
   }
   public handleEdit(row: Manufacturer): void {
     this.router.navigate(['/brands', 'update', row.id], {
-      queryParams: { lang: this.local.get('setting').language },
+      queryParams: { lang: this.local.get('settings').language },
     });
   }
   public handleAdd(): void {}

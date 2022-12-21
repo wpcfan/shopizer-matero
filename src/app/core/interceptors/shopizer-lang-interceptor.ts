@@ -11,7 +11,7 @@ export class ShopizerLanguageInterceptor implements HttpInterceptor {
     if (
       !req.url.includes(environment.apiUrl) ||
       req.url.includes('/v1/languages') ||
-      req.params.has('lang')
+      (req.params.has('lang') && req.params.get('lang') !== 'null')
     ) {
       return next.handle(req);
     }

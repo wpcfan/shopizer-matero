@@ -3,32 +3,32 @@ import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '@env/environment';
-import { ProductType } from '@models';
+import { ProductOption } from '@models';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from '@shared';
 import { BaseCrudTable, ColumnConfig, ColumnFilter } from '@shared/components/dyna-table';
 import { distinctUntilChanged, map, tap } from 'rxjs';
-import * as ProductTypeActions from '../+state/actions/product-type.actions';
-import * as fromProductTypes from '../+state/selectors/product-type.selectors';
+import * as ProductOptionsActions from '../../+state/actions/product-option.actions';
+import * as fromProductOptions from '../../+state/selectors/product-option.selectors';
 
 @Component({
-  selector: 'app-product-types-list',
+  selector: 'app-product-options-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductTypesListComponent extends BaseCrudTable<ProductType> {
-  state$ = this.store.select(fromProductTypes.selectProductTypeState);
+export class ProductOptionsListComponent extends BaseCrudTable<ProductOption> {
+  state$ = this.store.select(fromProductOptions.selectProductOptionState);
   storeParam$ = this.route.queryParamMap.pipe(
     map(params => params.get('store') ?? localStorage.getItem('store') ?? environment.defaultStore),
     distinctUntilChanged(),
-    tap(_ => this.store.dispatch(ProductTypeActions.loadProductTypes({ page: 0 })))
+    tap(_ => this.store.dispatch(ProductOptionsActions.loadProductOptions({ page: 0 })))
   );
   public columns: ColumnConfig[] = [
     {
       name: 'id',
       header: 'ID',
-      cell: (e: Partial<ProductType>) => e.id,
+      cell: (e: Partial<ProductOption>) => e.id,
       type: 'string',
       sortable: false,
       sticky: 'start',
@@ -36,14 +36,36 @@ export class ProductTypesListComponent extends BaseCrudTable<ProductType> {
     {
       name: 'name',
       header: 'Name',
-      cell: (e: Partial<ProductType>) => e.description?.name,
+      cell: (e: Partial<ProductOption>) =>
+        e.descriptions?.find(it => it.language === this.local.get('settings').language)?.name,
       type: 'string',
-      filterable: true,
+      filterable: false,
     },
     {
       name: 'code',
       header: 'Code',
-      cell: (e: Partial<ProductType>) => e.code,
+      cell: (e: Partial<ProductOption>) => e.code,
+      type: 'string',
+      sortable: false,
+    },
+    {
+      name: 'order',
+      header: 'Order',
+      cell: (e: Partial<ProductOption>) => `${e.order}`,
+      type: 'string',
+      sortable: false,
+    },
+    {
+      name: 'type',
+      header: 'Type',
+      cell: (e: Partial<ProductOption>) => e.type,
+      type: 'string',
+      sortable: false,
+    },
+    {
+      name: 'readonly',
+      header: 'Readonly',
+      cell: (e: Partial<ProductOption>) => (e.readonly ? 'Yes' : 'No'),
       type: 'string',
       sortable: false,
     },
@@ -54,23 +76,23 @@ export class ProductTypesListComponent extends BaseCrudTable<ProductType> {
   public handleSortChange(ev: Record<string, Sort>): void {
     throw new Error('Method not implemented.');
   }
-  public handleDelete(row: ProductType): void {
+  public handleDelete(row: ProductOption): void {
     throw new Error('Method not implemented.');
   }
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
     const params = this.filterParams(appliedFilters);
 
     if (Object.keys(params).length > 0) {
-      this.store.dispatch(ProductTypeActions.loadProductTypes({ page: 0, params }));
+      this.store.dispatch(ProductOptionsActions.loadProductOptions({ page: 0, params }));
     } else {
-      this.store.dispatch(ProductTypeActions.loadProductTypes({ page: 0 }));
+      this.store.dispatch(ProductOptionsActions.loadProductOptions({ page: 0 }));
     }
   }
-  public handleItem(row: ProductType): void {
+  public handleItem(row: ProductOption): void {
     this.handleEdit(row);
   }
-  public handleEdit(row: ProductType): void {
-    this.router.navigate(['/product-types', 'update', row.id], {
+  public handleEdit(row: ProductOption): void {
+    this.router.navigate(['/product-options', 'options', 'update', row.id], {
       queryParams: { lang: this.local.get('settings').language },
     });
   }

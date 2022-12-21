@@ -12,6 +12,7 @@ export * from './measure';
 export * from './menu';
 export * from './merchant';
 export * from './pageable';
+export * from './product-option';
 export * from './product-type';
 export * from './profile';
 export * from './select-option';

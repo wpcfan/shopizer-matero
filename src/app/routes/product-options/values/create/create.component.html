@@ -1,5 +1,5 @@
 <page-header
-  [title]="'product_types.create.title' | translate"
+  [title]="'product_option_values.create.title' | translate"
   [hideBreadcrumb]="false"
 ></page-header>
 
@@ -11,7 +11,7 @@
   >
     <form class="form-field-full" [formGroup]="form">
       <mat-form-field appearance="outline">
-        <mat-label>{{ 'product_types.create.code' | translate }}</mat-label>
+        <mat-label>{{ 'product_option_values.create.code' | translate }}</mat-label>
         <input matInput formControlName="code" />
         <mat-error *ngIf="form.controls.code.errors?.required">
           {{ 'validations.required' | translate }}
@@ -21,15 +21,38 @@
         </mat-error>
       </mat-form-field>
 
-      <div>
-        <mat-checkbox formControlName="visible">{{
-          'categories.create.visible' | translate
-        }}</mat-checkbox>
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'product_option_values.create.order' | translate }}</mat-label>
+        <input matInput formControlName="order" type="number" />
+        <mat-error *ngIf="form.controls.order.errors?.required">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'product_option_values.create.sort_order' | translate }}</mat-label>
+        <input matInput formControlName="sortOrder" type="number" />
+        <mat-error *ngIf="form.controls.sortOrder.errors?.required">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'product_option_values.create.name' | translate }}</mat-label>
+        <input matInput formControlName="name" type="text" />
+        <mat-error *ngIf="form.controls.name.errors?.required">
+          {{ 'validations.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'product_option_values.create.image' | translate }}</mat-label>
+        <input matInput formControlName="image" type="text" />
+      </mat-form-field>
 
       <div>
-        <mat-checkbox formControlName="allowAddToCart">{{
-          'categories.create.allow_add_to_cart' | translate
+        <mat-checkbox formControlName="defaultValue">{{
+          'product_option_values.create.default_value' | translate
         }}</mat-checkbox>
       </div>
 
@@ -47,14 +70,14 @@
             </mat-expansion-panel-header>
             <div class="form-field">
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.title' | translate }}</mat-label>
+                <mat-label>{{ 'description.title' | translate }}</mat-label>
                 <input matInput formControlName="title" />
                 <mat-error *ngIf="getIndexedFormGroup(i).controls.description.errors?.required">
                   {{ 'validations.required' | translate }}
                 </mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.name' | translate }}</mat-label>
+                <mat-label>{{ 'description.name' | translate }}</mat-label>
                 <input matInput formControlName="name" />
                 <mat-error *ngIf="getIndexedFormGroup(i).controls.name.errors?.required">
                   {{ 'validations.required' | translate }}
@@ -62,7 +85,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.friendly_url' | translate }}</mat-label>
+                <mat-label>{{ 'description.friendly_url' | translate }}</mat-label>
                 <input matInput formControlName="friendlyUrl" />
                 <mat-error *ngIf="getIndexedFormGroup(i).controls.friendlyUrl.errors?.required">
                   {{ 'validations.required' | translate }}
@@ -70,7 +93,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.highlights' | translate }}</mat-label>
+                <mat-label>{{ 'description.highlights' | translate }}</mat-label>
                 <input matInput formControlName="highlights" />
                 <mat-error *ngIf="getIndexedFormGroup(i).controls.highlights.errors?.required">
                   {{ 'validations.required' | translate }}
@@ -78,7 +101,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.meta_description' | translate }}</mat-label>
+                <mat-label>{{ 'description.meta_description' | translate }}</mat-label>
                 <input matInput formControlName="metaDescription" />
                 <mat-error *ngIf="getIndexedFormGroup(i).controls.metaDescription.errors?.required">
                   {{ 'validations.required' | translate }}
@@ -86,7 +109,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.keyWords' | translate }}</mat-label>
+                <mat-label>{{ 'description.keyWords' | translate }}</mat-label>
                 <input matInput formControlName="keyWords" />
                 <mat-error *ngIf="getIndexedFormGroup(i).controls.keyWords.errors?.required">
                   {{ 'validations.required' | translate }}
@@ -94,7 +117,7 @@
               </mat-form-field>
 
               <div appearance="outline">
-                <mat-label>{{ 'categories.create.description' | translate }}</mat-label>
+                <mat-label>{{ 'description.description' | translate }}</mat-label>
                 <app-rich-editor formControlName="description"></app-rich-editor>
                 <mat-error
                   *ngIf="

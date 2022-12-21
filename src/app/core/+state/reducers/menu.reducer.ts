@@ -117,6 +117,34 @@ export const initialState: State = {
       ],
     },
     {
+      route: '/product-options',
+      name: 'Product options',
+      type: 'sub',
+      icon: 'edit_attributes',
+      children: [
+        {
+          route: 'options/list',
+          name: 'Product option list',
+          type: 'link',
+        },
+        {
+          route: 'options/create',
+          name: 'Create product option',
+          type: 'link',
+        },
+        {
+          route: 'values/list',
+          name: 'Product option value list',
+          type: 'link',
+        },
+        {
+          route: 'values/create',
+          name: 'Create product option value',
+          type: 'link',
+        },
+      ],
+    },
+    {
       route: '/products',
       name: 'products',
       type: 'sub',

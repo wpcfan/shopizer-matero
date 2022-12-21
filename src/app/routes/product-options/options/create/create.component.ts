@@ -5,16 +5,17 @@ import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Language } from '@models';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import * as ProductTypeActions from '../+state/actions/product-type.actions';
-import { ProductTypeService } from '../+state/services/product-type.service';
+import * as ProductOptionsActions from '../../+state/actions/product-option.actions';
+import { ProductOptionService } from '../../+state/services/product-option.service';
 
 @Component({
-  selector: 'app-product-types-create',
+  selector: 'app-product-options-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductTypesCreateComponent implements OnInit {
+export class ProductOptionsCreateComponent implements OnInit {
+  optionTypes = ['select', 'radio', 'checkbox', 'text'];
   languages$!: Observable<Language[]>;
   form!: FormGroup;
   descriptions: FormArray = this.fb.array([]);
@@ -22,14 +23,15 @@ export class ProductTypesCreateComponent implements OnInit {
     private store: Store,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private service: ProductTypeService
+    private service: ProductOptionService
   ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
       code: ['', [Validators.required], [this.codeValidator()]],
-      visible: [true],
-      allowAddToCart: [true],
+      order: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
+      readOnly: [true],
+      type: ['', [Validators.required]],
       descriptions: this.descriptions,
     });
     this.languages$ = this.store.select(fromProfile.selectStoreLanguages).pipe(
@@ -72,6 +74,6 @@ export class ProductTypesCreateComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.store.dispatch(ProductTypeActions.createProductType({ data: this.form.value }));
+    this.store.dispatch(ProductOptionsActions.createProductOption({ data: this.form.value }));
   }
 }
