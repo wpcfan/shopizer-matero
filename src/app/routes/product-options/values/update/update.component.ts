@@ -15,7 +15,7 @@ import * as fromProductOptionValue from '../../+state/selectors/product-option-v
   styleUrls: ['./update.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductOptionsValuesUpdateComponent implements OnInit {
+export class ProductOptionValueUpdateComponent implements OnInit {
   languages$ = this.store.select(fromProfile.selectStoreLanguages);
   selected$!: Observable<ProductOptionValue | undefined>;
   idAndLang$ = combineLatest([

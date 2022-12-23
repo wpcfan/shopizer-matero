@@ -1,20 +1,19 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { ProductOptionsValuesListComponent } from './list.component';
+import { ProductOptionValueListComponent } from './list.component';
 
 describe('ProductOptionsValuesListComponent', () => {
-  let component: ProductOptionsValuesListComponent;
-  let fixture: ComponentFixture<ProductOptionsValuesListComponent>;
+  let component: ProductOptionValueListComponent;
+  let fixture: ComponentFixture<ProductOptionValueListComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductOptionsValuesListComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductOptionValueListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductOptionsValuesListComponent);
+    fixture = TestBed.createComponent(ProductOptionValueListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

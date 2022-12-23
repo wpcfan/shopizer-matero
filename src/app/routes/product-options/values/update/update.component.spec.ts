@@ -1,20 +1,19 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { ProductOptionsValuesUpdateComponent } from './update.component';
+import { ProductOptionValueUpdateComponent } from './update.component';
 
 describe('ProductOptionsValuesUpdateComponent', () => {
-  let component: ProductOptionsValuesUpdateComponent;
-  let fixture: ComponentFixture<ProductOptionsValuesUpdateComponent>;
+  let component: ProductOptionValueUpdateComponent;
+  let fixture: ComponentFixture<ProductOptionValueUpdateComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductOptionsValuesUpdateComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductOptionValueUpdateComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductOptionsValuesUpdateComponent);
+    fixture = TestBed.createComponent(ProductOptionValueUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

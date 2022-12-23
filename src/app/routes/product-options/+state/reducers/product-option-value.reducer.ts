@@ -6,7 +6,7 @@ export const productOptionValueFeatureKey = 'productOptionValue';
 
 export interface State {
   productOptionValues: ProductOptionValue[];
-  error?: string;
+  error?: any;
   total: number;
   page: number;
   loading: boolean;

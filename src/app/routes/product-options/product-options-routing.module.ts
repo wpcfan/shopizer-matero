@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductOptionsCreateComponent } from './options/create/create.component';
 import { ProductOptionsListComponent } from './options/list/list.component';
 import { ProductOptionsUpdateComponent } from './options/update/update.component';
-import { ProductOptionsValuesCreateComponent } from './values/create/create.component';
-import { ProductOptionsValuesListComponent } from './values/list/list.component';
-import { ProductOptionsValuesUpdateComponent } from './values/update/update.component';
+import { ProductOptionValueCreateComponent } from './values/create/create.component';
+import { ProductOptionValueListComponent } from './values/list/list.component';
+import { ProductOptionValueUpdateComponent } from './values/update/update.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'options', pathMatch: 'full' },
@@ -22,9 +22,9 @@ const routes: Routes = [
     path: 'values',
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
-      { path: 'list', component: ProductOptionsValuesListComponent },
-      { path: 'create', component: ProductOptionsValuesCreateComponent },
-      { path: 'update/:id', component: ProductOptionsValuesUpdateComponent },
+      { path: 'list', component: ProductOptionValueListComponent },
+      { path: 'create', component: ProductOptionValueCreateComponent },
+      { path: 'update/:id', component: ProductOptionValueUpdateComponent },
     ],
   },
 ];

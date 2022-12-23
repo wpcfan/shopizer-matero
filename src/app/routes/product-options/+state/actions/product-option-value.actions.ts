@@ -28,7 +28,7 @@ export const getByIdSuccess = createAction(
 
 export const getByIdFailure = createAction(
   '[Product Option Value] Get Product Option Value By Id Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 export const createProductOptionValue = createAction(
@@ -43,7 +43,7 @@ export const createProductOptionValueSuccess = createAction(
 
 export const createProductOptionValueFailure = createAction(
   '[Product Option Value] Create Product Option Value Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 export const updateProductOptionValue = createAction(
@@ -58,7 +58,7 @@ export const updateProductOptionValueSuccess = createAction(
 
 export const updateProductOptionValueFailure = createAction(
   '[Product Option Value] Update Product Option Value Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 export const deleteProductOptionValue = createAction(
@@ -72,5 +72,5 @@ export const deleteProductOptionValueSuccess = createAction(
 
 export const deleteProductOptionValueFailure = createAction(
   '[Product Option Value] Delete Product Option Value Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );

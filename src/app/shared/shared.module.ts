@@ -14,6 +14,7 @@ import { MaterialExtensionsModule } from '../material-extensions.module';
 import { MaterialModule } from '../material.module';
 
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { AutocompleteSelectComponent } from './components/autocomplete-select/autocomplete-select.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DynaTableModule } from './components/dyna-table';
@@ -22,6 +23,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { RichEditorComponent } from './components/rich-editor/rich-editor.component';
 import { SimpleTreeComponent } from './components/simple-tree/simple-tree.component';
+import { TreeSelectComponent } from './components/tree-select/tree-select.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
@@ -51,6 +53,8 @@ const COMPONENTS: any[] = [
   FileUploadComponent,
   SimpleTreeComponent,
   RichEditorComponent,
+  TreeSelectComponent,
+  AutocompleteSelectComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];

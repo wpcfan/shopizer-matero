@@ -12,16 +12,17 @@ import { ProductOptionsCreateComponent } from './options/create/create.component
 import { ProductOptionsListComponent } from './options/list/list.component';
 import { ProductOptionsUpdateComponent } from './options/update/update.component';
 import { ProductOptionsRoutingModule } from './product-options-routing.module';
-import { ProductOptionsValuesCreateComponent } from './values/create/create.component';
-import { ProductOptionsValuesListComponent } from './values/list/list.component';
-import { ProductOptionsValuesUpdateComponent } from './values/update/update.component';
+import { ProductOptionValueCreateComponent } from './values/create/create.component';
+import { ProductOptionValueListComponent } from './values/list/list.component';
+import { ProductOptionValueUpdateComponent } from './values/update/update.component';
 
 const COMPONENTS: any[] = [
   ProductOptionsListComponent,
   ProductOptionsCreateComponent,
   ProductOptionsUpdateComponent,
-  ProductOptionsValuesListComponent,
-  ProductOptionsValuesCreateComponent, ProductOptionsValuesUpdateComponent,
+  ProductOptionValueListComponent,
+  ProductOptionValueCreateComponent,
+  ProductOptionValueUpdateComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 

@@ -14,7 +14,7 @@ import { ProductOptionValueService } from '../../+state/services/product-option-
   styleUrls: ['./create.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductOptionsValuesCreateComponent implements OnInit {
+export class ProductOptionValueCreateComponent implements OnInit {
   languages$!: Observable<Language[]>;
   form!: FormGroup;
   descriptions: FormArray = this.fb.array([]);

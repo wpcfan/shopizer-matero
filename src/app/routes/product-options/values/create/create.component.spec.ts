@@ -1,20 +1,19 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { ProductOptionsValuesCreateComponent } from './create.component';
+import { ProductOptionValueCreateComponent } from './create.component';
 
 describe('ProductOptionsValuesCreateComponent', () => {
-  let component: ProductOptionsValuesCreateComponent;
-  let fixture: ComponentFixture<ProductOptionsValuesCreateComponent>;
+  let component: ProductOptionValueCreateComponent;
+  let fixture: ComponentFixture<ProductOptionValueCreateComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductOptionsValuesCreateComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductOptionValueCreateComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductOptionsValuesCreateComponent);
+    fixture = TestBed.createComponent(ProductOptionValueCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

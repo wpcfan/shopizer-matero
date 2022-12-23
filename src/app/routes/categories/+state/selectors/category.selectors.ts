@@ -1,30 +1,8 @@
 import { Category } from '@models';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { SimpleTreeNode } from '@shared/components/simple-tree/model';
-import { flatMap } from 'lodash';
+import { convertCategoriesToNestedTree, getFlatCategories } from '@shared/utils/tree';
 import * as fromCategory from '../reducers/category.reducer';
-
-const getFlatCategories = (categories: Category[]): Category[] => {
-  return flatMap(
-    categories.map(category =>
-      category.children && category.children.length > 0
-        ? [category, ...getFlatCategories(category.children)]
-        : [category]
-    )
-  );
-};
-
-const convertCategoriesToTree = (categories: Category[]): SimpleTreeNode[] => {
-  return categories.map(category => ({
-    id: `${category.id}`,
-    name: category.code,
-    value: category,
-    children:
-      category.children && category.children.length > 0
-        ? convertCategoriesToTree(category.children)
-        : [],
-  }));
-};
 
 export const selectCategoryState = createFeatureSelector<fromCategory.State>(
   fromCategory.categoryFeatureKey
@@ -81,5 +59,5 @@ export const selectAllFlatCategories = createSelector(
 
 export const selectTreeCategories = createSelector(
   selectAllCategories,
-  (categories): SimpleTreeNode[] => convertCategoriesToTree(categories)
+  (categories): SimpleTreeNode[] => convertCategoriesToNestedTree(categories)
 );

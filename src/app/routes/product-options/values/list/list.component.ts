@@ -17,7 +17,7 @@ import * as fromProductOptionValue from '../../+state/selectors/product-option-v
   styleUrls: ['./list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductOptionsValuesListComponent extends BaseCrudTable<ProductOptionValue> {
+export class ProductOptionValueListComponent extends BaseCrudTable<ProductOptionValue> {
   state$ = this.store.select(fromProductOptionValue.selectProductOptionValueState);
   storeParam$ = this.route.queryParamMap.pipe(
     map(params => params.get('store') ?? localStorage.getItem('store') ?? environment.defaultStore),
