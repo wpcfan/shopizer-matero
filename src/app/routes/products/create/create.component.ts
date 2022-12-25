@@ -23,7 +23,6 @@ export class ProductsCreateComponent implements OnInit {
   languages$!: Observable<Language[]>;
   form!: FormGroup;
   descriptions: FormArray = this.fb.array([]);
-  properties: FormArray = this.fb.array([]);
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -51,7 +50,6 @@ export class ProductsCreateComponent implements OnInit {
         width: [0, [Validators.min(0), Validators.max(100000)]],
         weight: [0, [Validators.min(0), Validators.max(100000)]],
       }),
-      properties: this.properties,
       descriptions: this.descriptions,
     });
     this.languages$ = this.store.select(fromProfile.selectStoreLanguages).pipe(
@@ -86,17 +84,6 @@ export class ProductsCreateComponent implements OnInit {
     });
   }
 
-  createProperty() {
-    this.properties.push(
-      this.fb.group({
-        attributeDefault: [false],
-        attributeDisplayOnly: [false],
-        option: ['', Validators.required],
-        optionValue: ['', Validators.required],
-      })
-    );
-  }
-
   get productSpecifications() {
     return this.form.get('productSpecifications') as FormGroup;
   }
@@ -112,6 +99,14 @@ export class ProductsCreateComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.store.dispatch(ProductActions.createProduct({ data: this.form.value }));
+    this.store.dispatch(
+      ProductActions.createProduct({
+        data: {
+          ...this.form.value,
+          manufacturer: this.form.controls.manufacturer.value.code,
+          type: this.form.controls.type.value.code,
+        },
+      })
+    );
   }
 }

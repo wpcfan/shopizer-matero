@@ -4,6 +4,8 @@ import { StoreModule } from '@ngrx/store';
 import { SharedModule } from '@shared/shared.module';
 import { BrandService } from '../brands/+state/services/brand.service';
 import { CategoryService } from '../categories/+state/services/category.service';
+import { ProductOptionValueService } from '../product-options/+state/services/product-option-value.service';
+import { ProductOptionService } from '../product-options/+state/services/product-option.service';
 import { ProductTypeService } from '../product-types/+state/services/product-type.service';
 import { ProductAttributeEffects } from './+state/effects/product-attribute.effects';
 import { ProductEffects } from './+state/effects/product.effects';
@@ -49,6 +51,8 @@ const COMPONENTS_DYNAMIC: any[] = [];
     BrandService,
     CategoryService,
     ProductTypeService,
+    ProductOptionService,
+    ProductOptionValueService,
   ],
 })
 export class ProductsModule {}

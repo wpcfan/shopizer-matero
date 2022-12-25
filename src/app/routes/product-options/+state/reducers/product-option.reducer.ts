@@ -1,3 +1,4 @@
+import { environment } from '@env/environment';
 import { ProductOption } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as ProductOptionActions from '../actions/product-option.actions';
@@ -30,7 +31,7 @@ export const reducer = createReducer(
       ...state,
       productOptions: action.data.data,
       total: action.data.recordsTotal,
-      page: Math.floor(action.data.recordsTotal / action.data.number),
+      page: Math.floor(action.data.recordsTotal / environment.defaultPageSize),
       loading: false,
     })
   ),

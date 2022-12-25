@@ -1,3 +1,4 @@
+import { environment } from '@env/environment';
 import { Currency, Merchant } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as MerchantActions from '../actions';
@@ -45,7 +46,7 @@ export const reducer = createReducer(
       ...state,
       merchants: data.data,
       total: data.recordsTotal,
-      page: Math.floor(data.recordsTotal / data.number),
+      page: Math.floor(data.recordsTotal / environment.defaultPageSize),
       loading: false,
     })
   ),

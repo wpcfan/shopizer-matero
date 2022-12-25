@@ -11,8 +11,8 @@ export class ProductAttributeEffects {
   list$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductAttributeActions.loadProductAttributes),
-      exhaustMap(({ productId, page, params }) =>
-        this.service.list(productId, page, params).pipe(
+      exhaustMap(({ productId, page }) =>
+        this.service.list(productId, page).pipe(
           map(data => ProductAttributeActions.loadProductAttributesSuccess({ data })),
           catchError(error => of(ProductAttributeActions.loadProductAttributesFailure({ error })))
         )
@@ -23,8 +23,8 @@ export class ProductAttributeEffects {
   getById$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductAttributeActions.getById),
-      exhaustMap(({ productId, id, lang }) =>
-        this.service.getById(productId, id, lang).pipe(
+      exhaustMap(({ productId, attributeId, lang }) =>
+        this.service.getById(productId, attributeId, lang).pipe(
           map(data => ProductAttributeActions.getByIdSuccess({ data })),
           catchError(error => of(ProductAttributeActions.getByIdFailure({ error })))
         )
@@ -47,8 +47,8 @@ export class ProductAttributeEffects {
   update$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductAttributeActions.updateProductAttribute),
-      exhaustMap(({ productId, id, data, lang }) =>
-        this.service.update(productId, id, data, lang).pipe(
+      exhaustMap(({ productId, attributeId, data, lang }) =>
+        this.service.update(productId, attributeId, data, lang).pipe(
           map(data => ProductAttributeActions.updateProductAttributeSuccess({ data })),
           catchError(error => of(ProductAttributeActions.updateProductAttributeFailure({ error })))
         )

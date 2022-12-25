@@ -1,3 +1,4 @@
+import { environment } from '@env/environment';
 import { ProductAttribute } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as ProductAttributeActions from '../actions/product-attribute.actions';
@@ -10,7 +11,6 @@ export interface State {
   total: number;
   page: number;
   loading: boolean;
-  filters?: Record<string, string>;
   selected?: ProductAttribute;
 }
 
@@ -30,7 +30,7 @@ export const reducer = createReducer(
       ...state,
       productAttributes: action.data.data,
       total: action.data.recordsTotal,
-      page: Math.floor(action.data.recordsTotal / action.data.number),
+      page: Math.floor(action.data.recordsTotal / environment.defaultPageSize),
       loading: false,
     })
   ),

@@ -1,3 +1,33 @@
-<page-header></page-header>
-
-<p>list works!</p>
+<ng-container *ngIf="params$ | async as params">
+  <ng-container *ngIf="state$ | async as state">
+    <ngx-dyna-table
+      #table
+      [data]="state.productAttributes"
+      [columns]="columns"
+      [pageIndex]="state.page"
+      [pageSize]="pageSize"
+      [total]="state.total"
+      [selectable]="selectable"
+      [sortable]="sortable"
+      [showEdit]="showEdit"
+      [showDelete]="showDelete"
+      [showAdd]="showAdd"
+      [showMore]="showMore"
+      [permsToAdd]="permsToAdd"
+      [permsToEdit]="permsToEdit"
+      [permsToDelete]="permsToDelete"
+      [multiSortable]="multiSortable"
+      [stickyHeader]="stickyHeader"
+      [showAction]="showAction"
+      (pageChange)="handlePageChange($event)"
+      (sortChange)="handleSortChange($event)"
+      (rowClick)="handleItem($event)"
+      (actionEdit)="handleEdit($event)"
+      (actionDelete)="handleDelete($event)"
+      (actionAdd)="handleAdd()"
+      (filterChange)="handleFilter($event)"
+    >
+    </ngx-dyna-table>
+  </ng-container>
+</ng-container>
+<button mat-button type="button" [routerLink]="['../create']">Create attribute</button>

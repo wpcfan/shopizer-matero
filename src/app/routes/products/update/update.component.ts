@@ -78,7 +78,6 @@ export class ProductsUpdateComponent implements OnInit {
         width: [0, [Validators.min(0), Validators.max(100000)]],
         weight: [0, [Validators.min(0), Validators.max(100000)]],
       }),
-      properties: this.properties,
       descriptions: this.descriptions,
     });
     this.languages$ = this.store.select(fromProfile.selectStoreLanguages);
@@ -86,14 +85,17 @@ export class ProductsUpdateComponent implements OnInit {
       tap(product => {
         if (product) {
           const categories = convertNestedToFlat(product.categories);
-
+          if (product.properties && product.properties.length > 0) {
+            this.properties.clear();
+            product.properties.forEach(() => this.createProperty());
+          }
           this.form.patchValue({
             identifier: product.identifier,
             sortOrder: product.sortOrder,
             categories,
             dateAvailable: product.dateAvailable,
-            manufacturer: product.manufacturer?.code,
-            type: product.type.code,
+            manufacturer: { label: product.manufacturer?.code, value: product.manufacturer },
+            type: { label: product.type?.code, value: product.type },
             price: product.price,
             quantity: product.quantity,
             shipeable: product.shipeable,
@@ -101,6 +103,7 @@ export class ProductsUpdateComponent implements OnInit {
             visible: product.visible,
             virtual: product.virtual,
             productSpecifications: product.productSpecifications,
+            properties: product.properties,
             descriptions: [product.description],
           });
         }

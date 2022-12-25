@@ -49,14 +49,13 @@ export class ProductTypesListComponent extends BaseCrudTable<ProductType> {
     },
   ];
   public handlePageChange(ev: PageEvent): void {
-    throw new Error('Method not implemented.');
+    this.router.navigate([], {
+      queryParams: { page: ev.pageIndex },
+      queryParamsHandling: 'merge',
+    });
   }
-  public handleSortChange(ev: Record<string, Sort>): void {
-    throw new Error('Method not implemented.');
-  }
-  public handleDelete(row: ProductType): void {
-    throw new Error('Method not implemented.');
-  }
+  public handleSortChange(ev: Record<string, Sort>): void {}
+  public handleDelete(row: ProductType): void {}
   public handleFilter(appliedFilters: Record<string, ColumnFilter>): void {
     const params = this.filterParams(appliedFilters);
 

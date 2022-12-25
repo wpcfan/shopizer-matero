@@ -2,32 +2,29 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Pageable, ProductAttribute } from '@models';
+import { ProductOptionValueService } from 'app/routes/product-options/+state/services/product-option-value.service';
+import { ProductOptionService } from 'app/routes/product-options/+state/services/product-option.service';
 import { map } from 'rxjs';
 
 @Injectable()
 export class ProductAttributeService {
   url = environment.apiUrl + '/v1/private/product';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private optionService: ProductOptionService,
+    private optionValueService: ProductOptionValueService
+  ) {}
 
-  list(
-    productId: number,
-    page = 0,
-    filterParams?: Record<string, string>,
-    pageSize = environment.defaultPageSize
-  ) {
-    const params = { count: pageSize.toString(), page: page.toString() };
-    if (filterParams) {
-      Object.assign(params, filterParams);
-    }
+  list(productId: number, page: number, count = 20) {
     return this.http
       .get<{
-        totalPages: number;
-        recordsTotal: number;
-        recordsFiltered: number;
         number: number;
+        recordsFiltered: number;
+        recordsTotal: number;
+        totalPages: number;
         attributes: ProductAttribute[];
-      }>(`${this.url}/${productId}/attributes`, { params })
+      }>(`${this.url}/${productId}/attributes`, { params: { page, count } })
       .pipe(
         map(it => {
           return {
@@ -63,5 +60,13 @@ export class ProductAttributeService {
     return this.http.get<ProductAttribute>(`${this.url}/${productId}/attribute/${id}`, {
       params: { lang },
     });
+  }
+
+  options() {
+    return this.optionService.list(0, undefined, 1000).pipe(map(it => it.data));
+  }
+
+  optionValues() {
+    return this.optionValueService.list(0, undefined, 1000).pipe(map(it => it.data));
   }
 }

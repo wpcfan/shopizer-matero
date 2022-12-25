@@ -1,3 +1,4 @@
+import { environment } from '@env/environment';
 import { Category } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as CategoryActions from '../actions/category.actions';
@@ -32,7 +33,7 @@ export const reducer = createReducer(
       ...state,
       categories: action.data.data,
       total: action.data.recordsTotal,
-      page: Math.floor(action.data.recordsTotal / action.data.number),
+      page: Math.floor(action.data.recordsTotal / environment.defaultPageSize),
       loading: false,
     })
   ),

@@ -1,6 +1,6 @@
 <page-header [title]="'products.create.title' | translate" [hideBreadcrumb]="false"></page-header>
 
-<div class="w-full h-full" fxLayout="row wrap">
+<div class="w-full h-full" fxLayout="row nowrap">
   <mat-card
     class="mat-elevation-z4 m-auto"
     style="max-width: 90%"
@@ -241,7 +241,21 @@
         >
           {{ 'common.back_to_list' | translate }}
         </button>
+
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          color="accent"
+          [routerLink]="['/products', 'update', idAndLang.id, 'attributes', 'list']"
+          [queryParams]="{ lang: idAndLang.lang }"
+        >
+          {{ 'products.update.attributes' | translate }}
+        </button>
       </div>
     </form>
   </mat-card>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
 </div>

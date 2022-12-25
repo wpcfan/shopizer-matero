@@ -3,7 +3,7 @@ import { createAction, props } from '@ngrx/store';
 
 export const loadProductAttributes = createAction(
   '[ProductAttribute] Load ProductAttributes',
-  props<{ productId: number; page: number; params?: Record<string, string> }>()
+  props<{ productId: number; page: number }>()
 );
 
 export const loadProductAttributesSuccess = createAction(
@@ -18,7 +18,7 @@ export const loadProductAttributesFailure = createAction(
 
 export const getById = createAction(
   '[Product Attribute] Get Product Attribute By Id',
-  props<{ productId: number; id: number; lang: string }>()
+  props<{ productId: number; attributeId: number; lang: string }>()
 );
 
 export const getByIdSuccess = createAction(
@@ -48,7 +48,7 @@ export const createProductAttributeFailure = createAction(
 
 export const updateProductAttribute = createAction(
   '[Product Attribute] Update Product Attribute',
-  props<{ productId: number; id: number; data: Partial<ProductAttribute>; lang: string }>()
+  props<{ productId: number; attributeId: number; data: Partial<ProductAttribute>; lang: string }>()
 );
 
 export const updateProductAttributeSuccess = createAction(

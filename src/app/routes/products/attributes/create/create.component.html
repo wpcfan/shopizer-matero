@@ -1,3 +1,35 @@
-<page-header></page-header>
+<mat-card
+  class="mat-elevation-z4 m-auto"
+  style="max-width: 90%"
+  [formGroup]="form"
+  *ngIf="productId$ | async as productId"
+>
+  <div>
+    <mat-checkbox formControlName="attributeDefault">{{
+      'products.create.attribute_default' | translate
+    }}</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox formControlName="attributeDisplayOnly">{{
+      'products.create.attribute_display_only' | translate
+    }}</mat-checkbox>
+  </div>
+  <mat-form-field>
+    <mat-label>{{ 'products.property.option' | translate }}</mat-label>
+    <mat-select formControlName="option">
+      <mat-option *ngFor="let option of options$ | async" [value]="option">
+        {{ option.code }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'products.property.option_value' | translate }}</mat-label>
+    <mat-select formControlName="optionValue">
+      <mat-option *ngFor="let optionValue of optionValues$ | async" [value]="optionValue">
+        {{ optionValue.code }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<p>create works!</p>
+  <button type="button" mat-button (click)="create(productId)">Create</button>
+</mat-card>

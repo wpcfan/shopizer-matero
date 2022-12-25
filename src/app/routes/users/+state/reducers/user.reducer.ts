@@ -1,3 +1,4 @@
+import { environment } from '@env/environment';
 import { Profile } from '@models';
 import { createReducer, on } from '@ngrx/store';
 import * as UserActions from '../actions/user.actions';
@@ -36,7 +37,7 @@ export const reducer = createReducer(
       ...state,
       users: data.data,
       total: data.recordsTotal,
-      page: Math.floor(data.recordsTotal / data.number),
+      page: Math.floor(data.recordsTotal / environment.defaultPageSize),
       loading: false,
     })
   ),
