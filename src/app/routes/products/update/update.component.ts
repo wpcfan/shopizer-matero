@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { ProductService } from '../+state/services/product.service';
   selector: 'app-products-update',
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsUpdateComponent implements OnInit {
   manufacturers$!: Observable<FilteredOption[]>;
@@ -166,5 +167,13 @@ export class ProductsUpdateComponent implements OnInit {
 
   delete(id: string) {
     this.store.dispatch(ProductActions.deleteProduct({ id: parseInt(id) }));
+  }
+
+  compareId(a: any, b: any) {
+    return a?.id === b?.id;
+  }
+
+  compareCode(a: any, b: any) {
+    return a?.code === b?.code;
   }
 }

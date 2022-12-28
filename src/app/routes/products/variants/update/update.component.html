@@ -1,0 +1,93 @@
+<page-header></page-header>
+
+<mat-card
+  class="mat-elevation-z4 m-auto"
+  style="max-width: 90%"
+  *ngIf="idAndLang$ | async as idAndLang"
+>
+  <form
+    style="display: flex; flex-direction: column"
+    [formGroup]="form"
+    *ngIf="selected$ | async as selected"
+  >
+    <div>
+      <mat-checkbox formControlName="defaultValue">{{
+        'products.create.default_value' | translate
+      }}</mat-checkbox>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'merchants.create.date' | translate }}</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="form.controls.date.invalid">
+        {{ 'validations.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'categories.create.sort_order' | translate }}</mat-label>
+      <input matInput formControlName="sortOrder" type="number" />
+      <mat-error *ngIf="form.controls.sortOrder.invalid">
+        {{ 'validations.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'products.create.code' | translate }}</mat-label>
+      <input matInput formControlName="code" />
+      <mat-error *ngIf="form.controls.code.invalid">
+        {{ 'validations.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'products.property.option' | translate }}</mat-label>
+      <mat-select formControlName="option" [compareWith]="compareId">
+        <mat-option *ngFor="let option of options$ | async" [value]="option">
+          {{ option.code }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'products.property.option_value' | translate }}</mat-label>
+      <mat-select formControlName="optionValue" [compareWith]="compareId">
+        <mat-option *ngFor="let optionValue of optionValues$ | async" [value]="optionValue">
+          {{ optionValue.code }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="button-row">
+      <button
+        type="button"
+        class="w-full"
+        mat-raised-button
+        color="primary"
+        (click)="update($event, idAndLang.id, idAndLang.lang)"
+      >
+        {{ 'common.submit' | translate }}
+      </button>
+
+      <button
+        type="button"
+        class="w-full"
+        mat-raised-button
+        color="warn"
+        (click)="delete(idAndLang.id)"
+      >
+        {{ 'common.delete' | translate }}
+      </button>
+
+      <button
+        type="button"
+        class="w-full"
+        mat-raised-button
+        color="accent"
+        [routerLink]="['/products', 'variants', 'list']"
+      >
+        {{ 'common.back_to_list' | translate }}
+      </button>
+    </div>
+  </form>
+</mat-card>

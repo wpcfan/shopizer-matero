@@ -1,5 +1,3 @@
-<page-header [title]="'products.create.title' | translate" [hideBreadcrumb]="false"></page-header>
-
 <div class="w-full h-full" fxLayout="row nowrap">
   <mat-card
     class="mat-elevation-z4 m-auto"
@@ -138,7 +136,11 @@
         <ng-container *ngFor="let language of languages; let i = index" [formGroupName]="i">
           <mat-form-field appearance="outline">
             <mat-label>{{ 'description.language' | translate }}</mat-label>
-            <mat-select formControlName="language" (selectionChange)="hanldeCountryChange($event)">
+            <mat-select
+              [compareWith]="compareCode"
+              formControlName="language"
+              (selectionChange)="hanldeCountryChange($event)"
+            >
               <mat-option *ngFor="let language of languages" [value]="language.code">
                 {{ language.code }}
               </mat-option>
@@ -251,6 +253,17 @@
           [queryParams]="{ lang: idAndLang.lang }"
         >
           {{ 'products.update.attributes' | translate }}
+        </button>
+
+        <button
+          type="button"
+          class="w-full"
+          mat-raised-button
+          color="accent"
+          [routerLink]="['/products', 'update', idAndLang.id, 'variants', 'list']"
+          [queryParams]="{ lang: idAndLang.lang }"
+        >
+          {{ 'products.update.variants' | translate }}
         </button>
       </div>
     </form>

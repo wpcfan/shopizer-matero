@@ -162,6 +162,34 @@ export const initialState: State = {
         },
       ],
     },
+    {
+      route: '/shipping',
+      name: 'shipping',
+      type: 'sub',
+      icon: 'delivery',
+      children: [
+        {
+          route: 'expedition',
+          name: 'Expedition',
+          type: 'link',
+        },
+        {
+          route: 'methods',
+          name: 'Shipping Methods',
+          type: 'link',
+        },
+        {
+          route: 'origin',
+          name: 'Shipping origin',
+          type: 'link',
+        },
+        {
+          route: 'packaging',
+          name: 'Packaging',
+          type: 'link',
+        },
+      ],
+    },
   ],
 };
 

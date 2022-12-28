@@ -5,7 +5,12 @@ import { ShippingMethodsComponent } from './methods/methods.component';
 import { ShippingOriginComponent } from './origin/origin.component';
 import { ShippingPackagingComponent } from './packaging/packaging.component';
 
-const routes: Routes = [{ path: 'expedition', component: ShippingExpeditionComponent }, { path: 'methods', component: ShippingMethodsComponent }, { path: 'origin', component: ShippingOriginComponent }, { path: 'packaging', component: ShippingPackagingComponent }];
+const routes: Routes = [
+  { path: 'expedition', component: ShippingExpeditionComponent },
+  { path: 'methods', component: ShippingMethodsComponent },
+  { path: 'origin', component: ShippingOriginComponent },
+  { path: 'packaging', component: ShippingPackagingComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

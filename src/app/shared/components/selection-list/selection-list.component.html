@@ -1,0 +1,30 @@
+<div style="display: flex">
+  <mat-selection-list #source [disabled]="isDisabled">
+    <mat-list-option *ngFor="let option of availableOptions" [value]="option">
+      {{ option.label }}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <div style="display: flex; flex-direction: column">
+    <button
+      mat-raised-button
+      (click)="moveToRight(source.selectedOptions)"
+      [disabled]="isDisabled || source.selectedOptions.selected.length === 0"
+    >
+      Move to right
+    </button>
+    <button
+      mat-raised-button
+      (click)="moveToLeft(target.selectedOptions)"
+      [disabled]="isDisabled || target.selectedOptions.selected.length === 0"
+    >
+      Move to left
+    </button>
+  </div>
+
+  <mat-selection-list #target [disabled]="isDisabled">
+    <mat-list-option *ngFor="let option of selectedOptions" [value]="option">
+      {{ option.label }}
+    </mat-list-option>
+  </mat-selection-list>
+</div>

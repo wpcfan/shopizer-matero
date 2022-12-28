@@ -8,6 +8,10 @@ export interface ProductOption {
   type: 'select' | 'radio' | 'checkbox' | 'text';
   description?: Description;
   descriptions?: Description[];
+  name: string;
+  lang: string;
+  optionValues?: ProductOptionValue[];
+  variant: boolean;
 }
 
 export interface ProductOptionValue {

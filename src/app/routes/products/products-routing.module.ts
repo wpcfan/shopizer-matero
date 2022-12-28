@@ -6,7 +6,9 @@ import { ProductAttributeUpdateComponent } from './attributes/update/update.comp
 import { ProductsCreateComponent } from './create/create.component';
 import { ProductsListComponent } from './list/list.component';
 import { ProductsUpdateComponent } from './update/update.component';
-import { ProductsVariationComponent } from './variation/variation.component';
+import { ProductsVariantsCreateComponent } from './variants/create/create.component';
+import { ProductsVariantsListComponent } from './variants/list/list.component';
+import { ProductsVariantsUpdateComponent } from './variants/update/update.component';
 
 const routes: Routes = [
   {
@@ -30,9 +32,17 @@ const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'variants',
+        children: [
+          { path: '', redirectTo: 'list', pathMatch: 'full' },
+          { path: 'list', component: ProductsVariantsListComponent },
+          { path: 'create', component: ProductsVariantsCreateComponent },
+          { path: 'update/:id', component: ProductsVariantsUpdateComponent },
+        ],
+      },
     ],
   },
-  { path: 'variation', component: ProductsVariationComponent },
 ];
 
 @NgModule({

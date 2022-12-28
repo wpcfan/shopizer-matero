@@ -1,20 +1,20 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductsVariationComponent } from './variation.component';
+import { ProductsVariantsCreateComponent } from './create.component';
 
-describe('ProductsVariationComponent', () => {
-  let component: ProductsVariationComponent;
-  let fixture: ComponentFixture<ProductsVariationComponent>;
+describe('ProductsVariantsCreateComponent', () => {
+  let component: ProductsVariantsCreateComponent;
+  let fixture: ComponentFixture<ProductsVariantsCreateComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductsVariationComponent ]
+      declarations: [ ProductsVariantsCreateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductsVariationComponent);
+    fixture = TestBed.createComponent(ProductsVariantsCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

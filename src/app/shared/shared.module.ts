@@ -22,6 +22,7 @@ import { ErrorCodeComponent } from './components/error-code/error-code.component
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { RichEditorComponent } from './components/rich-editor/rich-editor.component';
+import { SelectionListComponent } from './components/selection-list/selection-list.component';
 import { SimpleTreeComponent } from './components/simple-tree/simple-tree.component';
 import { TreeSelectComponent } from './components/tree-select/tree-select.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
@@ -55,6 +56,7 @@ const COMPONENTS: any[] = [
   RichEditorComponent,
   TreeSelectComponent,
   AutocompleteSelectComponent,
+  SelectionListComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective];
