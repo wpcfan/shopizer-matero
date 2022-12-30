@@ -1,20 +1,20 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShippingPackagingComponent } from './packaging.component';
+import { ShippingPackagingListComponent } from './list.component';
 
-describe('ShippingPackagingComponent', () => {
-  let component: ShippingPackagingComponent;
-  let fixture: ComponentFixture<ShippingPackagingComponent>;
+describe('ShippingPackagingListComponent', () => {
+  let component: ShippingPackagingListComponent;
+  let fixture: ComponentFixture<ShippingPackagingListComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShippingPackagingComponent ]
+      declarations: [ ShippingPackagingListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShippingPackagingComponent);
+    fixture = TestBed.createComponent(ShippingPackagingListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

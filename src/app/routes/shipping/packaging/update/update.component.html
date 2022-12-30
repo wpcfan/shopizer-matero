@@ -1,0 +1,35 @@
+<page-header></page-header>
+
+<div [formGroup]="form" class="form-field-full" *ngIf="selected$ | async as selected">
+  <mat-form-field appearance="outline">
+    <mat-label>Package Type</mat-label>
+    <mat-select formControlName="type">
+      <mat-option *ngFor="let type of packageTypes" [value]="type.value">
+        {{ type.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Package Code</mat-label>
+    <input matInput formControlName="code" />
+  </mat-form-field>
+  <ng-container *ngIf="form.controls.type.value === 'BOX'">
+    <mat-form-field appearance="outline">
+      <mat-label>Length</mat-label>
+      <input matInput formControlName="shippingLength" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Width</mat-label>
+      <input matInput formControlName="shippingWidth" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Height</mat-label>
+      <input matInput formControlName="shippingHeight" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Weight</mat-label>
+      <input matInput formControlName="shippingWeight" />
+    </mat-form-field>
+  </ng-container>
+  <button mat-button type="button" (click)="update(selected.code)">Create</button>
+</div>

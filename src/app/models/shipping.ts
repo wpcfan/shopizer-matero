@@ -13,3 +13,19 @@ export interface ShippingMethod {
   requiredKeys: string[];
   configurable?: boolean;
 }
+
+export class ShippingPackage {
+  code!: string;
+  itemName?: string;
+  shippingHeight?: number;
+  shippingLength?: number;
+  shippingMaxWeight?: number;
+  shippingQuantity?: number;
+  shippingWeight?: number;
+  shippingWidth?: number;
+  treshold?: number;
+  type?: string;
+  get id(): string {
+    return this.code;
+  }
+}

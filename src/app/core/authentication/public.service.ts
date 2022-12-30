@@ -24,6 +24,10 @@ export class PublicService {
     return this.http.get<Country[]>(`${this.url}/country`);
   }
 
+  shippingCountries() {
+    return this.http.get<Country[]>(`${this.url}/shipping/country`);
+  }
+
   zones(countryCode: string) {
     return this.http.get<Zone[]>(`${this.url}/zones`, { params: { code: countryCode } });
   }

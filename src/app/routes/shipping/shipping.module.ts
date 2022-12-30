@@ -8,14 +8,18 @@ import { ShippingService } from './+state/services/shipping.service';
 import { ShippingExpeditionComponent } from './expedition/expedition.component';
 import { ShippingMethodsComponent } from './methods/methods.component';
 import { ShippingOriginComponent } from './origin/origin.component';
-import { ShippingPackagingComponent } from './packaging/packaging.component';
+import { ShippingPackagingCreateComponent } from './packaging/create/create.component';
+import { ShippingPackagingListComponent } from './packaging/list/list.component';
+import { ShippingPackagingUpdateComponent } from './packaging/update/update.component';
 import { ShippingRoutingModule } from './shipping-routing.module';
 
 const COMPONENTS: any[] = [
   ShippingExpeditionComponent,
   ShippingMethodsComponent,
   ShippingOriginComponent,
-  ShippingPackagingComponent,
+  ShippingPackagingListComponent,
+  ShippingPackagingCreateComponent,
+  ShippingPackagingUpdateComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 
