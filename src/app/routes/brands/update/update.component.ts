@@ -59,8 +59,6 @@ export class BrandsUpdateComponent implements OnInit {
     this.selected$ = this.store.select(fromBrand.selectSelected).pipe(
       tap(brand => {
         if (brand) {
-          console.log(brand);
-
           this.form.patchValue({
             code: brand.code,
             order: brand.order,

@@ -166,7 +166,7 @@ export const initialState: State = {
       route: '/shipping',
       name: 'shipping',
       type: 'sub',
-      icon: 'delivery',
+      icon: 'local_shipping',
       children: [
         {
           route: 'expedition',
@@ -186,6 +186,24 @@ export const initialState: State = {
         {
           route: 'packaging',
           name: 'Packaging',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      route: '/tax',
+      name: 'tax',
+      type: 'sub',
+      icon: 'request_quote',
+      children: [
+        {
+          route: 'classes',
+          name: 'Tax Classes',
+          type: 'link',
+        },
+        {
+          route: 'rates',
+          name: 'Tax Rates',
           type: 'link',
         },
       ],

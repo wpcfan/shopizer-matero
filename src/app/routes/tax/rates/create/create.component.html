@@ -1,0 +1,72 @@
+<page-header></page-header>
+
+<div [formGroup]="form" class="form-field-full" *ngIf="languages$ | async as languages">
+  <mat-form-field appearance="outline" *ngIf="countries$ | async as countries">
+    <mat-label>Country</mat-label>
+    <mat-select formControlName="country">
+      <mat-option *ngFor="let country of countries" [value]="country.code">
+        {{ country.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" *ngIf="stateProvinces$ | async as states">
+    <mat-label>State</mat-label>
+    <mat-select formControlName="zone">
+      <mat-option *ngFor="let state of states" [value]="state.code">
+        {{ state.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Code</mat-label>
+    <input matInput formControlName="code" />
+  </mat-form-field>
+
+  <div formArrayName="descriptions">
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let language of languages; let i = index"
+        [formGroupName]="i"
+        [expanded]="i === 0"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ language.code }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'categories.create.name' | translate }}</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error *ngIf="getIndexedFormGroup(i).controls.name.errors?.required">
+              {{ 'validations.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Rate</mat-label>
+    <input matInput formControlName="rate" type="number" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Order</mat-label>
+    <input matInput formControlName="priority" type="number" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Tax class</mat-label>
+    <mat-select formControlName="taxClass">
+      <mat-option *ngFor="let taxClass of taxClasses$ | async" [value]="taxClass.code">
+        {{ taxClass.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button type="button" (click)="create($event)">Create</button>
+</div>

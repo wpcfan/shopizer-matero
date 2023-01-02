@@ -1,20 +1,20 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaxClassListComponent } from './class-list.component';
+import { TaxRatesListComponent } from './list.component';
 
-describe('TaxClassListComponent', () => {
-  let component: TaxClassListComponent;
-  let fixture: ComponentFixture<TaxClassListComponent>;
+describe('TaxRatesListComponent', () => {
+  let component: TaxRatesListComponent;
+  let fixture: ComponentFixture<TaxRatesListComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaxClassListComponent ]
+      declarations: [ TaxRatesListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaxClassListComponent);
+    fixture = TestBed.createComponent(TaxRatesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

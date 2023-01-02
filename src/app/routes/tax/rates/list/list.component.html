@@ -1,0 +1,34 @@
+<page-header></page-header>
+
+<ng-container *ngIf="list$ | async as list">
+  <ng-container *ngIf="{ value: page$ | async } as page">
+    <ngx-dyna-table
+      #table
+      [data]="list.data"
+      [columns]="columns"
+      [pageIndex]="pageFunc(list.recordsTotal, pageSize)"
+      [pageSize]="pageSize"
+      [total]="list.recordsTotal"
+      [selectable]="selectable"
+      [sortable]="sortable"
+      [showEdit]="showEdit"
+      [showDelete]="showDelete"
+      [showAdd]="showAdd"
+      [showMore]="showMore"
+      [permsToAdd]="permsToAdd"
+      [permsToEdit]="permsToEdit"
+      [permsToDelete]="permsToDelete"
+      [multiSortable]="multiSortable"
+      [stickyHeader]="stickyHeader"
+      [showAction]="showAction"
+      (pageChange)="handlePageChange($event)"
+      (sortChange)="handleSortChange($event)"
+      (rowClick)="handleItem($event)"
+      (actionEdit)="handleEdit($event)"
+      (actionDelete)="handleDelete($event)"
+      (actionAdd)="handleAdd()"
+      (filterChange)="handleFilter($event)"
+    >
+    </ngx-dyna-table>
+  </ng-container>
+</ng-container>

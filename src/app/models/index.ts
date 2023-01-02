@@ -22,4 +22,5 @@ export * from './profile';
 export * from './select-option';
 export * from './shipping';
 export * from './signup';
+export * from './tax';
 export * from './zone';
