@@ -1,3 +1,31 @@
 <page-header></page-header>
 
-<p>image-list works!</p>
+<div class="toolbar"></div>
+
+<div class="files">
+  <mat-card *ngFor="let item of list$ | async">
+    <mat-card-header>
+      <mat-card-title>{{ item.name }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-lg-image [src]="item.url" />
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="handleEdit(item)">
+        <mat-icon>edit</mat-icon>
+        <span>Rename</span>
+      </button>
+      <button mat-button color="warn" (click)="handleDelete(item)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Upload</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-file-upload (fileSelected)="onFileSelected($event)"></app-file-upload>
+    </mat-card-content>
+  </mat-card>
+</div>

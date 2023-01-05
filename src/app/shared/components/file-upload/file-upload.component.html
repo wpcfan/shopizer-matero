@@ -1,17 +1,26 @@
-<input
-  type="file"
-  [accept]="fileTypes"
-  class="file-input"
-  (change)="onFileSelected($event)"
-  #fileUpload
-/>
-<div class="file-upload">
-  <button
-    mat-mini-fab
-    color="primary"
-    class="upload-btn"
-    (click)="$event.preventDefault(); $event.stopPropagation(); fileUpload.click()"
-  >
-    <mat-icon>attach_file</mat-icon>
-  </button>
+<div
+  class="dropzone"
+  file-drop
+  (filesChangeEmiter)="onFileDropped($event)"
+  [ngStyle]="{ width: dropZoneWidth, height: dropZoneHeight }"
+>
+  <div>
+    <input
+      type="file"
+      [accept]="fileTypes"
+      class="file-input"
+      (change)="onFileSelected($event)"
+      #fileUpload
+    />
+    <div class="file-upload">
+      <button
+        mat-mini-fab
+        color="primary"
+        class="upload-btn"
+        (click)="$event.preventDefault(); $event.stopPropagation(); fileUpload.click()"
+      >
+        <mat-icon>attach_file</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>

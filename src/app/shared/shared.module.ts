@@ -26,6 +26,7 @@ import { SelectionListComponent } from './components/selection-list/selection-li
 import { SimpleTreeComponent } from './components/simple-tree/simple-tree.component';
 import { TreeSelectComponent } from './components/tree-select/tree-select.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
+import { FileDropDirective } from './directives/file-drop.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ToObservablePipe } from './pipes/to-observable.pipe';
 
@@ -59,7 +60,7 @@ const COMPONENTS: any[] = [
   SelectionListComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
-const DIRECTIVES: any[] = [DisableControlDirective];
+const DIRECTIVES: any[] = [DisableControlDirective, FileDropDirective];
 const PIPES: any[] = [SafeUrlPipe, ToObservablePipe];
 
 @NgModule({

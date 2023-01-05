@@ -226,6 +226,29 @@ export const initialState: State = {
         },
       ],
     },
+    {
+      route: '/content',
+      name: 'content',
+      type: 'sub',
+      icon: 'content_paste_go',
+      children: [
+        {
+          route: 'boxes',
+          name: 'Box list',
+          type: 'link',
+        },
+        {
+          route: 'pages',
+          name: 'Page list',
+          type: 'link',
+        },
+        {
+          route: 'images',
+          name: 'Image list',
+          type: 'link',
+        },
+      ],
+    },
   ],
 };
 
