@@ -30,8 +30,9 @@
       </mat-select>
     </mat-form-field>
 
-    <div style="display: flex; align-items: flex-start; justify-content: start">
-      <mat-card class="mat-elevation-z4 m-auto" formGroupName="billing">
+    <div class="addrs">
+      <mat-card class="mat-elevation-z4 m-0" formGroupName="billing">
+        <mat-card-title>Billing Address</mat-card-title>
         <mat-form-field appearance="outline">
           <mat-label>{{ 'register.firstName' | translate }}</mat-label>
           <input matInput formControlName="firstName" />
@@ -107,7 +108,8 @@
         </mat-form-field>
       </mat-card>
 
-      <mat-card class="mat-elevation-z4 m-auto" formGroupName="delivery">
+      <mat-card class="mat-elevation-z4 m-0" formGroupName="delivery">
+        <mat-card-title>Shipping Address</mat-card-title>
         <mat-form-field appearance="outline">
           <mat-label>{{ 'register.firstName' | translate }}</mat-label>
           <input matInput formControlName="firstName" />
