@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as AuthActions from '@core/+state/actions';
 import { Zone } from '@models';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from '@shared';
@@ -41,14 +40,7 @@ export class ShippingOriginComponent implements OnInit {
       postalCode: ['', [Validators.required]],
       country: ['', [Validators.required]],
     });
-    this.sub.add(
-      this.form
-        ?.get('country')
-        ?.valueChanges.pipe(filter(country => !!country))
-        .subscribe(country => {
-          this.store.dispatch(AuthActions.loadZones({ countryCode: country }));
-        })
-    );
+
     this.stateProvinces$ = this.form.get('country')!.valueChanges.pipe(
       filter(country => !!country.code),
       distinctUntilChanged(),

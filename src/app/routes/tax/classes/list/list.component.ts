@@ -49,7 +49,7 @@ export class TaxClassesListComponent extends BaseCrudTable<TaxClass> {
   ];
   showAdd = true;
   public handlePageChange(ev: PageEvent): void {
-    this.router.navigate(['/tax', 'classes', 'list'], {
+    this.router.navigate([], {
       queryParams: { page: ev.pageIndex, lang: this.local.get('lang') },
     });
   }

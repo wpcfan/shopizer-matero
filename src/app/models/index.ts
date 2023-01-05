@@ -3,6 +3,7 @@ export * from './audit';
 export * from './category';
 export * from './country';
 export * from './currency';
+export * from './customer';
 export * from './description';
 export * from './group';
 export * from './image';

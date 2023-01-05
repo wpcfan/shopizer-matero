@@ -208,6 +208,24 @@ export const initialState: State = {
         },
       ],
     },
+    {
+      route: '/customer',
+      name: 'customer',
+      type: 'sub',
+      icon: 'contacts',
+      children: [
+        {
+          route: 'list',
+          name: 'Customer list',
+          type: 'link',
+        },
+        {
+          route: 'create',
+          name: 'Create customer',
+          type: 'link',
+        },
+      ],
+    },
   ],
 };
 
