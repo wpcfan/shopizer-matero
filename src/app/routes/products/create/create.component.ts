@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Language } from '@models';
 import { Store } from '@ngrx/store';
 import { FilteredOption } from '@shared/components/autocomplete-select/autocomplete-select.component';
 import { SimpleTreeNode } from '@shared/components/simple-tree/model';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import * as ProductActions from '../+state/actions/product.actions';
 import { ProductService } from '../+state/services/product.service';
 
@@ -22,7 +22,6 @@ export class ProductsCreateComponent implements OnInit {
   productTypes$!: Observable<FilteredOption[]>;
   languages$!: Observable<Language[]>;
   form!: FormGroup;
-  descriptions: FormArray = this.fb.array([]);
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -50,18 +49,9 @@ export class ProductsCreateComponent implements OnInit {
         width: [0, [Validators.min(0), Validators.max(100000)]],
         weight: [0, [Validators.min(0), Validators.max(100000)]],
       }),
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
-    this.languages$ = this.store.select(fromProfile.selectStoreLanguages).pipe(
-      tap(languages => {
-        if (languages.length > 0) {
-          this.descriptions.clear();
-        }
-        languages.forEach(language => {
-          this.descriptions.push(this.createDescription(language.code));
-        });
-      })
-    );
+    this.languages$ = this.store.select(fromProfile.selectStoreLanguages);
     this.categories$ = this.service.categories();
     this.manufacturers$ = this.service
       .manufacturers()
@@ -71,25 +61,8 @@ export class ProductsCreateComponent implements OnInit {
       .pipe(map(items => items.map(it => ({ label: it.code, value: it }))));
   }
 
-  createDescription(language: string) {
-    return this.fb.group({
-      language: [language, Validators.required],
-      title: [''],
-      name: ['', Validators.required],
-      friendlyUrl: [''],
-      highlights: [''],
-      metaDescription: [''],
-      description: [''],
-      keyWords: [''],
-    });
-  }
-
   get productSpecifications() {
     return this.form.get('productSpecifications') as FormGroup;
-  }
-
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
   }
 
   create(ev: Event) {

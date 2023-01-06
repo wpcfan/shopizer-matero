@@ -24,30 +24,18 @@
     <input matInput formControlName="code" />
   </mat-form-field>
 
-  <div formArrayName="descriptions">
-    <mat-accordion>
-      <mat-expansion-panel
-        *ngFor="let language of languages; let i = index"
-        [formGroupName]="i"
-        [expanded]="i === 0"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ language.code }}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="form-field">
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'categories.create.name' | translate }}</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.name.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+  <app-descriptions
+    [languages]="languages"
+    [ignoreFields]="[
+      'title',
+      'friendlyUrl',
+      'highlights',
+      'metaDescription',
+      'keyWords',
+      'description'
+    ]"
+    formControlName="descriptions"
+  ></app-descriptions>
 
   <mat-form-field appearance="outline">
     <mat-label>Rate</mat-label>

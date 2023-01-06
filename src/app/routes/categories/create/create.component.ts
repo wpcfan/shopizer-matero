@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AsyncValidatorFn, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Category, Language } from '@models';
@@ -19,7 +19,6 @@ export class CategoriesCreateComponent implements OnInit {
   stores$ = this.store.select(fromProfile.selectStores);
   parentIdAndCategories$!: Observable<{ parentId: string | null; categories: Category[] }>;
   form!: FormGroup;
-  descriptions: FormArray = this.fb.array([]);
 
   constructor(
     private store: Store,
@@ -36,18 +35,9 @@ export class CategoriesCreateComponent implements OnInit {
       featured: [false, [Validators.required]],
       parent: [null],
       store: ['', [Validators.required]],
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
-    this.languages$ = this.store.select(fromProfile.selectStoreLanguages).pipe(
-      tap(languages => {
-        if (languages.length > 0) {
-          this.descriptions.clear();
-        }
-        languages.forEach(language => {
-          this.descriptions.push(this.createDescription(language.code));
-        });
-      })
-    );
+    this.languages$ = this.store.select(fromProfile.selectStoreLanguages);
     this.parentIdAndCategories$ = combineLatest([
       this.route.queryParamMap.pipe(
         filter(params => params.has('parentId')),
@@ -67,23 +57,6 @@ export class CategoriesCreateComponent implements OnInit {
 
   codeValidator(): AsyncValidatorFn {
     return control => this.service.unique(control.value);
-  }
-
-  createDescription(language: string) {
-    return this.fb.group({
-      language: [language, Validators.required],
-      title: ['', Validators.required],
-      name: ['', Validators.required],
-      friendlyUrl: ['', Validators.required],
-      highlights: [''],
-      metaDescription: [''],
-      description: [''],
-      keyWords: [''],
-    });
-  }
-
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
   }
 
   create(ev: Event) {

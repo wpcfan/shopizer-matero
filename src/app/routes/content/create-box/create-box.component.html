@@ -1,3 +1,24 @@
 <page-header></page-header>
 
-<p>create-box works!</p>
+<div class="w-full h-full" *ngIf="languages$ | async as languages">
+  <form class="form-field-full" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'common.code' | translate }}</mat-label>
+      <input matInput formControlName="code" />
+    </mat-form-field>
+
+    <div>
+      <mat-checkbox formControlName="visible">
+        {{ 'common.visible' | translate }}
+      </mat-checkbox>
+    </div>
+
+    <app-descriptions
+      [languages]="languages"
+      [ignoreFields]="['name', 'title', 'friendlyUrl', 'highlights', 'metaDescription', 'keyWords']"
+      formControlName="descriptions"
+    ></app-descriptions>
+
+    <button mat-button type="button" (click)="create($event)">Create</button>
+  </form>
+</div>

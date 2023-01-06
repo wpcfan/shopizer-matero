@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Language } from '@models';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, filter, map, Observable, Subscription, take, tap } from 'rxjs';
+import { distinctUntilChanged, filter, map, Observable, Subscription, take } from 'rxjs';
 import { RateService } from '../../+state/services/rate.service';
 import { TaxService } from '../../+state/services/tax.service';
 
@@ -21,7 +21,6 @@ export class TaxRatesCreateComponent implements OnInit {
   stateProvinces$ = this.store.select(fromProfile.selectZones);
   taxClasses$ = this.taxService.list({ count: 1000, page: 0 }).pipe(map(it => it.data));
   form!: FormGroup;
-  descriptions: FormArray = this.fb.array([]);
   sub = new Subscription();
   constructor(
     private fb: FormBuilder,
@@ -40,18 +39,9 @@ export class TaxRatesCreateComponent implements OnInit {
       rate: ['', [Validators.required]],
       priority: [0, [Validators.required]],
       taxClass: ['', [Validators.required]],
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
-    this.languages$ = this.store.select(fromProfile.selectStoreLanguages).pipe(
-      tap(languages => {
-        if (languages.length > 0) {
-          this.descriptions.clear();
-        }
-        languages.forEach(language => {
-          this.descriptions.push(this.createDescription(language.code));
-        });
-      })
-    );
+    this.languages$ = this.store.select(fromProfile.selectStoreLanguages);
     this.sub.add(
       this.form
         ?.get('country')
@@ -67,17 +57,6 @@ export class TaxRatesCreateComponent implements OnInit {
 
   codeValidator() {
     return (control: AbstractControl) => this.service.unique(control.value);
-  }
-
-  createDescription(language: string) {
-    return this.fb.group({
-      language: [language, Validators.required],
-      name: ['', Validators.required],
-    });
-  }
-
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
   }
 
   create(ev: Event) {

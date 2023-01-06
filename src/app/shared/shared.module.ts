@@ -17,6 +17,7 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { AutocompleteSelectComponent } from './components/autocomplete-select/autocomplete-select.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { DescriptionsComponent } from './components/descriptions/descriptions.component';
 import { DynaTableModule } from './components/dyna-table';
 import { ErrorCodeComponent } from './components/error-code/error-code.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
@@ -58,6 +59,7 @@ const COMPONENTS: any[] = [
   TreeSelectComponent,
   AutocompleteSelectComponent,
   SelectionListComponent,
+  DescriptionsComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective, FileDropDirective];

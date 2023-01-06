@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 import { Params } from '@angular/router';
 import { environment } from '@env/environment';
 import { Pageable } from '@models';
@@ -53,5 +54,11 @@ export class ContentBoxService {
           data: it.items,
         }))
       );
+  }
+
+  unique(code: string): Observable<ValidationErrors | null> {
+    return this.http
+      .get<{ exists: boolean }>(`${this.url}/${code}/exists`)
+      .pipe(map(res => (res.exists ? { unique: true } : null)));
   }
 }
