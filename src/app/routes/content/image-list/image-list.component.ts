@@ -7,6 +7,7 @@ import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confir
 import { concatMap, filter, from, map, switchMap, take } from 'rxjs';
 import { v4 } from 'uuid';
 import { ContentImageService } from '../+state/services/content-image.service';
+import { ContentUpdateImageComponent } from '../update-image/update-image.component';
 @Component({
   selector: 'app-content-image-list',
   templateUrl: './image-list.component.html',
@@ -45,7 +46,29 @@ export class ContentImageListComponent {
       });
   }
 
-  public handleEdit(row: ContentImage): void {}
+  public handleEdit(row: ContentImage): void {
+    const dialogRef = this.dialog.open(ContentUpdateImageComponent, {
+      data: row,
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter(result => result),
+        switchMap(result => this.service.rename(result))
+      )
+      .subscribe(_ => {
+        this.router.navigate([], {
+          queryParams: {
+            seed: v4(),
+            page: 0,
+            lang: this.local.get('settings').language,
+          },
+          queryParamsHandling: 'merge',
+        });
+      });
+  }
 
   handleAdd(): void {}
 

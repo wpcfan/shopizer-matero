@@ -19,11 +19,10 @@ const COMPONENTS: any[] = [
   ContentImageListComponent,
   ContentCreatePageComponent,
   ContentCreateBoxComponent,
-  ContentUpdateImageComponent,
   ContentUpdatePageComponent,
   ContentUpdateBoxComponent,
 ];
-const COMPONENTS_DYNAMIC: any[] = [];
+const COMPONENTS_DYNAMIC: any[] = [ContentUpdateImageComponent];
 
 @NgModule({
   imports: [SharedModule, ContentRoutingModule],

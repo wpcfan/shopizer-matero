@@ -30,8 +30,8 @@ export class ContentImageService {
     return this.http.delete(`${this.url}/remove`, { params: { path } });
   }
 
-  rename(newName: string, path: string) {
-    return this.http.post(`${this.url}/rename`, null, { params: { newName, path } });
+  rename(data: { newName: string; path: string }) {
+    return this.http.post(`${this.url}/rename`, null, { params: data });
   }
 
   folder(path: string) {
