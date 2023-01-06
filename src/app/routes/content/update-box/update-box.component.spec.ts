@@ -1,20 +1,20 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContentUpdaetBoxComponent } from './updaet-box.component';
+import { ContentUpdateBoxComponent } from './update-box.component';
 
-describe('ContentUpdaetBoxComponent', () => {
-  let component: ContentUpdaetBoxComponent;
-  let fixture: ComponentFixture<ContentUpdaetBoxComponent>;
+describe('ContentUpdateBoxComponent', () => {
+  let component: ContentUpdateBoxComponent;
+  let fixture: ComponentFixture<ContentUpdateBoxComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentUpdaetBoxComponent ]
+      declarations: [ ContentUpdateBoxComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentUpdaetBoxComponent);
+    fixture = TestBed.createComponent(ContentUpdateBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

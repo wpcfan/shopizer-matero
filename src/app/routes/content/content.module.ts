@@ -6,13 +6,12 @@ import { ContentPageService } from './+state/services/content-page.service';
 import { ContentBoxListComponent } from './box-list/box-list.component';
 import { ContentRoutingModule } from './content-routing.module';
 import { ContentCreateBoxComponent } from './create-box/create-box.component';
-import { ContentCreateImageComponent } from './create-image/create-image.component';
 import { ContentCreatePageComponent } from './create-page/create-page.component';
 import { ContentImageListComponent } from './image-list/image-list.component';
 import { ContentPageListComponent } from './page-list/page-list.component';
-import { ContentUpdaetBoxComponent } from './updaet-box/updaet-box.component';
-import { ContentUpdaetImageComponent } from './updaet-image/updaet-image.component';
-import { ContentUpdaetPageComponent } from './updaet-page/updaet-page.component';
+import { ContentUpdateBoxComponent } from './update-box/update-box.component';
+import { ContentUpdateImageComponent } from './update-image/update-image.component';
+import { ContentUpdatePageComponent } from './update-page/update-page.component';
 
 const COMPONENTS: any[] = [
   ContentPageListComponent,
@@ -20,10 +19,9 @@ const COMPONENTS: any[] = [
   ContentImageListComponent,
   ContentCreatePageComponent,
   ContentCreateBoxComponent,
-  ContentCreateImageComponent,
-  ContentUpdaetImageComponent,
-  ContentUpdaetBoxComponent,
-  ContentUpdaetPageComponent,
+  ContentUpdateImageComponent,
+  ContentUpdatePageComponent,
+  ContentUpdateBoxComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 
