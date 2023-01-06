@@ -29,81 +29,21 @@
         }}</mat-checkbox>
       </div>
 
-      <div formArrayName="descriptions" *ngIf="languages$ | async as languages">
-        <ng-container *ngFor="let language of languages; let i = index" [formGroupName]="i">
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.language' | translate }}</mat-label>
-            <mat-select formControlName="language" (selectionChange)="hanldeCountryChange($event)">
-              <mat-option *ngFor="let language of languages" [value]="language.code">
-                {{ language.code }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.description.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.title' | translate }}</mat-label>
-            <input matInput formControlName="title" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.description.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.name' | translate }}</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.name.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.friendly_url' | translate }}</mat-label>
-            <input matInput formControlName="friendlyUrl" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.friendlyUrl.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.highlights' | translate }}</mat-label>
-            <input matInput formControlName="highlights" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.highlights.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.meta_description' | translate }}</mat-label>
-            <input matInput formControlName="metaDescription" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.metaDescription.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'product_types.create.keyWords' | translate }}</mat-label>
-            <input matInput formControlName="keyWords" />
-            <mat-error *ngIf="getIndexedFormGroup(i).controls.keyWords.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <div appearance="outline">
-            <mat-label>{{ 'product_types.create.description' | translate }}</mat-label>
-            <app-rich-editor formControlName="description"></app-rich-editor>
-            <mat-error
-              *ngIf="
-                getIndexedFormGroup(i).controls.description.dirty &&
-                getIndexedFormGroup(i).controls.description.errors?.required
-              "
-            >
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </div>
-        </ng-container>
-      </div>
+      <ng-container *ngIf="languages$ | async as languages">
+        <app-update-description
+          [languages]="languages"
+          [ignoreFields]="[
+            'title',
+            'friendlyUrl',
+            'highlights',
+            'metaDescription',
+            'keyWords',
+            'description'
+          ]"
+          formControlName="descriptions"
+          (languageChange)="hanldeCountryChange($event)"
+        ></app-update-description>
+      </ng-container>
 
       <div class="button-row">
         <button

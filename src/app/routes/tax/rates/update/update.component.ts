@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as AuthActions from '@core/+state/actions';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
@@ -52,12 +51,7 @@ export class TaxRatesUpdateComponent implements OnInit {
       rate: ['', [Validators.required]],
       priority: [0, [Validators.required]],
       taxClass: [''],
-      descriptions: this.fb.array([
-        this.fb.group({
-          language: [this.local.get('settings').language, [Validators.required]],
-          name: ['', [Validators.required]],
-        }),
-      ]),
+      descriptions: [[]],
     });
 
     this.sub.add(
@@ -91,10 +85,6 @@ export class TaxRatesUpdateComponent implements OnInit {
     );
   }
 
-  getIndexedFormGroup(index: number) {
-    return (this.form.get('descriptions') as FormArray).controls[index] as FormGroup;
-  }
-
   codeValidator() {
     return (control: AbstractControl) => this.service.unique(control.value);
   }
@@ -112,10 +102,9 @@ export class TaxRatesUpdateComponent implements OnInit {
       .subscribe(() => this.router.navigate(['../../'], { relativeTo: this.route }));
   }
 
-  hanldeLanguageChange(ev: MatSelectChange) {
+  hanldeCountryChange(lang: string) {
     this.router.navigate([], {
-      queryParams: { lang: ev.value },
-      queryParamsHandling: 'merge',
+      queryParams: { lang },
     });
   }
 }

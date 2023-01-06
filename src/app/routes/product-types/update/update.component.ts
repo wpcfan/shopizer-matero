@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { ProductType } from '@models';
@@ -33,7 +32,6 @@ export class ProductTypesUpdateComponent implements OnInit {
     )
   );
   form!: FormGroup;
-  descriptions!: FormArray;
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -42,23 +40,11 @@ export class ProductTypesUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.descriptions = this.fb.array([
-      this.fb.group({
-        language: ['', Validators.required],
-        title: [''],
-        name: ['', Validators.required],
-        friendlyUrl: [''],
-        highlights: [''],
-        metaDescription: [''],
-        description: [''],
-        keyWords: [''],
-      }),
-    ]);
     this.form = this.fb.group({
       code: ['', [Validators.required]],
       visible: [true],
       allowAddToCart: [true],
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
     this.selected$ = this.store.select(fromProductTypes.selectProductTypeSelected).pipe(
       tap(productType => {
@@ -74,10 +60,6 @@ export class ProductTypesUpdateComponent implements OnInit {
     );
   }
 
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
-  }
-
   update(ev: Event, id: string, lang: string) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -89,9 +71,9 @@ export class ProductTypesUpdateComponent implements OnInit {
     );
   }
 
-  hanldeCountryChange(ev: MatSelectChange) {
-    this.router.navigate(['/brands', 'update', this.form.value.code], {
-      queryParams: { lang: ev.value },
+  hanldeCountryChange(lang: string) {
+    this.router.navigate([], {
+      queryParams: { lang },
     });
   }
 

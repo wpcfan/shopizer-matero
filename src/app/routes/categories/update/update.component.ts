@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
@@ -31,7 +31,6 @@ export class CategoriesUpdateComponent implements OnInit {
     tap(({ id, lang }) => this.store.dispatch(CategoryActions.getById({ id: parseInt(id), lang })))
   );
   form!: FormGroup;
-  descriptions!: FormArray;
 
   constructor(
     private store: Store,
@@ -41,18 +40,6 @@ export class CategoriesUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.descriptions = this.fb.array([
-      this.fb.group({
-        language: ['', Validators.required],
-        title: ['', Validators.required],
-        name: ['', Validators.required],
-        friendlyUrl: ['', Validators.required],
-        highlights: [''],
-        metaDescription: [''],
-        description: [''],
-        keyWords: [''],
-      }),
-    ]);
     this.form = this.fb.group({
       code: ['', [Validators.required]],
       sortOrder: [0, [Validators.required]],
@@ -60,7 +47,7 @@ export class CategoriesUpdateComponent implements OnInit {
       featured: [false, [Validators.required]],
       parent: [null],
       store: ['', [Validators.required]],
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
     this.selectedCategory$ = this.store.select(fromCategory.selectSelectedCategory).pipe(
       tap(category => {
@@ -79,10 +66,6 @@ export class CategoriesUpdateComponent implements OnInit {
     );
   }
 
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
-  }
-
   update(ev: Event, id: string, lang: string) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -95,7 +78,7 @@ export class CategoriesUpdateComponent implements OnInit {
   }
 
   hanldeCountryChange(ev: MatSelectChange) {
-    this.router.navigate(['/categories', 'update', this.form.value.code], {
+    this.router.navigate([], {
       queryParams: { lang: ev.value },
     });
   }

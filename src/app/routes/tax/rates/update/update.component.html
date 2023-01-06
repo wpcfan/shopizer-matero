@@ -25,19 +25,21 @@
       <input matInput formControlName="code" />
     </mat-form-field>
 
-    <div formArrayName="descriptions">
-      <ng-container [formGroupName]="0">
-        <div class="form-field">
-          <mat-form-field appearance="outline">
-            <mat-label>{{ 'categories.create.name' | translate }}</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="getIndexedFormGroup(0).controls.name.errors?.required">
-              {{ 'validations.required' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </ng-container>
-    </div>
+    <ng-container *ngIf="languages$ | async as languages">
+      <app-update-description
+        [languages]="languages"
+        [ignoreFields]="[
+          'title',
+          'friendlyUrl',
+          'highlights',
+          'metaDescription',
+          'keyWords',
+          'description'
+        ]"
+        formControlName="descriptions"
+        (languageChange)="hanldeCountryChange($event)"
+      ></app-update-description>
+    </ng-container>
 
     <mat-form-field appearance="outline">
       <mat-label>Rate</mat-label>

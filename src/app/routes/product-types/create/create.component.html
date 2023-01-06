@@ -33,82 +33,18 @@
         }}</mat-checkbox>
       </div>
 
-      <div formArrayName="descriptions">
-        <mat-accordion>
-          <mat-expansion-panel
-            *ngFor="let language of languages; let i = index"
-            [formGroupName]="i"
-            [expanded]="i === 0"
-          >
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ language.code }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="form-field">
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.title' | translate }}</mat-label>
-                <input matInput formControlName="title" />
-                <mat-error *ngIf="getIndexedFormGroup(i).controls.description.errors?.required">
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.name' | translate }}</mat-label>
-                <input matInput formControlName="name" />
-                <mat-error *ngIf="getIndexedFormGroup(i).controls.name.errors?.required">
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.friendly_url' | translate }}</mat-label>
-                <input matInput formControlName="friendlyUrl" />
-                <mat-error *ngIf="getIndexedFormGroup(i).controls.friendlyUrl.errors?.required">
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.highlights' | translate }}</mat-label>
-                <input matInput formControlName="highlights" />
-                <mat-error *ngIf="getIndexedFormGroup(i).controls.highlights.errors?.required">
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.meta_description' | translate }}</mat-label>
-                <input matInput formControlName="metaDescription" />
-                <mat-error *ngIf="getIndexedFormGroup(i).controls.metaDescription.errors?.required">
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{ 'categories.create.keyWords' | translate }}</mat-label>
-                <input matInput formControlName="keyWords" />
-                <mat-error *ngIf="getIndexedFormGroup(i).controls.keyWords.errors?.required">
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </mat-form-field>
-
-              <div appearance="outline">
-                <mat-label>{{ 'categories.create.description' | translate }}</mat-label>
-                <app-rich-editor formControlName="description"></app-rich-editor>
-                <mat-error
-                  *ngIf="
-                    getIndexedFormGroup(i).controls.description.dirty &&
-                    getIndexedFormGroup(i).controls.description.errors?.required
-                  "
-                >
-                  {{ 'validations.required' | translate }}
-                </mat-error>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
+      <app-descriptions
+        [languages]="languages"
+        [ignoreFields]="[
+          'title',
+          'friendlyUrl',
+          'highlights',
+          'metaDescription',
+          'keyWords',
+          'description'
+        ]"
+        formControlName="descriptions"
+      ></app-descriptions>
 
       <button
         type="button"

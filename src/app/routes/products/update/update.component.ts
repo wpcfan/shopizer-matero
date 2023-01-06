@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Language, Product } from '@models';
@@ -24,7 +23,6 @@ export class ProductsUpdateComponent implements OnInit {
   productTypes$!: Observable<FilteredOption[]>;
   languages$!: Observable<Language[]>;
   form!: FormGroup;
-  descriptions!: FormArray;
   properties: FormArray = this.fb.array([]);
   idAndLang$ = combineLatest([
     this.route.paramMap.pipe(
@@ -48,18 +46,6 @@ export class ProductsUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.descriptions = this.fb.array([
-      this.fb.group({
-        language: ['', Validators.required],
-        title: [''],
-        name: ['', Validators.required],
-        friendlyUrl: [''],
-        highlights: [''],
-        metaDescription: [''],
-        description: [''],
-        keyWords: [''],
-      }),
-    ]);
     this.form = this.fb.group({
       identifier: ['', [Validators.required]],
       sortOrder: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
@@ -79,7 +65,7 @@ export class ProductsUpdateComponent implements OnInit {
         width: [0, [Validators.min(0), Validators.max(100000)]],
         weight: [0, [Validators.min(0), Validators.max(100000)]],
       }),
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
     this.languages$ = this.store.select(fromProfile.selectStoreLanguages);
     this.selected$ = this.store.select(fromProduct.selectProductSelected).pipe(
@@ -134,10 +120,6 @@ export class ProductsUpdateComponent implements OnInit {
     return this.form.get('productSpecifications') as FormGroup;
   }
 
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
-  }
-
   create(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -159,9 +141,9 @@ export class ProductsUpdateComponent implements OnInit {
     );
   }
 
-  hanldeCountryChange(ev: MatSelectChange) {
-    this.router.navigate(['/products', 'update', this.form.value.code], {
-      queryParams: { lang: ev.value },
+  hanldeCountryChange(lang: string) {
+    this.router.navigate([], {
+      queryParams: { lang },
     });
   }
 

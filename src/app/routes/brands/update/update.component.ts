@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { Manufacturer } from '@models';
@@ -30,7 +29,6 @@ export class BrandsUpdateComponent implements OnInit {
     tap(({ id, lang }) => this.store.dispatch(BrandActions.getById({ id: parseInt(id), lang })))
   );
   form!: FormGroup;
-  descriptions!: FormArray;
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -39,22 +37,10 @@ export class BrandsUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.descriptions = this.fb.array([
-      this.fb.group({
-        language: ['', Validators.required],
-        title: [''],
-        name: ['', Validators.required],
-        friendlyUrl: [''],
-        highlights: [''],
-        metaDescription: [''],
-        description: [''],
-        keyWords: [''],
-      }),
-    ]);
     this.form = this.fb.group({
       code: ['', [Validators.required]],
       order: [0, [Validators.required]],
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
     this.selected$ = this.store.select(fromBrand.selectSelected).pipe(
       tap(brand => {
@@ -69,10 +55,6 @@ export class BrandsUpdateComponent implements OnInit {
     );
   }
 
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
-  }
-
   update(ev: Event, id: string, lang: string) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -84,9 +66,9 @@ export class BrandsUpdateComponent implements OnInit {
     );
   }
 
-  hanldeCountryChange(ev: MatSelectChange) {
+  hanldeCountryChange(language: string) {
     this.router.navigate(['/brands', 'update', this.form.value.code], {
-      queryParams: { lang: ev.value },
+      queryParams: { lang: language },
     });
   }
 

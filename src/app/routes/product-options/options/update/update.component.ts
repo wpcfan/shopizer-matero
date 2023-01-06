@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { ProductOption } from '@models';
@@ -34,7 +33,6 @@ export class ProductOptionsUpdateComponent implements OnInit {
     )
   );
   form!: FormGroup;
-  descriptions!: FormArray;
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -43,24 +41,12 @@ export class ProductOptionsUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.descriptions = this.fb.array([
-      this.fb.group({
-        language: ['', Validators.required],
-        title: [''],
-        name: ['', Validators.required],
-        friendlyUrl: [''],
-        highlights: [''],
-        metaDescription: [''],
-        description: [''],
-        keyWords: [''],
-      }),
-    ]);
     this.form = this.fb.group({
       code: ['', [Validators.required]],
       order: [0, [Validators.required, Validators.min(0), Validators.max(100000)]],
       readOnly: [true],
       type: ['', [Validators.required]],
-      descriptions: this.descriptions,
+      descriptions: [[]],
     });
     this.selected$ = this.store.select(fromProductOptions.selectProductOptionSelected).pipe(
       tap(selected => {
@@ -77,10 +63,6 @@ export class ProductOptionsUpdateComponent implements OnInit {
     );
   }
 
-  getIndexedFormGroup(index: number) {
-    return this.descriptions.controls[index] as FormGroup;
-  }
-
   update(ev: Event, id: string, lang: string) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -92,9 +74,9 @@ export class ProductOptionsUpdateComponent implements OnInit {
     );
   }
 
-  hanldeCountryChange(ev: MatSelectChange) {
-    this.router.navigate(['/product-options', 'options', 'update', this.form.value.code], {
-      queryParams: { lang: ev.value },
+  hanldeCountryChange(language: string) {
+    this.router.navigate([], {
+      queryParams: { lang: language },
     });
   }
 
