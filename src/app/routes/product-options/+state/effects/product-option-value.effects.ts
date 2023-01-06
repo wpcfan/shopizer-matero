@@ -25,8 +25,8 @@ export class ProductOptionValueEffects {
   getById$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductOptionValueActions.getById),
-      exhaustMap(({ id, lang }) =>
-        this.service.getById(id, lang).pipe(
+      exhaustMap(({ id }) =>
+        this.service.getById(id).pipe(
           map(data => ProductOptionValueActions.getByIdSuccess({ data })),
           catchError(error => of(ProductOptionValueActions.getByIdFailure({ error })))
         )
@@ -51,8 +51,8 @@ export class ProductOptionValueEffects {
   update$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductOptionValueActions.updateProductOptionValue),
-      exhaustMap(({ id, data, lang }) =>
-        this.service.update(id, data, lang).pipe(
+      exhaustMap(({ id, data }) =>
+        this.service.update(id, data).pipe(
           map(data => ProductOptionValueActions.updateProductOptionValueSuccess({ data })),
           catchError(error =>
             of(ProductOptionValueActions.updateProductOptionValueFailure({ error }))

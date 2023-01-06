@@ -38,9 +38,9 @@ export class CategoryService {
       );
   }
 
-  update(id: number, category: Partial<Category>, lang: string) {
+  update(id: number, category: Partial<Category>) {
     return this.http.put<Category>(`${this.url}/v1/private/category/${id}`, category, {
-      params: { lang },
+      params: { lang: '_all' },
     });
   }
 
@@ -52,8 +52,8 @@ export class CategoryService {
     return this.http.post<Category>(`${this.url}/v1/private/category`, category);
   }
 
-  getById(id: number, lang: string) {
-    return this.http.get<Category>(`${this.url}/v1/category/${id}`, { params: { lang } });
+  getById(id: number) {
+    return this.http.get<Category>(`${this.url}/v1/category/${id}`, { params: { lang: '_all' } });
   }
 
   unique(code: string): Observable<ValidationErrors | null> {

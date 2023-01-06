@@ -37,9 +37,9 @@ export class BrandService {
       );
   }
 
-  update(id: number, manufacturer: Partial<Manufacturer>, lang: string) {
+  update(id: number, manufacturer: Partial<Manufacturer>) {
     return this.http.put<Manufacturer>(`${this.url}/private/manufacturer/${id}`, manufacturer, {
-      params: { lang },
+      params: { lang: '_all' },
     });
   }
 
@@ -51,8 +51,10 @@ export class BrandService {
     return this.http.post<Manufacturer>(`${this.url}/private/manufacturer`, manufacturer);
   }
 
-  getById(id: number, lang: string) {
-    return this.http.get<Manufacturer>(`${this.url}/manufacturer/${id}`, { params: { lang } });
+  getById(id: number) {
+    return this.http.get<Manufacturer>(`${this.url}/manufacturer/${id}`, {
+      params: { lang: '_all' },
+    });
   }
 
   unique(code: string): Observable<ValidationErrors | null> {

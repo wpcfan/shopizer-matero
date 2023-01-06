@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { ProductOptionValue } from '@models';
 import { Store } from '@ngrx/store';
-import { combineLatest, filter, map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import * as ProductOptionValueActions from '../../+state/actions/product-option-value.actions';
 import * as fromProductOptionValue from '../../+state/selectors/product-option-value.selectors';
 
@@ -17,20 +17,12 @@ import * as fromProductOptionValue from '../../+state/selectors/product-option-v
 export class ProductOptionValueUpdateComponent implements OnInit {
   languages$ = this.store.select(fromProfile.selectStoreLanguages);
   selected$!: Observable<ProductOptionValue | undefined>;
-  idAndLang$ = combineLatest([
-    this.route.paramMap.pipe(
-      filter(params => params.has('id')),
-      map(params => params.get('id') as string),
-      tap(console.log)
-    ),
-    this.route.queryParamMap.pipe(map(params => params.get('lang') as string)),
-  ]).pipe(
-    map(([id, lang]) => ({ id, lang })),
-    tap(console.log),
-    tap(({ id, lang }) =>
-      this.store.dispatch(ProductOptionValueActions.getById({ id: parseInt(id), lang }))
-    )
+  id$ = this.route.paramMap.pipe(
+    filter(params => params.has('id')),
+    map(params => params.get('id') as string),
+    tap(id => this.store.dispatch(ProductOptionValueActions.getById({ id: parseInt(id) })))
   );
+
   form!: FormGroup;
   constructor(
     private store: Store,
@@ -53,22 +45,12 @@ export class ProductOptionValueUpdateComponent implements OnInit {
       .select(fromProductOptionValue.selectProductOptionValueSelected)
       .pipe(
         tap(selected => {
-          if (selected) {
-            this.form.patchValue({
-              code: selected.code,
-              order: selected.order,
-              sortOrder: selected.sortOrder,
-              defaultValue: selected.defaultValue,
-              image: selected.image,
-              name: selected.name,
-              descriptions: [selected.description],
-            });
-          }
+          this.form.patchValue({ ...selected });
         })
       );
   }
 
-  update(ev: Event, id: string, lang: string) {
+  update(ev: Event, id: string) {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.form.invalid) {
@@ -78,7 +60,6 @@ export class ProductOptionValueUpdateComponent implements OnInit {
       ProductOptionValueActions.updateProductOptionValue({
         id: parseInt(id),
         data: this.form.value,
-        lang,
       })
     );
   }

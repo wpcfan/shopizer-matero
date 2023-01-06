@@ -89,7 +89,7 @@ export class ContentBoxListComponent extends BaseCrudTable<ContentBox> {
     this.handleEdit(row);
   }
   public handleEdit(row: ContentBox): void {
-    this.router.navigate(['../', 'update', row.id], {
+    this.router.navigate(['../', 'update', row.code], {
       relativeTo: this.route,
       queryParamsHandling: 'preserve',
     });

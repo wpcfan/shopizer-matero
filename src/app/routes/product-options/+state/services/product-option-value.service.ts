@@ -38,9 +38,9 @@ export class ProductOptionValueService {
       );
   }
 
-  update(id: number, manufacturer: Partial<ProductOptionValue>, lang: string) {
+  update(id: number, manufacturer: Partial<ProductOptionValue>) {
     return this.http.put<ProductOptionValue>(`${this.url}/${id}`, manufacturer, {
-      params: { lang },
+      params: { lang: '_all' },
     });
   }
 
@@ -52,8 +52,8 @@ export class ProductOptionValueService {
     return this.http.post<ProductOptionValue>(`${this.url}`, manufacturer);
   }
 
-  getById(id: number, lang: string) {
-    return this.http.get<ProductOptionValue>(`${this.url}/${id}`, { params: { lang } });
+  getById(id: number) {
+    return this.http.get<ProductOptionValue>(`${this.url}/${id}`, { params: { lang: '_all' } });
   }
 
   unique(code: string): Observable<ValidationErrors | null> {

@@ -26,7 +26,7 @@
     </mat-form-field>
 
     <ng-container *ngIf="languages$ | async as languages">
-      <app-update-description
+      <app-descriptions
         [languages]="languages"
         [ignoreFields]="[
           'title',
@@ -37,8 +37,7 @@
           'description'
         ]"
         formControlName="descriptions"
-        (languageChange)="hanldeCountryChange($event)"
-      ></app-update-description>
+      ></app-descriptions>
     </ng-container>
 
     <mat-form-field appearance="outline">

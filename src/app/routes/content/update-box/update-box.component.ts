@@ -17,10 +17,10 @@ export class ContentUpdateBoxComponent implements OnInit {
   languages$!: Observable<Language[]>;
   form!: FormGroup;
   selected$ = this.route.paramMap.pipe(
-    filter(it => it.has('id')),
-    map(it => Number(it.get('id'))),
-    switchMap(id => this.service.get(id)),
-    tap(it => this.form.patchValue(it))
+    filter(it => it.has('code')),
+    map(it => it.get('code') as string),
+    switchMap(code => this.service.get(code)),
+    tap(it => this.form.patchValue({ ...it }))
   );
   constructor(
     private store: Store,

@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { FilteredOption } from '@shared/components/autocomplete-select/autocomplete-select.component';
 import { SimpleTreeNode } from '@shared/components/simple-tree/model';
 import { convertNestedToFlat } from '@shared/utils/tree';
-import { combineLatest, filter, map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import * as ProductActions from '../+state/actions/product.actions';
 import * as fromProduct from '../+state/selectors/product.selectors';
 import { ProductService } from '../+state/services/product.service';
@@ -24,17 +24,10 @@ export class ProductsUpdateComponent implements OnInit {
   languages$!: Observable<Language[]>;
   form!: FormGroup;
   properties: FormArray = this.fb.array([]);
-  idAndLang$ = combineLatest([
-    this.route.paramMap.pipe(
-      filter(params => params.has('id')),
-      map(params => params.get('id') as string),
-      tap(console.log)
-    ),
-    this.route.queryParamMap.pipe(map(params => params.get('lang') as string)),
-  ]).pipe(
-    map(([id, lang]) => ({ id, lang })),
-    tap(console.log),
-    tap(({ id, lang }) => this.store.dispatch(ProductActions.getById({ id: parseInt(id), lang })))
+  id$ = this.route.paramMap.pipe(
+    filter(params => params.has('id')),
+    map(params => params.get('id') as string),
+    tap(id => this.store.dispatch(ProductActions.getById({ id: parseInt(id) })))
   );
   selected$!: Observable<Product | undefined>;
   constructor(
@@ -72,26 +65,11 @@ export class ProductsUpdateComponent implements OnInit {
       tap(product => {
         if (product) {
           const categories = convertNestedToFlat(product.categories);
-          if (product.properties && product.properties.length > 0) {
-            this.properties.clear();
-            product.properties.forEach(() => this.createProperty());
-          }
           this.form.patchValue({
-            identifier: product.identifier,
-            sortOrder: product.sortOrder,
-            categories,
-            dateAvailable: product.dateAvailable,
+            ...product,
             manufacturer: { label: product.manufacturer?.code, value: product.manufacturer },
             type: { label: product.type?.code, value: product.type },
-            price: product.price,
-            quantity: product.quantity,
-            shipeable: product.shipeable,
-            canBePurchased: product.canBePurchased,
-            visible: product.visible,
-            virtual: product.virtual,
-            productSpecifications: product.productSpecifications,
-            properties: product.properties,
-            descriptions: [product.description],
+            categories,
           });
         }
       })
@@ -130,21 +108,13 @@ export class ProductsUpdateComponent implements OnInit {
     this.store.dispatch(ProductActions.createProduct({ data: this.form.value }));
   }
 
-  update(ev: Event, id: string, lang: string) {
+  update(ev: Event, id: string) {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.form.invalid) {
       return;
     }
-    this.store.dispatch(
-      ProductActions.updateProduct({ id: parseInt(id), data: this.form.value, lang })
-    );
-  }
-
-  hanldeCountryChange(lang: string) {
-    this.router.navigate([], {
-      queryParams: { lang },
-    });
+    this.store.dispatch(ProductActions.updateProduct({ id: parseInt(id), data: this.form.value }));
   }
 
   delete(id: string) {

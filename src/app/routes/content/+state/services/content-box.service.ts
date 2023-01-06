@@ -25,8 +25,8 @@ export class ContentBoxService {
     return this.http.delete(this.url + '/' + id);
   }
 
-  get(id: number): Observable<ContentBox> {
-    return this.http.get<ContentBox>(this.url + '/' + id);
+  get(code: string): Observable<ContentBox> {
+    return this.http.get<ContentBox>(this.listUrl + '/' + code, { params: { lang: '_all' } });
   }
 
   list(params: Params): Observable<Pageable<ContentBox>> {

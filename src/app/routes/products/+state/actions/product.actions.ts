@@ -16,10 +16,7 @@ export const loadProductsFailure = createAction(
   props<{ error: any }>()
 );
 
-export const getById = createAction(
-  '[Product] Get Product By Id',
-  props<{ id: number; lang: string }>()
-);
+export const getById = createAction('[Product] Get Product By Id', props<{ id: number }>());
 
 export const getByIdSuccess = createAction(
   '[Product] Get Product By Id Success',
@@ -48,7 +45,7 @@ export const createProductFailure = createAction(
 
 export const updateProduct = createAction(
   '[Product] Update Product',
-  props<{ id: number; data: Partial<Product>; lang: string }>()
+  props<{ id: number; data: Partial<Product> }>()
 );
 
 export const updateProductSuccess = createAction(

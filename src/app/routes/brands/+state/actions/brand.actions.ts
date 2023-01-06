@@ -16,10 +16,7 @@ export const loadBrandsFailure = createAction(
   props<{ error: any }>()
 );
 
-export const getById = createAction(
-  '[Brand] Get Brand By Id',
-  props<{ id: number; lang: string }>()
-);
+export const getById = createAction('[Brand] Get Brand By Id', props<{ id: number }>());
 
 export const getByIdSuccess = createAction(
   '[Brand] Get Brand By Id Success',
@@ -48,7 +45,7 @@ export const createBrandFailure = createAction(
 
 export const updateBrand = createAction(
   '[Brand] Update Brand',
-  props<{ id: number; data: Partial<Manufacturer>; lang: string }>()
+  props<{ id: number; data: Partial<Manufacturer> }>()
 );
 
 export const updateBrandSuccess = createAction(

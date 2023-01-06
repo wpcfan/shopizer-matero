@@ -46,9 +46,9 @@ export class ProductService {
       );
   }
 
-  update(id: number, manufacturer: Partial<Product>, lang: string) {
+  update(id: number, manufacturer: Partial<Product>) {
     return this.http.put<Product>(`${this.url}/${id}`, manufacturer, {
-      params: { lang },
+      params: { lang: '_all' },
     });
   }
 
@@ -60,8 +60,8 @@ export class ProductService {
     return this.http.post<Product>(`${this.url}`, manufacturer);
   }
 
-  getById(id: number, lang: string) {
-    return this.http.get<Product>(`${this.url}/${id}`, { params: { lang } });
+  getById(id: number) {
+    return this.http.get<Product>(`${this.url}/${id}`, { params: { lang: '_all' } });
   }
 
   manufacturers(name?: string): Observable<Manufacturer[]> {

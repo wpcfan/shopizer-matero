@@ -23,8 +23,8 @@ export class BrandEffects {
   getById$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(BrandsActions.getById),
-      exhaustMap(({ id, lang }) =>
-        this.service.getById(id, lang).pipe(
+      exhaustMap(({ id }) =>
+        this.service.getById(id).pipe(
           map(data => BrandsActions.getByIdSuccess({ data })),
           catchError(error => of(BrandsActions.getByIdFailure({ error })))
         )
@@ -47,8 +47,8 @@ export class BrandEffects {
   update$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(BrandsActions.updateBrand),
-      exhaustMap(({ id, data, lang }) =>
-        this.service.update(id, data, lang).pipe(
+      exhaustMap(({ id, data }) =>
+        this.service.update(id, data).pipe(
           map(data => BrandsActions.updateBrandSuccess({ data })),
           catchError(error => of(BrandsActions.updateBrandFailure({ error })))
         )

@@ -13,11 +13,11 @@
       </mat-checkbox>
     </div>
 
-    <app-update-description
+    <app-descriptions
       [languages]="languages"
       [ignoreFields]="['name', 'title', 'friendlyUrl', 'highlights', 'metaDescription', 'keyWords']"
       formControlName="descriptions"
-    ></app-update-description>
+    ></app-descriptions>
 
     <button mat-button type="button" (click)="update(selected.id, $event)">Update</button>
   </form>

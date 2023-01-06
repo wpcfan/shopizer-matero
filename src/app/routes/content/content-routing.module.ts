@@ -24,7 +24,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       { path: 'list', component: ContentBoxListComponent },
       { path: 'create', component: ContentCreateBoxComponent },
-      { path: 'update/:id', component: ContentUpdateBoxComponent },
+      { path: 'update/:code', component: ContentUpdateBoxComponent },
     ],
   },
   {

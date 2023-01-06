@@ -69,19 +69,11 @@ export class TaxRatesUpdateComponent implements OnInit {
       filter(params => params.has('id')),
       map(params => Number(params.get('id')) ?? 0),
       switchMap(id => this.service.getById(id)),
-      tap(selected => {
-        if (selected) {
-          this.form.patchValue({
-            code: selected.code,
-            country: selected.country,
-            rate: selected.rate,
-            zone: selected.zone,
-            priority: selected.priority,
-            taxClass: selected.taxClass,
-            descriptions: [selected.description],
-          });
-        }
-      })
+      tap(selected =>
+        selected.description !== null || selected.description !== undefined
+          ? this.form.patchValue({ ...selected, discriptions: [selected.description] })
+          : this.form.patchValue({ ...selected })
+      )
     );
   }
 

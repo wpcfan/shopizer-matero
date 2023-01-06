@@ -1,9 +1,5 @@
 <div class="w-full h-full" fxLayout="row nowrap">
-  <mat-card
-    class="mat-elevation-z4 m-auto"
-    style="max-width: 90%"
-    *ngIf="idAndLang$ | async as idAndLang"
-  >
+  <mat-card class="mat-elevation-z4 m-auto" style="max-width: 90%" *ngIf="id$ | async as id">
     <form class="form-field-full" [formGroup]="form" *ngIf="selected$ | async">
       <mat-form-field appearance="outline">
         <mat-label>{{ 'products.create.identifier' | translate }}</mat-label>
@@ -133,11 +129,7 @@
       </ng-container>
 
       <ng-container *ngIf="languages$ | async as languages">
-        <app-update-description
-          [languages]="languages"
-          formControlName="descriptions"
-          (languageChange)="hanldeCountryChange($event)"
-        ></app-update-description>
+        <app-descriptions [languages]="languages" formControlName="descriptions"></app-descriptions>
       </ng-container>
 
       <div class="button-row">
@@ -146,18 +138,12 @@
           class="w-full"
           mat-raised-button
           color="primary"
-          (click)="update($event, idAndLang.id, idAndLang.lang)"
+          (click)="update($event, id)"
         >
           {{ 'common.submit' | translate }}
         </button>
 
-        <button
-          type="button"
-          class="w-full"
-          mat-raised-button
-          color="warn"
-          (click)="delete(idAndLang.id)"
-        >
+        <button type="button" class="w-full" mat-raised-button color="warn" (click)="delete(id)">
           {{ 'common.delete' | translate }}
         </button>
 
@@ -176,8 +162,7 @@
           class="w-full"
           mat-raised-button
           color="accent"
-          [routerLink]="['/products', 'update', idAndLang.id, 'attributes', 'list']"
-          [queryParams]="{ lang: idAndLang.lang }"
+          [routerLink]="['/products', 'update', id, 'attributes', 'list']"
         >
           {{ 'products.update.attributes' | translate }}
         </button>
@@ -187,8 +172,7 @@
           class="w-full"
           mat-raised-button
           color="accent"
-          [routerLink]="['/products', 'update', idAndLang.id, 'variants', 'list']"
-          [queryParams]="{ lang: idAndLang.lang }"
+          [routerLink]="['/products', 'update', id, 'variants', 'list']"
         >
           {{ 'products.update.variants' | translate }}
         </button>

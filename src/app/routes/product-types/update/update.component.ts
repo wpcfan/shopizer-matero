@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as fromProfile from '@core/+state/selectors/profile.selectors';
 import { ProductType } from '@models';
 import { Store } from '@ngrx/store';
-import { combineLatest, filter, map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import * as ProductTypeActions from '../+state/actions/product-type.actions';
 import * as fromProductTypes from '../+state/selectors/product-type.selectors';
 
@@ -17,20 +17,12 @@ import * as fromProductTypes from '../+state/selectors/product-type.selectors';
 export class ProductTypesUpdateComponent implements OnInit {
   languages$ = this.store.select(fromProfile.selectStoreLanguages);
   selected$!: Observable<ProductType | undefined>;
-  idAndLang$ = combineLatest([
-    this.route.paramMap.pipe(
-      filter(params => params.has('id')),
-      map(params => params.get('id') as string),
-      tap(console.log)
-    ),
-    this.route.queryParamMap.pipe(map(params => params.get('lang') as string)),
-  ]).pipe(
-    map(([id, lang]) => ({ id, lang })),
-    tap(console.log),
-    tap(({ id, lang }) =>
-      this.store.dispatch(ProductTypeActions.getById({ id: parseInt(id), lang }))
-    )
+  id$ = this.route.paramMap.pipe(
+    filter(params => params.has('id')),
+    map(params => params.get('id') as string),
+    tap(id => this.store.dispatch(ProductTypeActions.getById({ id: parseInt(id) })))
   );
+
   form!: FormGroup;
   constructor(
     private store: Store,
@@ -46,35 +38,20 @@ export class ProductTypesUpdateComponent implements OnInit {
       allowAddToCart: [true],
       descriptions: [[]],
     });
-    this.selected$ = this.store.select(fromProductTypes.selectProductTypeSelected).pipe(
-      tap(productType => {
-        if (productType) {
-          this.form.patchValue({
-            code: productType.code,
-            visible: productType.visible,
-            allowAddToCart: productType.allowAddToCart,
-            descriptions: [productType.description],
-          });
-        }
-      })
-    );
+    this.selected$ = this.store
+      .select(fromProductTypes.selectProductTypeSelected)
+      .pipe(tap(productType => this.form.patchValue({ ...productType })));
   }
 
-  update(ev: Event, id: string, lang: string) {
+  update(ev: Event, id: string) {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.form.invalid) {
       return;
     }
     this.store.dispatch(
-      ProductTypeActions.updateProductType({ id: parseInt(id), data: this.form.value, lang })
+      ProductTypeActions.updateProductType({ id: parseInt(id), data: this.form.value })
     );
-  }
-
-  hanldeCountryChange(lang: string) {
-    this.router.navigate([], {
-      queryParams: { lang },
-    });
   }
 
   delete(id: string) {

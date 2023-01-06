@@ -37,9 +37,9 @@ export class ProductOptionService {
       );
   }
 
-  update(id: number, manufacturer: Partial<ProductOption>, lang: string) {
+  update(id: number, manufacturer: Partial<ProductOption>) {
     return this.http.put<ProductOption>(`${this.url}/${id}`, manufacturer, {
-      params: { lang },
+      params: { lang: '_all' },
     });
   }
 
@@ -51,8 +51,8 @@ export class ProductOptionService {
     return this.http.post<ProductOption>(`${this.url}`, manufacturer);
   }
 
-  getById(id: number, lang: string) {
-    return this.http.get<ProductOption>(`${this.url}/${id}`, { params: { lang } });
+  getById(id: number) {
+    return this.http.get<ProductOption>(`${this.url}/${id}`, { params: { lang: '_all' } });
   }
 
   unique(code: string): Observable<ValidationErrors | null> {

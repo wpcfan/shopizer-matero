@@ -26,7 +26,6 @@ import { RichEditorComponent } from './components/rich-editor/rich-editor.compon
 import { SelectionListComponent } from './components/selection-list/selection-list.component';
 import { SimpleTreeComponent } from './components/simple-tree/simple-tree.component';
 import { TreeSelectComponent } from './components/tree-select/tree-select.component';
-import { UpdateDescriptionComponent } from './components/update-description/update-description.component';
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { FileDropDirective } from './directives/file-drop.directive';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
@@ -61,7 +60,6 @@ const COMPONENTS: any[] = [
   AutocompleteSelectComponent,
   SelectionListComponent,
   DescriptionsComponent,
-  UpdateDescriptionComponent,
 ];
 const COMPONENTS_DYNAMIC: any[] = [];
 const DIRECTIVES: any[] = [DisableControlDirective, FileDropDirective];

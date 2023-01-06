@@ -3,7 +3,7 @@
   [hideBreadcrumb]="false"
 ></page-header>
 
-<div class="w-full h-full" fxLayout="row wrap" *ngIf="idAndLang$ | async as idAndLang">
+<div class="w-full h-full" fxLayout="row wrap" *ngIf="id$ | async as id">
   <mat-card class="mat-elevation-z4 m-auto" style="max-width: 90%">
     <form class="form-field-full" [formGroup]="form" *ngIf="selected$ | async as brand">
       <mat-form-field appearance="outline">
@@ -53,7 +53,7 @@
       </div>
 
       <ng-container *ngIf="languages$ | async as languages">
-        <app-update-description
+        <app-descriptions
           [languages]="languages"
           [ignoreFields]="[
             'title',
@@ -64,8 +64,7 @@
             'description'
           ]"
           formControlName="descriptions"
-          (languageChange)="hanldeCountryChange($event)"
-        ></app-update-description>
+        ></app-descriptions>
       </ng-container>
 
       <div class="button-row">
@@ -74,18 +73,12 @@
           class="w-full"
           mat-raised-button
           color="primary"
-          (click)="update($event, idAndLang.id, idAndLang.lang)"
+          (click)="update($event, id)"
         >
           {{ 'common.submit' | translate }}
         </button>
 
-        <button
-          type="button"
-          class="w-full"
-          mat-raised-button
-          color="warn"
-          (click)="delete(idAndLang.id)"
-        >
+        <button type="button" class="w-full" mat-raised-button color="warn" (click)="delete(id)">
           {{ 'common.delete' | translate }}
         </button>
 
