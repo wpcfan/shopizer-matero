@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ContentImage } from '@models/content';
 import { LocalStorageService } from '@shared';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
-import { filter, map, switchMap, take } from 'rxjs';
+import { concatMap, filter, from, map, switchMap, take } from 'rxjs';
+import { v4 } from 'uuid';
 import { ContentImageService } from '../+state/services/content-image.service';
-
 @Component({
   selector: 'app-content-image-list',
   templateUrl: './image-list.component.html',
@@ -35,7 +35,11 @@ export class ContentImageListComponent {
       )
       .subscribe(_ => {
         this.router.navigate([], {
-          queryParams: { page: 0, lang: this.local.get('settings').language },
+          queryParams: {
+            seed: v4(),
+            page: 0,
+            lang: this.local.get('settings').language,
+          },
           queryParamsHandling: 'merge',
         });
       });
@@ -45,15 +49,20 @@ export class ContentImageListComponent {
 
   handleAdd(): void {}
 
-  onFileSelected(file: File) {
-    this.service
-      .add(file, file.name)
-      .pipe(take(1))
-      .subscribe(_ => {
-        this.router.navigate([], {
-          queryParams: { page: 0, lang: this.local.get('settings').language },
-          queryParamsHandling: 'merge',
-        });
+  onFileSelected(files: File[]) {
+    from(files)
+      .pipe(concatMap(file => this.service.add(file, file.name)))
+      .subscribe({
+        complete: () => {
+          this.router.navigate([], {
+            queryParams: {
+              seed: v4(),
+              page: 0,
+              lang: this.local.get('settings').language,
+            },
+            queryParamsHandling: 'merge',
+          });
+        },
       });
   }
 

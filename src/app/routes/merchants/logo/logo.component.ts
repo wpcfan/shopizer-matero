@@ -26,8 +26,10 @@ export class MerchantsLogoComponent {
   logo$ = this.store.select(fromMerchants.selectMerchantLogo);
   constructor(private route: ActivatedRoute, private store: Store) {}
 
-  onFileSelected(file: File, code: string) {
-    this.store.dispatch(MerchantActions.uploadLogo({ file, code }));
+  onFileSelected(files: File[], code: string) {
+    if (files.length > 0) {
+      this.store.dispatch(MerchantActions.uploadLogo({ file: files[0], code }));
+    }
   }
 
   onFileRemoved(code: string) {

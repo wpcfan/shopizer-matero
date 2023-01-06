@@ -10,6 +10,7 @@
       [accept]="fileTypes"
       class="file-input"
       (change)="onFileSelected($event)"
+      [multiple]="multiple"
       #fileUpload
     />
     <div class="file-upload">
