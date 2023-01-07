@@ -96,7 +96,7 @@ export class ContentPageListComponent extends BaseCrudTable<ContentPage> {
     this.handleEdit(row);
   }
   public handleEdit(row: ContentPage): void {
-    this.router.navigate(['../', 'update', row.id], {
+    this.router.navigate(['../', 'update', row.code], {
       relativeTo: this.route,
       queryParamsHandling: 'preserve',
     });

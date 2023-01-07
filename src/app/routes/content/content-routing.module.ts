@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       { path: 'list', component: ContentPageListComponent },
       { path: 'create', component: ContentCreatePageComponent },
-      { path: 'update/:id', component: ContentUpdatePageComponent },
+      { path: 'update/:code', component: ContentUpdatePageComponent },
     ],
   },
   {

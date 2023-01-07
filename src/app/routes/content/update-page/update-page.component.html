@@ -1,1 +1,40 @@
-<p>update-page works!</p>
+<page-header></page-header>
+
+<div class="w-full h-full" *ngIf="languages$ | async as languages">
+  <form class="form-field-full" [formGroup]="form" *ngIf="selected$ | async as selected">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'common.code' | translate }}</mat-label>
+      <input matInput formControlName="code" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'common.content_type' | translate }}</mat-label>
+      <input matInput formControlName="contentType" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'common.order' | translate }}</mat-label>
+      <input matInput formControlName="order" />
+    </mat-form-field>
+
+    <div>
+      <mat-checkbox formControlName="visible">
+        {{ 'common.visible' | translate }}
+      </mat-checkbox>
+    </div>
+
+    <div>
+      <mat-checkbox formControlName="linkToMenu">
+        {{ 'common.linkToMenu' | translate }}
+      </mat-checkbox>
+    </div>
+
+    <app-descriptions
+      [languages]="languages"
+      [ignoreFields]="['highlights', 'keyWords']"
+      formControlName="descriptions"
+    ></app-descriptions>
+
+    <button mat-button type="button" (click)="update(selected.id, $event)">Create</button>
+  </form>
+</div>
