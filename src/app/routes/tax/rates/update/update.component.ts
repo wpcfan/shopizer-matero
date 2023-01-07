@@ -70,8 +70,8 @@ export class TaxRatesUpdateComponent implements OnInit {
       map(params => Number(params.get('id')) ?? 0),
       switchMap(id => this.service.getById(id)),
       tap(selected =>
-        selected.description !== null || selected.description !== undefined
-          ? this.form.patchValue({ ...selected, discriptions: [selected.description] })
+        selected.description !== null && selected.description !== undefined
+          ? this.form.patchValue({ ...selected, descriptions: [selected.description] })
           : this.form.patchValue({ ...selected })
       )
     );
